@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "788337236878",
+    "project_id": "smartgym-65f16",
+    "storage_bucket": "smartgym-65f16.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:788337236878:android:f0cc2565fd27a537ca62df",
+        "android_client_info": {
+          "package_name": "com.example.smartgym"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "788337236878-8cm5eoljna3lmt0irdbppnkaeok1r4dm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBIS48ce_491LAQ65ORjE8ScsmDhtRsYkg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "788337236878-8cm5eoljna3lmt0irdbppnkaeok1r4dm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
