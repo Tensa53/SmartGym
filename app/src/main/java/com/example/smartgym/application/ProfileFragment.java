@@ -1,5 +1,6 @@
 package com.example.smartgym.application;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,10 +10,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.example.smartgym.R;
+import com.example.smartgym.infoUtenti.application.LoginActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements View.OnClickListener {
+
+    Button btLogout;
 
     public ProfileFragment() {
     }
@@ -30,5 +36,27 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        btLogout = view.findViewById(R.id.btLogout);
+
+        btLogout.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+
+        switch (id) {
+            case R.id.btLogout: onLogout();
+            break;
+        }
+    }
+
+    private void onLogout() {
+        FirebaseAuth.getInstance().signOut();
+
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 }

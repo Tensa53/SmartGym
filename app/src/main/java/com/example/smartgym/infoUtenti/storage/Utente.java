@@ -1,4 +1,4 @@
-package com.example.smartgym.storage;
+package com.example.smartgym.infoUtenti.storage;
 
 import androidx.annotation.NonNull;
 
@@ -40,11 +40,5 @@ public class Utente {
 
     public void setMail(String mail) {
         this.mail = mail;
-    }
-
-    @NonNull
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
     }
 }

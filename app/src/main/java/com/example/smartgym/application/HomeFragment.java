@@ -12,11 +12,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.smartgym.R;
-import com.example.smartgym.storage.Utente;
-import com.example.smartgym.storage.UtenteDAO;
+import com.example.smartgym.infoUtenti.storage.Utente;
+import com.example.smartgym.infoUtenti.storage.UtenteDAO;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class HomeFragment extends Fragment {
 
@@ -55,19 +61,25 @@ public class HomeFragment extends Fragment {
     }
 
     private void recuperaUtente() {
-        String id = "giuseppeverdi@mail.it";
+        String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
         utenteDAO = new UtenteDAO();
 
-        DocumentReference docRef = utenteDAO.doRetrieveUserDocById(id);
+        Task<QuerySnapshot> task = utenteDAO.doRetrieveUserDocByEmail(email);
 
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        task.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Utente utente = documentSnapshot.toObject(Utente.class);
-                completeHome(utente);
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                    Utente utente = documentSnapshot.toObject(Utente.class);
+                    completeHome(utente);
+                } else {
+
+                }
             }
         });
+
     }
 
     private void completeHome(Utente utente) {
