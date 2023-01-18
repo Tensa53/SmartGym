@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.smartgym.R;
-import com.example.smartgym.infoUtenti.application.LoginActivity;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.smartgym.infoUtenti.application.service.InfoUtentiServiceImpl;
+import com.example.smartgym.infoUtenti.application.activity.LoginActivity;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
@@ -53,7 +53,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void onLogout() {
-        FirebaseAuth.getInstance().signOut();
+        InfoUtentiServiceImpl infoUtentiService = new InfoUtentiServiceImpl();
+        infoUtentiService.logout();
 
         Intent intent = new Intent(getContext(), LoginActivity.class);
         startActivity(intent);
