@@ -1,4 +1,4 @@
-package com.example.smartgym.infoUtenti.storage;
+package com.example.smartgym.infoUtenti.storage.entity;
 
 import androidx.annotation.NonNull;
 
