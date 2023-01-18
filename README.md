@@ -4,8 +4,6 @@
 
 ## Componenti del gruppo di progetto:
 
-Login
-
 | Nome                  |Matricola |
 |-----------------------|----------|
 | FABIANO DANIELE       |0512110373|
