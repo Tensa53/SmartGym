@@ -1,6 +1,5 @@
-package com.example.smartgym.infoUtenti.application;
+package com.example.smartgym.infoUtenti.application.activity;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,6 +9,7 @@ import android.view.WindowManager;
 
 import com.example.smartgym.R;
 import com.example.smartgym.application.MainActivity;
+import com.example.smartgym.infoUtenti.application.activity.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

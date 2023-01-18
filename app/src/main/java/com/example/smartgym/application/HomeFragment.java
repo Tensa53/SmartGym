@@ -12,16 +12,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.smartgym.R;
-import com.example.smartgym.infoUtenti.storage.Utente;
-import com.example.smartgym.infoUtenti.storage.UtenteDAO;
+import com.example.smartgym.infoUtenti.application.service.InfoUtentiServiceImpl;
+import com.example.smartgym.infoUtenti.storage.entity.Utente;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class HomeFragment extends Fragment {
@@ -30,8 +26,6 @@ public class HomeFragment extends Fragment {
     TextView tvUtente;
 
     Utente myUtente;
-
-    UtenteDAO utenteDAO;
 
     public HomeFragment() {
     }
@@ -63,11 +57,11 @@ public class HomeFragment extends Fragment {
     private void recuperaUtente() {
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
 
-        utenteDAO = new UtenteDAO();
+        InfoUtentiServiceImpl infoUtentiService = new InfoUtentiServiceImpl();
 
-        Task<QuerySnapshot> task = utenteDAO.doRetrieveUserDocByEmail(email);
+        Task<QuerySnapshot> getUserResult = infoUtentiService.getUserbyEmail(email);
 
-        task.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        getUserResult.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {

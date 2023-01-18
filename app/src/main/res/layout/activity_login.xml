@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".infoUtenti.application.LoginActivity">
+    tools:context=".infoUtenti.application.activity.LoginActivity">
 
     <LinearLayout
         android:id="@+id/ll1"
