@@ -1,4 +1,4 @@
-package com.example.smartgym.infoUtenti.application;
+package com.example.smartgym.infoUtenti.application.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.smartgym.R;
 import com.example.smartgym.application.MainActivity;
+import com.example.smartgym.infoUtenti.application.service.InfoUtentiServiceImpl;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -58,7 +59,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String email = etEmail.getText().toString();
         String password = etPassword.getText().toString();
 
-        mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        InfoUtentiServiceImpl infoUtentiService = new InfoUtentiServiceImpl();
+
+        Task<AuthResult> loginResult = infoUtentiService.login(email, password);
+
+        loginResult.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {

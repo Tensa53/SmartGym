@@ -1,4 +1,4 @@
-package com.example.smartgym.infoUtenti.storage;
+package com.example.smartgym.infoUtenti.storage.dataAccess;
 
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
