@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".infoUtenti.application.activity.RegisterActivity">
+
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true">
+        
+        <EditText
+            android:id="@+id/etNome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="nome"/>
+        
+        <EditText
+            android:id="@+id/etCognome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="cognome"/>
+
+        <LinearLayout
+            android:id="@+id/ll2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btDataDiNascita"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:text="Data di Nascita"/>
+
+            <TextView
+                android:id="@+id/tvDataDiNascita"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:text="DD-MM-YYYY"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvSesso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textSize="20sp"
+                android:text="Sesso:"/>
+
+            <RadioGroup
+                android:id="@+id/rbg1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tag="true"
+                    android:text="Maschio"/>
+
+                <RadioButton
+                    android:id="@+id/rb2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tag="false"
+                    android:text="Femmina"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="email"/>
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="password"/>
+
+        <EditText
+            android:id="@+id/etPasswordConf"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ripeti password"/>
+
+        <Button
+            android:id="@+id/btRegistrati"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrati"/>
+        
+    </LinearLayout>
+
+</RelativeLayout>
