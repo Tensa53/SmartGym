@@ -80,6 +80,6 @@ public class HomeFragment extends Fragment {
         if (utente != null)
             myUtente = utente;
 
-        tvUtente.setText("Benvenuto " + myUtente.getMail());
+        tvUtente.setText("Benvenuto " + myUtente.getNome());
     }
 }

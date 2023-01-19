@@ -53,6 +53,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void onRegister() {
+        Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+        startActivity(intent);
     }
 
     private void onLogin() {
