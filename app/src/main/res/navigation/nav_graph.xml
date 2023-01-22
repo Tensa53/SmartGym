@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.smartgym.application.HomeFragment"
+        android:name="com.example.smartgym.infoUtenti.application.activity.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/exercisesFragment"
-        android:name="com.example.smartgym.application.ExercisesFragment"
+        android:name="com.example.smartgym.gestioneScheda.application.activity.ExercisesFragment"
         android:label="fragment_exercises"
         tools:layout="@layout/fragment_exercises" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.smartgym.application.ProfileFragment"
+        android:name="com.example.smartgym.infoUtenti.application.activity.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

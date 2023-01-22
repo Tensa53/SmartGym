@@ -1,4 +1,4 @@
-package com.example.smartgym.application;
+package com.example.smartgym.gestioneScheda.application.activity;
 
 import android.os.Bundle;
 import android.view.MenuItem;

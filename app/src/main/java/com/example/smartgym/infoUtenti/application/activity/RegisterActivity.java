@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,27 +16,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smartgym.R;
-import com.example.smartgym.application.MainActivity;
-import com.example.smartgym.infoUtenti.application.service.InfoUtentiService;
-import com.example.smartgym.infoUtenti.application.service.InfoUtentiServiceImpl;
-import com.example.smartgym.infoUtenti.storage.entity.Utente;
+import com.example.smartgym.start.MainActivity;
+import com.example.smartgym.infoUtenti.application.exception.LoginFieldException;
+import com.example.smartgym.infoUtenti.application.exception.RegisterFieldException;
+import com.example.smartgym.infoUtenti.application.logic.FormUtils;
+import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
+import com.example.smartgym.infoUtenti.storage.entity.Atleta;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener,DatePickerDialog.OnDateSetListener {
 
@@ -49,7 +43,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     RadioGroup rbg1;
 
-    InfoUtentiServiceImpl infoUtentiService;
+    LoginRegistration loginRegistration;
+
+    FormUtils formUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,94 +57,39 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         btDataDiNascita.setOnClickListener(this);
         btRegistrati.setOnClickListener(this);
 
-        infoUtentiService = new InfoUtentiServiceImpl();
+        loginRegistration = new LoginRegistration();
+        formUtils = new FormUtils();
     }
 
     private void completeRegister(String email) {
+        String nome = etNome.getText().toString();
+        String cognome = etCognome.getText().toString();
+        String dataDiNascita = tvDataDiNascita.getText().toString();
+        int selectedRadio = rbg1.getCheckedRadioButtonId();
 
-        if (controllaAltriCampi()){
-            String nome = etNome.getText().toString();
+        try {
+            formUtils.controllaAltriCampiRegistrazione(nome,cognome,dataDiNascita,selectedRadio);
 
-            String cognome = etCognome.getText().toString();
-
-            Timestamp datadiNascita = calcolaDataDiNascita();
+            Timestamp datadiNascita = formUtils.calcolaDataDiNascita(tvDataDiNascita.getTag().toString());
 
             RadioButton rb = findViewById(rbg1.getCheckedRadioButtonId());
 
             boolean sesso = Boolean.parseBoolean(rb.getTag().toString());
 
-            Utente utente = new Utente(nome,cognome,email,sesso,datadiNascita);
+            Atleta atleta = new Atleta(nome,cognome,email,sesso,datadiNascita);
 
-            Task<DocumentReference> saveResult = infoUtentiService.registerUserData(utente);
+            Task<Void> registerResult = loginRegistration.saveAthlete(atleta);
 
-            saveResult.addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            registerResult.addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
-                public void onSuccess(DocumentReference documentReference) {
-                    launchHome();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful())
+                        launchHome();
                 }
             });
+        } catch (RegisterFieldException e) {
+            Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private boolean controllaAltriCampi() {
-        String nome = etNome.getText().toString();
-
-        if (nome.length() == 0){
-            Toast.makeText(this,"Inserisci un nome",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if (nome.length() > 20){
-            Toast.makeText(this,"Il nome non deve superare i 20 caratteri",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        String cognome = etCognome.getText().toString();
-
-        if (cognome.length() == 0){
-            Toast.makeText(this,"Inserisci un cognome",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if (cognome.length() > 20){
-            Toast.makeText(this,"Il cognome non deve superare i 20 caratteri",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        String dataDiNascita = tvDataDiNascita.getText().toString();
-
-        if (dataDiNascita.compareTo("DD-MM-YYYY") == 0){
-            Toast.makeText(this, "Inserisci una data di nascita",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if (rbg1.getCheckedRadioButtonId() == -1){
-            Toast.makeText(this,"Seleziona il sesso",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        return true;
-    }
-
-    private Timestamp calcolaDataDiNascita() {
-        String dataDiNascita = tvDataDiNascita.getTag().toString();
-
-        int day = Integer.parseInt(dataDiNascita.split("-")[0]);
-
-        int month = Integer.parseInt(dataDiNascita.split("-")[1]) - 1;
-
-        int year = Integer.parseInt(dataDiNascita.split("-")[2]);
-
-        GregorianCalendar gregorianCalendar = new GregorianCalendar(year, month, day);
-
-        Date date = new Date(gregorianCalendar.getTimeInMillis());
-
-        return new Timestamp(date);
     }
 
     private void launchHome() {
@@ -166,22 +107,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(RegisterActivity.this,this,year,month,day);
 
-        long yearTime;
+        long eighteenYearsTimeTot = formUtils.getMaxDate();
 
-        long yearTimeTot = 0L;
-
-        int yeard = Calendar.getInstance().get(Calendar.YEAR);
-
-        for (int i = yeard; i > (yeard - 18); i--){
-            if (i % 4 == 0)
-                yearTime = 1000L*60*60*24*366;
-            else
-                yearTime = 1000L*60*60*24*365;
-
-            yearTimeTot += yearTime;
-        }
-
-        long maxDate = new Date().getTime() - yearTimeTot;
+        long maxDate = new Date().getTime() - eighteenYearsTimeTot;
 
         datePickerDialog.getDatePicker().setMaxDate(maxDate);
         datePickerDialog.show();
@@ -192,8 +120,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         String password = etPassword.getText().toString();
 
-        if (controllaEmailEPassword(email,password)) {
-            Task<AuthResult> createResult = infoUtentiService.registerUserAuth(email,password);
+        String ripetiPassword = etRipetiPassword.getText().toString();
+
+        try {
+            formUtils.controllaEmailEPassword(email,password,ripetiPassword);
+
+            Task<AuthResult> createResult = loginRegistration.createUser(email,password);
 
             createResult.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -204,54 +136,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         Toast.makeText(getApplicationContext(), "L'indirizzo email e gia in uso", Toast.LENGTH_SHORT).show();
                 }
             });
+        } catch (LoginFieldException e) {
+            Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG).show();
         }
-    }
-
-    private boolean controllaEmailEPassword(String email, String password) {
-        if (email.length() == 0){
-            Toast.makeText(this,"Inserisci un indirizzo email",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if (email.length() > 40){
-            Toast.makeText(this,"L'indirizzo email non deve superare i 40 caratteri",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        Pattern pattern = Pattern.compile("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$");
-        Matcher matcher = pattern.matcher(email);
-
-        if (!matcher.matches()){
-            Toast.makeText(this,"L'indirizzo email deve rispettare il formato",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if (password.length() == 0){
-            Toast.makeText(this,"Inserisci una password",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        if (password.length() > 14){
-            Toast.makeText(this, "La password non deve superare i 14 caratteri",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        String ripetiPassword = etRipetiPassword.getText().toString();
-
-        if (password.compareTo(ripetiPassword) != 0){
-            Toast.makeText(this,"Le password non corrispondono", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        Pattern pattern1 = Pattern.compile("(?=.*[!@#$%^&*])(?=.*\\d)(?=.*[A-Z]).{8,}");
-        Matcher matcher1 = pattern1.matcher(etPassword.getText().toString());
-
-        if (!matcher1.matches()){
-            Toast.makeText(this,"La password deve avere almeno 8 caratteri, di cui uno maiuscolo,un numero, un carattere speciale)",Toast.LENGTH_LONG).show();
-            return false;
-        }
-
-        return true;
     }
 
     private void widgetBinding() {

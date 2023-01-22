@@ -1,6 +1,5 @@
-package com.example.smartgym.application;
+package com.example.smartgym.gestioneScheda.application.activity;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -12,12 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.example.smartgym.R;
 
 public class ExercisesFragment extends Fragment implements View.OnClickListener {
 
     Button bt1;
+
+    ListView lv1;
 
     public ExercisesFragment() {
     }
