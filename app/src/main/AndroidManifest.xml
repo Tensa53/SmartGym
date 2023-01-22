@@ -27,7 +27,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".infoUtenti.application.activity.SplashScreenActivity"
+            android:name=".start.SplashScreenActivity"
             android:exported="true"
             android:noHistory="true">
             <intent-filter>
@@ -41,20 +41,20 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".application.ExercisesActivity1"
+            android:name=".gestioneScheda.application.activity.ExercisesActivity1"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".application.MainActivity"
+            android:name=".start.MainActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".application.ExercisesActivity2" />
+        <activity android:name=".gestioneScheda.application.activity.ExercisesActivity2" />
     </application>
 
 </manifest>

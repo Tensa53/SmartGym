@@ -11,12 +11,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.smartgym.R;
-import com.example.smartgym.application.MainActivity;
-import com.example.smartgym.infoUtenti.application.service.InfoUtentiServiceImpl;
+import com.example.smartgym.start.MainActivity;
+import com.example.smartgym.infoUtenti.application.exception.LoginFieldException;
+import com.example.smartgym.infoUtenti.application.logic.FormUtils;
+import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,7 +25,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     Button btLogin,btRegistrazione;
 
-    private FirebaseAuth mAuth;
+    LoginRegistration loginRegistration;
+
+    FormUtils formUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +39,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btLogin.setOnClickListener(this);
         btRegistrazione.setOnClickListener(this);
 
-        mAuth = FirebaseAuth.getInstance();
-
+        formUtils = new FormUtils();
+        loginRegistration = new LoginRegistration();
     }
 
     @Override
@@ -46,9 +49,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         switch (id) {
             case R.id.btLogin: onLogin();
-            break;
+                break;
             case R.id.btRegistrazione: onRegister();
-            break;
+                break;
         }
     }
 
@@ -61,20 +64,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String email = etEmail.getText().toString();
         String password = etPassword.getText().toString();
 
-        InfoUtentiServiceImpl infoUtentiService = new InfoUtentiServiceImpl();
+        try {
+            formUtils.controllaEmailEPassword(email,password,null);
 
-        Task<AuthResult> loginResult = infoUtentiService.login(email, password);
+            Task<AuthResult> loginResult = loginRegistration.login(email,password);
 
-        loginResult.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    launchHome();
-                } else {
-                    Toast.makeText(LoginActivity.this, "Credenziali errate !!!", Toast.LENGTH_SHORT).show();
+            loginResult.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        launchHome();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Credenziali errate !!!", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+        } catch (LoginFieldException e) {
+            Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG).show();
+        }
     }
 
     private void launchHome() {

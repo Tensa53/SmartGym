@@ -1,15 +1,13 @@
-package com.example.smartgym.infoUtenti.application.activity;
+package com.example.smartgym.start;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.WindowManager;
 
 import com.example.smartgym.R;
-import com.example.smartgym.application.MainActivity;
 import com.example.smartgym.infoUtenti.application.activity.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,7 +39,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 if (firebaseUser != null)
                     intent = new Intent(getApplicationContext(),MainActivity.class);
                 else
-                    intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    intent = new Intent(getApplicationContext(),LoginActivity.class);
 
                 startActivity(intent);
 

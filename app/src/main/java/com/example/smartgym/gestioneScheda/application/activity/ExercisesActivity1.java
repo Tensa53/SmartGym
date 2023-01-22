@@ -1,10 +1,11 @@
-package com.example.smartgym.application;
+package com.example.smartgym.gestioneScheda.application.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,8 +53,6 @@ public class ExercisesActivity1 extends AppCompatActivity {
         }
 
         intent.putExtra("stringa", b.getText().toString());
-
-        startActivity(intent);
     }
 
     @Override

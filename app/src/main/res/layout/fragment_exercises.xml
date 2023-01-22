@@ -3,29 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".application.ExercisesFragment">
+    tools:context=".gestioneScheda.application.activity.ExercisesFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Exercises Fragment"
-            android:textSize="30dp"
-            android:textColor="@color/purple_500"
-            android:layout_centerInParent="true"
-            />
-
         <Button
             android:id="@+id/bt1"
-            android:layout_below="@id/tv1"
             android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Nuova Scheda Esercizi"/>
+
+        <ListView
+            android:id="@+id/lv1"
+            android:layout_width="400dp"
+            android:layout_height="500dp"
+            android:layout_below="@id/bt1"
+            android:layout_centerInParent="true"/>
 
     </RelativeLayout>
 
