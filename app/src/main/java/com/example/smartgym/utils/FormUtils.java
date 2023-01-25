@@ -1,4 +1,4 @@
-package com.example.smartgym.infoUtenti.application.logic;
+package com.example.smartgym.utils;
 
 import com.example.smartgym.infoUtenti.application.exception.LoginFieldException;
 import com.example.smartgym.infoUtenti.application.exception.RegisterFieldException;

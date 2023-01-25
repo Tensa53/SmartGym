@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.example.smartgym.R;
 import com.example.smartgym.start.MainActivity;
 import com.example.smartgym.infoUtenti.application.exception.LoginFieldException;
-import com.example.smartgym.infoUtenti.application.logic.FormUtils;
+import com.example.smartgym.utils.FormUtils;
 import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

@@ -24,7 +24,6 @@ public class Atleta implements Serializable {
     private int allenamentiSettimanali;
     private int altezza;
     private int peso;
-    private String traguardo;
 
     public Atleta() {
 
@@ -39,7 +38,6 @@ public class Atleta implements Serializable {
         this.allenamentiSettimanali = 0;
         this.altezza = 0;
         this.peso = 0;
-        this.traguardo = "";
     }
 
     public boolean areFeaturesEmpty(){
@@ -123,14 +121,6 @@ public class Atleta implements Serializable {
         this.peso = peso;
     }
 
-    public String getTraguardo() {
-        return traguardo;
-    }
-
-    public void setTraguardo(String traguardo) {
-        this.traguardo = traguardo;
-    }
-
     @Override
     public String toString() {
         return "Atleta{" +
@@ -142,7 +132,7 @@ public class Atleta implements Serializable {
                 ", allenamentiSettimanali=" + allenamentiSettimanali +
                 ", altezza=" + altezza +
                 ", peso=" + peso +
-                ", traguardo='" + traguardo + '\'' +
+                ", traguardo='" + '\'' +
                 '}';
     }
 
@@ -153,6 +143,6 @@ public class Atleta implements Serializable {
             s = "Maschio";
 
         return "Nome: " + getNome() + "\n" + "Cognome: " + getCognome() + "\n" + "Email: " + getEmail() + "\n" + "Sesso: " + s + "\n" + "dataDinascita: " + getFormattedDataDiNascita()
-                + "\n" + "Allenamenti settimanali: " + allenamentiSettimanali + "\n" + "Altezza: " + altezza + "\n" + "Peso: " + peso + "\n" + "Traguardo:" + traguardo;
+                + "\n" + "Allenamenti settimanali: " + allenamentiSettimanali + "\n" + "Altezza: " + altezza + "\n" + "Peso: " + peso;
     }
 }

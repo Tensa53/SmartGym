@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.smartgym.R;
 
-public class ExercisesActivity2 extends AppCompatActivity {
+public class CreazioneSchedaManualeActivity extends AppCompatActivity {
 
     TextView tv;
 
