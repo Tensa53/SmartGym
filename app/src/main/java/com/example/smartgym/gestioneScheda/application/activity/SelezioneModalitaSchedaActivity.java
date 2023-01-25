@@ -5,7 +5,6 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,7 +13,7 @@ import android.widget.TextView;
 
 import com.example.smartgym.R;
 
-public class ExercisesActivity1 extends AppCompatActivity {
+public class SelezioneModalitaSchedaActivity extends AppCompatActivity {
 
     TextView tv;
 
@@ -28,7 +27,7 @@ public class ExercisesActivity1 extends AppCompatActivity {
 
         actionBar.setTitle("Creazione Scheda Esercizi");
 
-        setContentView(R.layout.layout_exercises_1);
+        setContentView(R.layout.activity_selezione_modalita_scheda);
 
         tv = findViewById(R.id.tvselezionemodalita);
 
@@ -44,7 +43,7 @@ public class ExercisesActivity1 extends AppCompatActivity {
 
         switch (id) {
             case R.id.btmanuale:
-                intent = new Intent(getApplicationContext(), ExercisesActivity2.class);
+                intent = new Intent(getApplicationContext(), CreazioneSchedaManualeActivity.class);
                 break;
             case R.id.btgenerata: //TODO
                 break;
@@ -53,6 +52,7 @@ public class ExercisesActivity1 extends AppCompatActivity {
         }
 
         intent.putExtra("stringa", b.getText().toString());
+        startActivity(intent);
     }
 
     @Override

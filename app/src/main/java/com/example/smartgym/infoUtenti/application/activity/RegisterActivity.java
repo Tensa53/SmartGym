@@ -19,16 +19,13 @@ import com.example.smartgym.R;
 import com.example.smartgym.start.MainActivity;
 import com.example.smartgym.infoUtenti.application.exception.LoginFieldException;
 import com.example.smartgym.infoUtenti.application.exception.RegisterFieldException;
-import com.example.smartgym.infoUtenti.application.logic.FormUtils;
+import com.example.smartgym.utils.FormUtils;
 import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
 import com.example.smartgym.infoUtenti.storage.entity.Atleta;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.firestore.DocumentReference;
 
 import java.util.Calendar;
 import java.util.Date;
