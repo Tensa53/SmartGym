@@ -1,6 +1,3 @@
-# Created by https://www.toptal.com/developers/gitignore/api/androidstudio,java,gradle
-# Edit at https://www.toptal.com/developers/gitignore?templates=androidstudio,java,gradle
-
 ### Java ###
 # Compiled class file
 *.class
@@ -176,5 +173,3 @@ fabric.properties
 ### AndroidStudio Patch ###
 
 !/gradle/wrapper/gradle-wrapper.jar
-
-# End of https://www.toptal.com/developers/gitignore/api/androidstudio,java,gradle
