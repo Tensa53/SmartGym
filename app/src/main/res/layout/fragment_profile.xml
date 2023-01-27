@@ -16,7 +16,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="80dp"
-            android:text="Profile Fragment"
+            android:text="MIK Profile Fragment"
             android:textColor="@color/purple_500"
             android:textSize="20sp" />
 

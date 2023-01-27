@@ -18,7 +18,7 @@
             android:layout_marginBottom="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nuova Scheda Esercizi"/>
+            android:text="Nuova Scheda Esercizi Mary"/>
 
         <ListView
             android:id="@+id/lv1"
