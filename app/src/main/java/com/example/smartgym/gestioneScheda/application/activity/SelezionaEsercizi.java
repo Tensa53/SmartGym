@@ -103,12 +103,12 @@ public class SelezionaEsercizi extends AppCompatActivity {
         int c1 = e.getDettaglio().getDurata();
         int c2 = e.getDettaglio().getRipetizioni();
 
-        if (c1 != 0) {
-            //aumentiamo la durata
+        if (c1 != 0 && c1 < 60 ) {
+            //max 60 sec
             c1++;
             e.getDettaglio().setDurata(c1);
-        } else if (c2 != 0) {
-            //aumentiamo le ripetizioni
+        } else if (c2 != 0 && c2 < 20) {
+            //max 20 rip
             c2++;
             e.getDettaglio().setRipetizioni(c2);
         }
@@ -123,12 +123,12 @@ public class SelezionaEsercizi extends AppCompatActivity {
         int c1 = e.getDettaglio().getDurata();
         int c2 = e.getDettaglio().getRipetizioni();
 
-        if (c1 != 0) {
-            //durata
+        if (c1 > 10) {
+            //almeno 10 sec
             c1--;
             e.getDettaglio().setDurata(c1);
-        } else if (c2 != 0) {
-            //ripetizioni
+        } else if (c2 > 5) {
+            //almeno 5 rip
             c2--;
             e.getDettaglio().setRipetizioni(c2);
         }
