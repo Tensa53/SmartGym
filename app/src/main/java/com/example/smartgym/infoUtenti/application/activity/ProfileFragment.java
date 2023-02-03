@@ -24,11 +24,13 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import org.w3c.dom.Text;
+
 public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     Button btLogout;
 
-    TextView tv1;
+    TextView tv1, name, surname, email, password, weight, height, experience;
 
     Atleta myAthlete;
 
@@ -53,7 +55,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
 
         btLogout = view.findViewById(R.id.btLogout);
-        tv1 = view.findViewById(R.id.tv1);
+        name = view.findViewById(R.id.nameValue);
+        surname = view.findViewById(R.id.surnameValue);
+        email = view.findViewById(R.id.emailValue);
+        weight = view.findViewById(R.id.weightValue);
+        height = view.findViewById(R.id.heightValue);
+        //password = view.findViewById(R.id.passwordValue);
+        //experience = view.findViewById(R.id.experienceValue);
 
         athleteInfo = new AthleteInfo();
         loginRegistration = new LoginRegistration();
@@ -82,7 +90,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     private void saveAtleta(Atleta atleta) {
         myAthlete = atleta;
 
-        tv1.setText(myAthlete.toFormattedString());
+        name.setText(myAthlete.getNome());
+        surname.setText(myAthlete.getCognome());
+        email.setText(myAthlete.getEmail());
+        weight.setText(myAthlete.getPeso());
+        height.setText(myAthlete.getAltezza());
+        //password.setText(myAthlete.getPassword());
+        //experience.setText(myAthlete.getExperience());
     }
 
     @Override
