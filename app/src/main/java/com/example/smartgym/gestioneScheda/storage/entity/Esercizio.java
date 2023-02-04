@@ -36,6 +36,12 @@ public class Esercizio implements Serializable {
         this.isChecked = false;
     }
 
+    public Esercizio(String nome, String parteDelCorpo) {
+        this.nome = nome;
+        this.parteDelCorpo = parteDelCorpo;
+        this.isChecked = false;
+    }
+
     public Esercizio(String id, String nome, String descrizione, String parteDelCorpo, String tipologia, String difficolta) {
         this.id = id;
         this.nome = nome;

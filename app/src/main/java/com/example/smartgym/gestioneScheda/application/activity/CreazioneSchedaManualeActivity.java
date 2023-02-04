@@ -40,8 +40,7 @@ public class CreazioneSchedaManualeActivity extends AppCompatActivity {
         Intent intent = null;
 
         switch (id) {
-            case R.id.btbraccia: partedelCorpo = "braccia";
-                break;
+            case R.id.btbraccia: partedelCorpo = "braccia"; break;
 
             case R.id.btgambe: partedelCorpo = "gambe"; break;
 
