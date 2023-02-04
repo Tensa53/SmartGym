@@ -24,6 +24,7 @@ public class Atleta implements Serializable {
     private int allenamentiSettimanali;
     private int altezza;
     private int peso;
+    private String esperienza;
 
     public Atleta() {
 
@@ -38,6 +39,7 @@ public class Atleta implements Serializable {
         this.allenamentiSettimanali = 0;
         this.altezza = 0;
         this.peso = 0;
+        this.esperienza = "principiante";
     }
 
     public boolean areFeaturesEmpty(){
@@ -52,6 +54,14 @@ public class Atleta implements Serializable {
 
     public void setAllenamentiSettimanali(int allenamentiSettimanali) {
         this.allenamentiSettimanali = allenamentiSettimanali;
+    }
+
+    public String getEsperienza() {
+        return esperienza;
+    }
+
+    public void setEsperienza(String esperienza) {
+        this.esperienza = esperienza;
     }
 
     public String getNome() {
