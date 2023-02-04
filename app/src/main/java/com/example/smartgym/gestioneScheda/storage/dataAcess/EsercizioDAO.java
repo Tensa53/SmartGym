@@ -32,6 +32,12 @@ public class EsercizioDAO {
         return task;
     }
 
+    public Task<QuerySnapshot> doRetrieveEsercizioById2(String id) {
+        Task<QuerySnapshot> task = dbHelper.collection("esercizi").whereEqualTo("id",id).get();
+
+        return task;
+    }
+
     public Task<DocumentSnapshot> doRetrieveByName(String nome) {
         Task<DocumentSnapshot> task = dbHelper.collection("esercizi").document(nome).get();
 
