@@ -38,6 +38,12 @@ public class SchedaEsercizi implements Serializable {
         this.autore = autore;
     }
 
+    public SchedaEsercizi(String id, String nome, ArrayList<Esercizio> esercizi) {
+        this.id = id;
+        this.nome = nome;
+        this.esercizi = esercizi;
+    }
+
     public String getId() {
         return id;
     }
