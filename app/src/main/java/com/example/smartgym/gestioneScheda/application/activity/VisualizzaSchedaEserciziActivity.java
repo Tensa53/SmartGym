@@ -47,7 +47,7 @@ public class VisualizzaSchedaEserciziActivity extends AppCompatActivity {
 
         lv.setAdapter(customAdapterEsercizi);
 
-        tv1.setText("Esercizi della scheda " + nome);
+        tv1.setText(nome);
 
         populateList();
     }

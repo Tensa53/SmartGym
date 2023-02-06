@@ -12,9 +12,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.smartgym.R;
+import com.example.smartgym.gestioneScheda.application.activity.CustomAdapterEsercizi;
+import com.example.smartgym.gestioneScheda.storage.entity.DettaglioEsercizio;
+import com.example.smartgym.gestioneScheda.storage.entity.Esercizio;
 import com.example.smartgym.infoUtenti.application.logic.AthleteInfo;
 import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
 import com.example.smartgym.infoUtenti.storage.entity.Atleta;
@@ -29,11 +33,16 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
     TextView tv1;
     TextView tvUtente;
+
+    CustomAdapterEsercizi customAdapterEsercizi;
+
+    ListView lv;
 
     AthleteInfo athleteInfo;
     LoginRegistration loginRegistration;
@@ -59,6 +68,7 @@ public class HomeFragment extends Fragment {
 
         tv1 = view.findViewById(R.id.tv1);
         tvUtente = view.findViewById(R.id.tvUtente);
+        lv = view.findViewById(R.id.lv1);
 
         loginRegistration = new LoginRegistration();
         athleteInfo = new AthleteInfo();
@@ -67,6 +77,12 @@ public class HomeFragment extends Fragment {
 
         if (user != null)
             recuperaAtleta(user.getEmail());
+
+        customAdapterEsercizi = new CustomAdapterEsercizi(getContext(),R.layout.list_esercizi_item,new ArrayList<Esercizio>());
+
+        lv.setAdapter(customAdapterEsercizi);
+
+        populateList();
     }
 
     private void recuperaAtleta(String email) {
@@ -86,6 +102,19 @@ public class HomeFragment extends Fragment {
         myAthlete = atleta;
 
         tvUtente.setText("Benvenuto " + myAthlete.getNome());
+    }
+
+    private void populateList() {
+        customAdapterEsercizi.add(new Esercizio("PushUp",new DettaglioEsercizio(10,0)));
+        customAdapterEsercizi.add(new Esercizio("TricepDip",new DettaglioEsercizio(10,0)));
+        customAdapterEsercizi.add(new Esercizio("Squat",new DettaglioEsercizio(10,0)));
+        customAdapterEsercizi.add(new Esercizio("Trazioni",new DettaglioEsercizio(10,0)));
+        customAdapterEsercizi.add(new Esercizio("Crunch",new DettaglioEsercizio(10,0)));
+        customAdapterEsercizi.add(new Esercizio("Jumping Jacks",new DettaglioEsercizio(10,0)));
+        customAdapterEsercizi.add(new Esercizio("Mountain Climber",new DettaglioEsercizio(10,0)));
+        customAdapterEsercizi.add(new Esercizio("Plank",new DettaglioEsercizio(0,30)));
+        customAdapterEsercizi.add(new Esercizio("Cobra Stretch",new DettaglioEsercizio(10,0)));
+        customAdapterEsercizi.add(new Esercizio("Side Hop",new DettaglioEsercizio(0,20)));
     }
 
 }
