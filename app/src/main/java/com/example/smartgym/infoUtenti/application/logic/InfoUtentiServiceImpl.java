@@ -3,9 +3,7 @@ import com.example.smartgym.infoUtenti.storage.entity.Atleta;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 /**
  * La seguente classe fornisce i servizi e le funzionalita per il package (sottosistema) InfoUtenti
@@ -43,8 +41,8 @@ public class InfoUtentiServiceImpl implements InfoUtentiService {
      * @pre login(String email, String password)
      * @return l'utente attualmente loggato nel sistema
      */
-    public FirebaseUser isUserLogged(){
-        return loginRegistration.isUserLogged();
+    public FirebaseUser getUserLogged(){
+        return loginRegistration.getUserLogged();
     }
 
     /**
@@ -72,8 +70,8 @@ public class InfoUtentiServiceImpl implements InfoUtentiService {
      *
      * @param atleta istanza della classe Atleta, contiene i dati relativi all'utente atleta
      */
-    public void saveAthlete(Atleta atleta){
-        loginRegistration.saveAthlete(atleta);
+    public void saveAthlete(Atleta atleta, String id){
+        loginRegistration.saveAthlete(atleta,id);
 
         return;
     }
@@ -85,8 +83,8 @@ public class InfoUtentiServiceImpl implements InfoUtentiService {
      * @return il riferimento al documento per prelevare i dati
      */
     @Override
-    public Task<DocumentSnapshot> getAthletebyEmail(String email) {
-        return athleteInfoUtils.getAthletebyEmail(email);
+    public Task<DocumentSnapshot> getAthletebyId(String id) {
+        return athleteInfoUtils.getAthletebyId(id);
     }
 
     @Override

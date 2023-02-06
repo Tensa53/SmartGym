@@ -67,7 +67,7 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
 
         lv1.setOnItemClickListener(this);
 
-        caricaSchede(loginRegistration.isUserLogged().getEmail());
+        caricaSchede(loginRegistration.getUserLogged().getEmail());
     }
 
     private void caricaSchede(String email) {

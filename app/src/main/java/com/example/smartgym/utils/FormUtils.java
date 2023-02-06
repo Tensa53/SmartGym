@@ -63,7 +63,7 @@ public class FormUtils {
             throw new LoginFieldException("La password deve avere almeno 8 caratteri, di cui uno maiuscolo,un numero, un carattere speciale");
     }
 
-    public Timestamp calcolaDataDiNascita(String dataDiNascita) {
+    public Date calcolaDataDiNascita(String dataDiNascita) {
         int day = Integer.parseInt(dataDiNascita.split("-")[0]);
 
         int month = Integer.parseInt(dataDiNascita.split("-")[1]) - 1;
@@ -74,7 +74,7 @@ public class FormUtils {
 
         Date date = new Date(gregorianCalendar.getTimeInMillis());
 
-        return new Timestamp(date);
+        return date;
     }
 
     public long getMaxDate() {

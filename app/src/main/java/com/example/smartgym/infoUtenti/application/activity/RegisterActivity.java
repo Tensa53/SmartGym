@@ -62,20 +62,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String nome = etNome.getText().toString();
         String cognome = etCognome.getText().toString();
         String dataDiNascita = tvDataDiNascita.getText().toString();
+        String idUser = loginRegistration.getUserLogged().getUid();
+
         int selectedRadio = rbg1.getCheckedRadioButtonId();
 
         try {
             formUtils.controllaAltriCampiRegistrazione(nome,cognome,dataDiNascita,selectedRadio);
 
-            Timestamp datadiNascita = formUtils.calcolaDataDiNascita(tvDataDiNascita.getTag().toString());
+            Date datadiNascita = formUtils.calcolaDataDiNascita(tvDataDiNascita.getTag().toString());
 
             RadioButton rb = findViewById(rbg1.getCheckedRadioButtonId());
 
-            boolean sesso = Boolean.parseBoolean(rb.getTag().toString());
+            String sesso = rb.getText().toString();
 
             Atleta atleta = new Atleta(nome,cognome,email,sesso,datadiNascita);
 
-            Task<Void> registerResult = loginRegistration.saveAthlete(atleta);
+            Task<Void> registerResult = loginRegistration.saveAthlete(atleta,idUser);
 
             registerResult.addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -113,10 +115,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void onRegister() {
+
         String email = etEmail.getText().toString();
-
         String password = etPassword.getText().toString();
-
         String ripetiPassword = etRipetiPassword.getText().toString();
 
         try {
@@ -130,7 +131,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     if (task.isSuccessful())
                         completeRegister(email);
                     else
-                        Toast.makeText(getApplicationContext(), "L'indirizzo email e gia in uso", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "L'indirizzo email e gia' in uso", Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (LoginFieldException e) {

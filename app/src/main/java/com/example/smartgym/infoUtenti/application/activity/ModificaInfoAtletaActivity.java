@@ -8,28 +8,40 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.smartgym.R;
+import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
+import com.example.smartgym.infoUtenti.storage.entity.Atleta;
+import com.google.firebase.auth.FirebaseUser;
 
 public class ModificaInfoAtletaActivity extends AppCompatActivity implements View.OnClickListener {
 
-    Button btUpdate;
+    Button btUpdate, btReturn;
     TextView name, surname, email, password;
+    Atleta myAthlete;
+    LoginRegistration loginRegistration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modifica_info_atleta);
 
+        loginRegistration = new LoginRegistration();
+        FirebaseUser user = loginRegistration.getUserLogged();
+
         btUpdate = findViewById(R.id.btUpdate);
+        btReturn = findViewById(R.id.btReturn);
+
         name = findViewById(R.id.nameValue);
-        name.setEnabled(false);
         surname = findViewById(R.id.surnameValue);
-        surname.setEnabled(false);
         email = findViewById(R.id.emailValue);
-        email.setEnabled(false);
         password = findViewById(R.id.passwordValue);
-        password.setEnabled(false);
 
         btUpdate.setOnClickListener(this);
+        btReturn.setOnClickListener(this);
+    }
+
+    private void saveAtleta(Atleta atleta) {
+        myAthlete = atleta;
+
     }
 
     @Override
@@ -38,13 +50,15 @@ public class ModificaInfoAtletaActivity extends AppCompatActivity implements Vie
 
         switch (id){
             case R.id.btUpdate: onUpdate();
+            case R.id.btReturn: returnProfile();
         }
     }
 
     private void onUpdate() {
-        name.setEnabled(true);
-        surname.setEnabled(true);
-        email.setEnabled(true);
-        password.setEnabled(true);
+
+    }
+
+    private void returnProfile(){
+
     }
 }

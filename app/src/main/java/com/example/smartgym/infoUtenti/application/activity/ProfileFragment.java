@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.smartgym.R;
 import com.example.smartgym.infoUtenti.application.logic.AthleteInfo;
@@ -58,11 +57,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         athleteInfo = new AthleteInfo();
         loginRegistration = new LoginRegistration();
+        String idUser = loginRegistration.getUserLogged().getUid();
 
-        FirebaseUser user = loginRegistration.isUserLogged();
-
-        if (user != null)
-            recuperaAtleta(user.getEmail());
+        if (idUser != null)
+            recuperaAtleta(idUser);
 
         btModificaInfo.setOnClickListener(this);
         btModificaCaratteristiche.setOnClickListener(this);
@@ -71,6 +69,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void widgetBinding() {
+
         btModificaInfo = getView().findViewById(R.id.btModificaInfo);
         btModificaCaratteristiche = getView().findViewById(R.id.btModificaCaratteristiche);
         btLogout = getView().findViewById(R.id.btLogout);
@@ -88,8 +87,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         tvEsperienza = getView().findViewById(R.id.tvEsperienza);
     }
 
-    private void recuperaAtleta(String email) {
-        Task<DocumentSnapshot> task = athleteInfo.getAthletebyEmail(email);
+    private void recuperaAtleta(String id) {
+        Task<DocumentSnapshot> task = athleteInfo.getAthletebyId(id);
 
         task.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -107,8 +106,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         tvEmail.append(" " + myAthlete.getEmail());
         tvNome.append(" " + myAthlete.getNome());
         tvCognome.append(" " + myAthlete.getCognome());
-        tvDataDiNascita.append(" " + myAthlete.getFormattedDataDiNascita());
-        tvSesso.append(" " + myAthlete.isSesso());
+        tvDataDiNascita.append(" " + myAthlete.formattedDataDiNascita());
+        tvSesso.append(" " + myAthlete.getSesso());
 
         tvPeso.append(" " + myAthlete.getPeso());
         tvAltezza.append(" " + myAthlete.getAltezza());
@@ -133,11 +132,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void onCancellaProfilo() {
-        Toast.makeText(getContext(),"TODO", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getContext(), CancellaProfiloActivity.class);
+        startActivity(intent);
     }
 
     private void onModificaCaratteristiche() {
-        Toast.makeText(getContext(),"TODO", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getContext(), ModificaCaratteristicheActivity.class);
+        startActivity(intent);
     }
 
     private void onModificaInfo() {

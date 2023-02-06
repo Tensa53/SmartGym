@@ -1,7 +1,5 @@
 package com.example.smartgym.infoUtenti.application.activity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,17 +20,11 @@ import com.example.smartgym.gestioneScheda.storage.entity.Esercizio;
 import com.example.smartgym.infoUtenti.application.logic.AthleteInfo;
 import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
 import com.example.smartgym.infoUtenti.storage.entity.Atleta;
-import com.example.smartgym.start.MainActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
@@ -72,11 +64,10 @@ public class HomeFragment extends Fragment {
 
         loginRegistration = new LoginRegistration();
         athleteInfo = new AthleteInfo();
+        String idUser = loginRegistration.getUserLogged().getUid();
 
-        FirebaseUser user = loginRegistration.isUserLogged();
-
-        if (user != null)
-            recuperaAtleta(user.getEmail());
+        if (idUser != null)
+            recuperaAtleta(idUser);
 
         customAdapterEsercizi = new CustomAdapterEsercizi(getContext(),R.layout.list_esercizi_item,new ArrayList<Esercizio>());
 
@@ -85,8 +76,8 @@ public class HomeFragment extends Fragment {
         populateList();
     }
 
-    private void recuperaAtleta(String email) {
-        Task<DocumentSnapshot> task = athleteInfo.getAthletebyEmail(email);
+    private void recuperaAtleta(String id) {
+        Task<DocumentSnapshot> task = athleteInfo.getAthletebyId(id);
 
         task.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
