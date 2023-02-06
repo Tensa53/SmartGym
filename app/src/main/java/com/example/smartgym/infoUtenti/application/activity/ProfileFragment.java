@@ -133,16 +133,25 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void onCancellaProfilo() {
         Intent intent = new Intent(getContext(), CancellaProfiloActivity.class);
+        Bundle b = new Bundle();
+        b.putSerializable("User", myAthlete);
+        intent.putExtras(b);
         startActivity(intent);
     }
 
     private void onModificaCaratteristiche() {
         Intent intent = new Intent(getContext(), ModificaCaratteristicheActivity.class);
+        Bundle b = new Bundle();
+        b.putSerializable("User", myAthlete);
+        intent.putExtras(b);
         startActivity(intent);
     }
 
     private void onModificaInfo() {
         Intent intent = new Intent(getContext(), ModificaInfoAtletaActivity.class);
+        Bundle b = new Bundle();
+        b.putSerializable("User", myAthlete);
+        intent.putExtras(b);
         startActivity(intent);
     }
 

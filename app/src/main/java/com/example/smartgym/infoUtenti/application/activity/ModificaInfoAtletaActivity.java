@@ -25,23 +25,24 @@ public class ModificaInfoAtletaActivity extends AppCompatActivity implements Vie
         setContentView(R.layout.activity_modifica_info_atleta);
 
         loginRegistration = new LoginRegistration();
-        FirebaseUser user = loginRegistration.getUserLogged();
+
+        Bundle bundle = getIntent().getExtras();
+
+        myAthlete = (Atleta)(bundle.getSerializable("User"));
 
         btUpdate = findViewById(R.id.btUpdate);
         btReturn = findViewById(R.id.btReturn);
 
         name = findViewById(R.id.nameValue);
+        name.setText(myAthlete.getNome());
         surname = findViewById(R.id.surnameValue);
+        surname.setText(myAthlete.getCognome());
         email = findViewById(R.id.emailValue);
+        email.setText(myAthlete.getEmail());
         password = findViewById(R.id.passwordValue);
 
         btUpdate.setOnClickListener(this);
         btReturn.setOnClickListener(this);
-    }
-
-    private void saveAtleta(Atleta atleta) {
-        myAthlete = atleta;
-
     }
 
     @Override
@@ -59,6 +60,6 @@ public class ModificaInfoAtletaActivity extends AppCompatActivity implements Vie
     }
 
     private void returnProfile(){
-
+        super.onBackPressed();
     }
 }
