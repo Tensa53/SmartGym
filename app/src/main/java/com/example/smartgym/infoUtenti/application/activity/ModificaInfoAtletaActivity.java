@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.smartgym.R;
+import com.example.smartgym.infoUtenti.application.logic.AthleteInfo;
 import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
 import com.example.smartgym.infoUtenti.storage.entity.Atleta;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseUser;
 
 public class ModificaInfoAtletaActivity extends AppCompatActivity implements View.OnClickListener {
@@ -17,17 +20,16 @@ public class ModificaInfoAtletaActivity extends AppCompatActivity implements Vie
     Button btUpdate, btReturn;
     TextView name, surname, email, password;
     Atleta myAthlete;
-    LoginRegistration loginRegistration;
+    LoginRegistration loginRegistration = new LoginRegistration();
+    AthleteInfo atletaInfo = new AthleteInfo();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_modifica_info_atleta);
 
-        loginRegistration = new LoginRegistration();
-
         Bundle bundle = getIntent().getExtras();
-
         myAthlete = (Atleta)(bundle.getSerializable("User"));
 
         btUpdate = findViewById(R.id.btUpdate);
@@ -48,14 +50,21 @@ public class ModificaInfoAtletaActivity extends AppCompatActivity implements Vie
     @Override
     public void onClick(View view) {
         int id = view.getId();
+        String idUser = loginRegistration.getUserLogged().getUid();
 
         switch (id){
-            case R.id.btUpdate: onUpdate();
+            case R.id.btUpdate: onUpdate(myAthlete,idUser);
             case R.id.btReturn: returnProfile();
         }
     }
 
-    private void onUpdate() {
+    private void onUpdate(Atleta atleta, String id) {
+        atletaInfo.editAthleteInfo(atleta,id).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(getBaseContext(),"ok",Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 

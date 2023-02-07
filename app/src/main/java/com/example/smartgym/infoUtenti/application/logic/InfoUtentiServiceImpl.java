@@ -5,6 +5,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import org.checkerframework.checker.units.qual.A;
+
 /**
  * La seguente classe fornisce i servizi e le funzionalita per il package (sottosistema) InfoUtenti
  */
@@ -89,10 +91,13 @@ public class InfoUtentiServiceImpl implements InfoUtentiService {
 
     @Override
     public void editAthleteInfo() {
+        /*
         athleteInfoUtils.editAthleteInfo();
-
         return;
+         */
     }
+
+
 
     @Override
     public void insertAthleteFeatures() {

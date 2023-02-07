@@ -19,25 +19,29 @@
             android:id="@+id/nameValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="nome"/>
+            android:hint="nome"
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/surnameValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="cognome"/>
+            android:hint="cognome"
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/emailValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="email"/>
+            android:hint="email"
+            android:minHeight="48dp" />
 
         <EditText
             android:id="@+id/passwordValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="password"/>
+            android:hint="password"
+            android:minHeight="48dp" />
 
         <Button
             android:id="@+id/btUpdate"
