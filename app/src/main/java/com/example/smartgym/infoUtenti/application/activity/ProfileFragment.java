@@ -1,5 +1,6 @@
 package com.example.smartgym.infoUtenti.application.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -36,7 +37,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     LoginRegistration loginRegistration;
     AthleteInfo athleteInfo;
 
+    AtletaReceiver atletaReceiver;
+
     public ProfileFragment() {
+    }
+
+    @Override
+    public void onAttach(@NonNull Activity activity) {
+        super.onAttach(activity);
+        atletaReceiver = (AtletaReceiver) activity;
     }
 
     @Override
@@ -59,13 +68,32 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         loginRegistration = new LoginRegistration();
         String idUser = loginRegistration.getUserLogged().getUid();
 
-        if (idUser != null)
-            recuperaAtleta(idUser);
+        myAthlete = atletaReceiver.getAtleta();
+
+
+
+//        if (idUser != null)
+//            recuperaAtleta(idUser);
+
+        setFields();
 
         btModificaInfo.setOnClickListener(this);
         btModificaCaratteristiche.setOnClickListener(this);
         btLogout.setOnClickListener(this);
         btCancellaProfilo.setOnClickListener(this);
+    }
+
+    private void setFields() {
+        tvEmail.append(" " + myAthlete.getEmail());
+        tvNome.append(" " + myAthlete.getNome());
+        tvCognome.append(" " + myAthlete.getCognome());
+        tvDataDiNascita.append(" " + myAthlete.formattedDataDiNascita());
+        tvSesso.append(" " + myAthlete.getSesso());
+
+        tvPeso.append(" " + myAthlete.getPeso());
+        tvAltezza.append(" " + myAthlete.getAltezza());
+        tvAllenamenti.append(" " + myAthlete.getAllenamentiSettimanali());
+        tvEsperienza.append(" " + myAthlete.getEsperienza());
     }
 
     private void widgetBinding() {
@@ -102,17 +130,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     private void saveAtleta(Atleta atleta) {
         myAthlete = atleta;
-
-        tvEmail.append(" " + myAthlete.getEmail());
-        tvNome.append(" " + myAthlete.getNome());
-        tvCognome.append(" " + myAthlete.getCognome());
-        tvDataDiNascita.append(" " + myAthlete.formattedDataDiNascita());
-        tvSesso.append(" " + myAthlete.getSesso());
-
-        tvPeso.append(" " + myAthlete.getPeso());
-        tvAltezza.append(" " + myAthlete.getAltezza());
-        tvAllenamenti.append(" " + myAthlete.getAllenamentiSettimanali());
-        tvEsperienza.append(" " + myAthlete.getEsperienza());
     }
 
     @Override

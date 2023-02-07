@@ -1,7 +1,11 @@
 package com.example.smartgym.infoUtenti.application.activity;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,7 +16,10 @@ import com.example.smartgym.R;
 import com.example.smartgym.infoUtenti.application.logic.AthleteInfo;
 import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
 import com.example.smartgym.infoUtenti.storage.entity.Atleta;
+import com.example.smartgym.start.MainActivity;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 
 public class ModificaInfoAtletaActivity extends AppCompatActivity implements View.OnClickListener {
@@ -22,7 +29,6 @@ public class ModificaInfoAtletaActivity extends AppCompatActivity implements Vie
     Atleta myAthlete;
     LoginRegistration loginRegistration = new LoginRegistration();
     AthleteInfo atletaInfo = new AthleteInfo();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,18 +60,42 @@ public class ModificaInfoAtletaActivity extends AppCompatActivity implements Vie
 
         switch (id){
             case R.id.btUpdate: onUpdate(myAthlete,idUser);
+                break;
             case R.id.btReturn: returnProfile();
+                break;
         }
     }
 
     private void onUpdate(Atleta atleta, String id) {
-        atletaInfo.editAthleteInfo(atleta,id).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+        String nuovoNome = name.getText().toString();
+        String nuovoCognome = surname.getText().toString();
+        String nuovaEmail = email.getText().toString();
+
+        myAthlete.setNome(nuovoNome);
+        myAthlete.setCognome(nuovoCognome);
+        myAthlete.setEmail(nuovaEmail);
+
+        Task<Void> updateResult = atletaInfo.editAthleteInfo(atleta,id);
+
+        updateResult.addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(getBaseContext(),"ok",Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Informazioni aggiornate con successo !", Toast.LENGTH_LONG).show();
+                lanciaHome();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
 
+    private void lanciaHome() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     private void returnProfile(){

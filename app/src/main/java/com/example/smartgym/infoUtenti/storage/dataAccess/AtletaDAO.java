@@ -25,10 +25,8 @@ public class AtletaDAO {
         return task;
     }
 
-    public void doDeleteAthlete(String id) {
-        dbHelper.collection("atleti").document(id).delete();
-
-        return;
+    public Task<Void> doDeleteAthlete(String id) {
+        return dbHelper.collection("atleti").document(id).delete();
     }
 
     public Task<Void> doUpdateAthlete(Atleta atleta, String id){

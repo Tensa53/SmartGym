@@ -37,15 +37,10 @@ public class LoginRegistration {
         return;
     }
 
-
     public Task<AuthResult> createUser(String email, String password) {
         Task<AuthResult> task = mauth.createUserWithEmailAndPassword(email, password);
 
         return task;
-    }
-
-    public Task<Void> saveAthlete(Atleta atleta, String id) {
-        return atletaDAO.doSaveAthlete(atleta,id);
     }
 
     public Task<Void> deleteUser(String email) {

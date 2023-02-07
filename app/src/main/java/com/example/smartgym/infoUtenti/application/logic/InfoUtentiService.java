@@ -23,14 +23,14 @@ public interface InfoUtentiService {
 
     Task<DocumentSnapshot> getAthletebyId(String id);
 
-    void editAthleteInfo();
+    Task<Void> editAthleteInfo(Atleta atleta, String id);
 
-    void insertAthleteFeatures();
+    Task<Void> insertAthleteFeatures(Atleta atleta, String id);
 
-    void editAthleteFeatures();
+    Task<Void> editAthleteFeatures(Atleta atleta, String id);
 
-    void deleteUser(String email);
+    Task<Void> deleteUser(String id);
 
-    Task<Void> deleteAthlete(String email);
+    Task<Void> deleteAthlete(String id);
 
 }

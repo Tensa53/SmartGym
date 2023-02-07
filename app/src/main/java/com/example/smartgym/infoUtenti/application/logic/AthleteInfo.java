@@ -13,6 +13,10 @@ public class AthleteInfo {
         atletaDAO = new AtletaDAO();
     }
 
+    public Task<Void> saveAthlete(Atleta atleta, String id) {
+        return atletaDAO.doSaveAthlete(atleta,id);
+    }
+
     public Task<DocumentSnapshot> getAthletebyId(String id){
         Task<DocumentSnapshot> task = atletaDAO.doRetrieveAthleteDocById(id);
         return task;
@@ -22,18 +26,16 @@ public class AthleteInfo {
         return atletaDAO.doUpdateAthlete(atleta, id);
     }
 
-    public void insertAthleteFeatures(){
-        //TODO
+    public Task<Void> insertAthleteFeatures(Atleta atleta, String id){
+        return atletaDAO.doUpdateAthlete(atleta, id);
     }
 
-    public void editAthleteFeatures(){
-        //TODO
+    public Task<Void> editAthleteFeatures(Atleta atleta, String id){
+        return atletaDAO.doUpdateAthlete(atleta, id);
     }
 
-    public void deleteAthlete(String id){
-        atletaDAO.doDeleteAthlete(id);
-
-        return;
+    public Task<Void> deleteAthlete(String id){
+        return atletaDAO.doDeleteAthlete(id);
     }
 
 }

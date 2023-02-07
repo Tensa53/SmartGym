@@ -1,9 +1,13 @@
 package com.example.smartgym.infoUtenti.application.activity;
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -12,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.smartgym.R;
 import com.example.smartgym.gestioneScheda.application.activity.CustomAdapterEsercizi;
@@ -20,6 +25,7 @@ import com.example.smartgym.gestioneScheda.storage.entity.Esercizio;
 import com.example.smartgym.infoUtenti.application.logic.AthleteInfo;
 import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
 import com.example.smartgym.infoUtenti.storage.entity.Atleta;
+import com.example.smartgym.start.MainActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,6 +46,7 @@ public class HomeFragment extends Fragment {
     LoginRegistration loginRegistration;
 
     Atleta myAthlete;
+    AtletaReceiver atletaReceiver;
 
     public HomeFragment() {
     }
@@ -47,6 +54,13 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onAttach(@NonNull Activity activity) {
+        super.onAttach(activity);
+
+        atletaReceiver = (AtletaReceiver) activity;
     }
 
     @Override
@@ -76,6 +90,26 @@ public class HomeFragment extends Fragment {
         populateList();
     }
 
+    private void mostraAvviso() {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                switch (i) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                    {
+                        Toast.makeText(getContext(),"OKAY", Toast.LENGTH_LONG).show();
+                    }
+                    break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setMessage("Informazioni aggiornate con successo !")
+                .setPositiveButton("OK", dialogClickListener).show();
+    }
+
     private void recuperaAtleta(String id) {
         Task<DocumentSnapshot> task = athleteInfo.getAthletebyId(id);
 
@@ -91,6 +125,8 @@ public class HomeFragment extends Fragment {
 
     private void saveAtleta(Atleta atleta) {
         myAthlete = atleta;
+
+        atletaReceiver.setAtleta(myAthlete);
 
         tvUtente.setText("Benvenuto " + myAthlete.getNome());
     }

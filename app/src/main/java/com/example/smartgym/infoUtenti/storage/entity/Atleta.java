@@ -50,6 +50,19 @@ public class Atleta implements Serializable {
         return esperienza;
     }
 
+    public Integer esperienzaValue() {
+        if (esperienza.equalsIgnoreCase("Principiante"))
+            return 0;
+
+        if (esperienza.equalsIgnoreCase("Intermedio"))
+            return 1;
+
+        if (esperienza.equalsIgnoreCase("Esperto"))
+            return 2;
+
+        return 0;
+    }
+
     public void setEsperienza(String esperienza) {
         this.esperienza = esperienza;
     }

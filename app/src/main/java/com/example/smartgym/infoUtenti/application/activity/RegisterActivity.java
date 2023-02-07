@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smartgym.R;
+import com.example.smartgym.infoUtenti.application.logic.AthleteInfo;
 import com.example.smartgym.start.MainActivity;
 import com.example.smartgym.infoUtenti.application.exception.LoginFieldException;
 import com.example.smartgym.infoUtenti.application.exception.RegisterFieldException;
@@ -26,6 +27,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
+
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -42,6 +45,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     LoginRegistration loginRegistration;
 
+    AthleteInfo athleteInfo;
+
     FormUtils formUtils;
 
     @Override
@@ -55,6 +60,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         btRegistrati.setOnClickListener(this);
 
         loginRegistration = new LoginRegistration();
+        AthleteInfo athleteInfo = new AthleteInfo();
         formUtils = new FormUtils();
     }
 
@@ -77,7 +83,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             Atleta atleta = new Atleta(nome,cognome,email,sesso,datadiNascita);
 
-            Task<Void> registerResult = loginRegistration.saveAthlete(atleta,idUser);
+            Task<Void> registerResult = athleteInfo.saveAthlete(atleta,idUser);
 
             registerResult.addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override

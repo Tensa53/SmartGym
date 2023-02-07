@@ -1,5 +1,6 @@
 package com.example.smartgym.gestioneScheda.application.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -18,6 +19,7 @@ import android.widget.ListView;
 import com.example.smartgym.R;
 import com.example.smartgym.gestioneScheda.storage.dataAcess.SchedaEserciziDAO;
 import com.example.smartgym.gestioneScheda.storage.entity.SchedaEsercizi;
+import com.example.smartgym.infoUtenti.application.activity.AtletaReceiver;
 import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
 
 import java.util.ArrayList;
@@ -34,7 +36,15 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
 
     CustomAdapterNomeScheda customAdapter;
 
+    AtletaReceiver atletaReceiver;
+
     public ExercisesFragment() {
+    }
+
+    @Override
+    public void onAttach(@NonNull Activity activity) {
+        super.onAttach(activity);
+        atletaReceiver = (AtletaReceiver) activity;
     }
 
     @Override

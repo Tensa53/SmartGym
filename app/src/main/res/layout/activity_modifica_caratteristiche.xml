@@ -15,19 +15,51 @@
         android:orientation="vertical"
         android:layout_centerHorizontal="true">
 
-        <EditText
-            android:id="@+id/weightValue"
+        <LinearLayout
+            android:id="@+id/ll2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Peso"
-            android:minHeight="48dp" />
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/heightValue"
+            <EditText
+                android:id="@+id/weightValue"
+                android:layout_width="0dp"
+                android:layout_weight="80"
+                android:layout_height="wrap_content"
+                android:hint="Peso" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="20"
+                android:layout_height="wrap_content"
+                android:text="(in kg)"
+                android:textSize="19sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Altezza"
-            android:minHeight="48dp" />
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/heightValue"
+                android:layout_width="0dp"
+                android:layout_weight="80"
+                android:layout_height="wrap_content"
+                android:hint="Altezza" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="20"
+                android:layout_height="wrap_content"
+                android:text="(in cm)"
+                android:textSize="19sp"/>
+
+        </LinearLayout>
+
+
 
         <!--<EditText
             android:id="@+id/experienceValue"
@@ -36,54 +68,58 @@
             android:hint="Esperienza"
             android:minHeight="48dp" /> -->
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/ll4"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:orientation="horizontal">
 
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteTextViewEsperienza"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:inputType="none"
-                android:text="Esperienza"
-                tools:ignore="TouchTargetSizeCheck" />
+            <TextView
+                android:id="@+id/tvEsperienza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Esperienza:"
+                android:textSize="19sp"/>
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <Spinner
+                android:id="@+id/spinnerEsperienza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
-        <!--<EditText
+        </LinearLayout>
+
+        <EditText
             android:id="@+id/numAllenamenti"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="number"
             android:hint="Numero Allenamenti"
-            android:minHeight="48dp" /> -->
+            android:minHeight="48dp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="20dp"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
 
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteTextViewAllenamenti"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:inputType="none"
-                android:text="Allenamenti Settimanali"
+<!--            <AutoCompleteTextView-->
+<!--                android:id="@+id/autoCompleteTextViewAllenamenti"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:inputType="none"-->
+<!--                android:text="Allenamenti Settimanali"-->
 
-                />
+<!--                />-->
 
 
-        </com.google.android.material.textfield.TextInputLayout>
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
         <Button
             android:id="@+id/btUpdate"

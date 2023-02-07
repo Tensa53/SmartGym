@@ -3,6 +3,7 @@ package com.example.smartgym.start;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 
 import com.example.smartgym.R;
 import com.example.smartgym.gestioneScheda.application.activity.ExercisesFragment;
+import com.example.smartgym.infoUtenti.application.activity.AtletaReceiver;
 import com.example.smartgym.infoUtenti.application.activity.HomeFragment;
 import com.example.smartgym.infoUtenti.application.activity.ProfileFragment;
 import com.example.smartgym.infoUtenti.application.logic.AthleteInfo;
@@ -32,7 +34,7 @@ import java.security.AlgorithmConstraints;
 import java.util.Map;
 import java.util.Set;
 
-public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener, AtletaReceiver {
 
     BottomNavigationView bottomNavigationView;
 
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     ProfileFragment profileFragment = new ProfileFragment();
 
     ActionBar actionBar;
+
+    Atleta myAthlete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,5 +86,15 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         }
 
         return false;
+    }
+
+    @Override
+    public Atleta getAtleta() {
+        return myAthlete;
+    }
+
+    @Override
+    public void setAtleta(Atleta atleta) {
+        myAthlete = atleta;
     }
 }

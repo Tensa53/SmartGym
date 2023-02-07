@@ -11,13 +11,18 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.smartgym.R;
+import com.example.smartgym.infoUtenti.storage.dataAccess.AtletaDAO;
+import com.example.smartgym.infoUtenti.storage.entity.Atleta;
 import com.example.smartgym.start.MainActivity;
 import com.example.smartgym.infoUtenti.application.exception.LoginFieldException;
 import com.example.smartgym.utils.FormUtils;
 import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+
+import org.checkerframework.checker.units.qual.A;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -75,7 +80,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (task.isSuccessful()) {
                         launchHome();
                     } else {
-                        Toast.makeText(LoginActivity.this, "Credenziali errate !!!", Toast.LENGTH_SHORT).show();
+                        etEmail.setError("Credenziali Errate !!!");
+                        etPassword.setError("Credenziali Errate !!!");
                     }
                 }
             });
