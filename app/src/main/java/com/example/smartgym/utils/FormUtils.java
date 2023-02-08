@@ -66,7 +66,7 @@ public class FormUtils {
     public Date calcolaDataDiNascita(String dataDiNascita) {
         int day = Integer.parseInt(dataDiNascita.split("-")[0]);
 
-        int month = Integer.parseInt(dataDiNascita.split("-")[1]) - 1;
+        int month = Integer.parseInt(dataDiNascita.split("-")[1]);
 
         int year = Integer.parseInt(dataDiNascita.split("-")[2]);
 

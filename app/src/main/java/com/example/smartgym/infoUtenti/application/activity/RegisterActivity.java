@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -45,8 +46,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     LoginRegistration loginRegistration;
 
-    AthleteInfo athleteInfo;
-
     FormUtils formUtils;
 
     @Override
@@ -60,7 +59,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         btRegistrati.setOnClickListener(this);
 
         loginRegistration = new LoginRegistration();
-        AthleteInfo athleteInfo = new AthleteInfo();
         formUtils = new FormUtils();
     }
 
@@ -68,7 +66,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String nome = etNome.getText().toString();
         String cognome = etCognome.getText().toString();
         String dataDiNascita = tvDataDiNascita.getText().toString();
-        String idUser = loginRegistration.getUserLogged().getUid();
 
         int selectedRadio = rbg1.getCheckedRadioButtonId();
 
@@ -82,6 +79,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             String sesso = rb.getText().toString();
 
             Atleta atleta = new Atleta(nome,cognome,email,sesso,datadiNascita);
+
+            String idUser = loginRegistration.getUserLogged().getUid();
+
+            Log.d("DEBUG", idUser.toString());
+
+            AthleteInfo athleteInfo = new AthleteInfo();
+
+            Log.d("DEBUG", athleteInfo.toString());
 
             Task<Void> registerResult = athleteInfo.saveAthlete(atleta,idUser);
 
