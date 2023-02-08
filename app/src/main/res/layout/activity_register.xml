@@ -71,15 +71,13 @@
                     android:id="@+id/rb1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:tag="true"
-                    android:text="Maschio"/>
+                    android:text="M"/>
 
                 <RadioButton
                     android:id="@+id/rb2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:tag="false"
-                    android:text="Femmina"/>
+                    android:text="F"/>
 
             </RadioGroup>
 

@@ -1,35 +1,26 @@
 package com.example.smartgym.infoUtenti.storage.entity;
 
-import android.net.Uri;
-import android.os.Build;
-
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-
-import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseUser;
-
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 public class Atleta implements Serializable {
 
     private String nome;
     private String cognome;
     private String email;
-    private boolean sesso;
-    private Timestamp dataDiNascita;
+    private String sesso;
+    private Date dataDiNascita;
     private int allenamentiSettimanali;
     private int altezza;
     private int peso;
+    private String esperienza;
 
     public Atleta() {
 
     }
 
-    public Atleta(String nome, String cognome, String email, boolean sesso, Timestamp dataDiNascita) {
+    public Atleta(String nome, String cognome, String email, String sesso, Date dataDiNascita) {
         this.nome = nome;
         this.cognome = cognome;
         this.email = email;
@@ -38,6 +29,7 @@ public class Atleta implements Serializable {
         this.allenamentiSettimanali = 0;
         this.altezza = 0;
         this.peso = 0;
+        this.esperienza = "principiante";
     }
 
     public boolean areFeaturesEmpty(){
@@ -52,6 +44,27 @@ public class Atleta implements Serializable {
 
     public void setAllenamentiSettimanali(int allenamentiSettimanali) {
         this.allenamentiSettimanali = allenamentiSettimanali;
+    }
+
+    public String getEsperienza() {
+        return esperienza;
+    }
+
+    public Integer esperienzaValue() {
+        if (esperienza.equalsIgnoreCase("Principiante"))
+            return 0;
+
+        if (esperienza.equalsIgnoreCase("Intermedio"))
+            return 1;
+
+        if (esperienza.equalsIgnoreCase("Esperto"))
+            return 2;
+
+        return 0;
+    }
+
+    public void setEsperienza(String esperienza) {
+        this.esperienza = esperienza;
     }
 
     public String getNome() {
@@ -78,30 +91,29 @@ public class Atleta implements Serializable {
         this.email = email;
     }
 
-    public boolean isSesso() {
+    public String getSesso() {
         return sesso;
     }
 
-    public void setSesso(boolean sesso) {
+    public void setSesso(String sesso) {
         this.sesso = sesso;
     }
 
-    public Timestamp getDataDiNascita() {
+    public Date getDataDiNascita() {
         return dataDiNascita;
     }
 
-    public String getFormattedDataDiNascita() {
-        Date currentDate = new Date(getDataDiNascita().getSeconds() * 1000);
+    public String formattedDataDiNascita() {
         SimpleDateFormat dateFormat = null;
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             dateFormat = new SimpleDateFormat("dd-MM-YYYY");
         }
 
-        return dateFormat.format(currentDate);
+        return dateFormat.format(getDataDiNascita());
     }
 
-    public void setDataDiNascita(Timestamp dataDiNascita) {
+    public void setDataDiNascita(Date dataDiNascita) {
         this.dataDiNascita = dataDiNascita;
     }
 
@@ -137,12 +149,8 @@ public class Atleta implements Serializable {
     }
 
     public String toFormattedString() {
-        String s = "";
 
-        if (sesso)
-            s = "Maschio";
-
-        return "Nome: " + getNome() + "\n" + "Cognome: " + getCognome() + "\n" + "Email: " + getEmail() + "\n" + "Sesso: " + s + "\n" + "dataDinascita: " + getFormattedDataDiNascita()
+        return "Nome: " + getNome() + "\n" + "Cognome: " + getCognome() + "\n" + "Email: " + getEmail() + "\n" + "Sesso: " + sesso + "\n" + "dataDinascita: " + formattedDataDiNascita()
                 + "\n" + "Allenamenti settimanali: " + allenamentiSettimanali + "\n" + "Altezza: " + altezza + "\n" + "Peso: " + peso;
     }
 }

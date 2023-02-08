@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smartgym.R;
+import com.example.smartgym.infoUtenti.application.logic.AthleteInfo;
 import com.example.smartgym.start.MainActivity;
 import com.example.smartgym.infoUtenti.application.exception.LoginFieldException;
 import com.example.smartgym.infoUtenti.application.exception.RegisterFieldException;
@@ -26,6 +27,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
+
+import org.checkerframework.checker.units.qual.A;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -42,6 +45,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     LoginRegistration loginRegistration;
 
+    AthleteInfo athleteInfo;
+
     FormUtils formUtils;
 
     @Override
@@ -55,6 +60,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         btRegistrati.setOnClickListener(this);
 
         loginRegistration = new LoginRegistration();
+        AthleteInfo athleteInfo = new AthleteInfo();
         formUtils = new FormUtils();
     }
 
@@ -62,20 +68,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String nome = etNome.getText().toString();
         String cognome = etCognome.getText().toString();
         String dataDiNascita = tvDataDiNascita.getText().toString();
+        String idUser = loginRegistration.getUserLogged().getUid();
+
         int selectedRadio = rbg1.getCheckedRadioButtonId();
 
         try {
             formUtils.controllaAltriCampiRegistrazione(nome,cognome,dataDiNascita,selectedRadio);
 
-            Timestamp datadiNascita = formUtils.calcolaDataDiNascita(tvDataDiNascita.getTag().toString());
+            Date datadiNascita = formUtils.calcolaDataDiNascita(tvDataDiNascita.getTag().toString());
 
             RadioButton rb = findViewById(rbg1.getCheckedRadioButtonId());
 
-            boolean sesso = Boolean.parseBoolean(rb.getTag().toString());
+            String sesso = rb.getText().toString();
 
             Atleta atleta = new Atleta(nome,cognome,email,sesso,datadiNascita);
 
-            Task<Void> registerResult = loginRegistration.saveAthlete(atleta);
+            Task<Void> registerResult = athleteInfo.saveAthlete(atleta,idUser);
 
             registerResult.addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -113,10 +121,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void onRegister() {
+
         String email = etEmail.getText().toString();
-
         String password = etPassword.getText().toString();
-
         String ripetiPassword = etRipetiPassword.getText().toString();
 
         try {
@@ -130,7 +137,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     if (task.isSuccessful())
                         completeRegister(email);
                     else
-                        Toast.makeText(getApplicationContext(), "L'indirizzo email e gia in uso", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "L'indirizzo email e gia' in uso", Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (LoginFieldException e) {

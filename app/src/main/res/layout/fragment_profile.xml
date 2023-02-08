@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,26 +8,160 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tv1"
+        <LinearLayout
+            android:id="@+id/ll1"
+            android:layout_marginTop="40dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="80dp"
-            android:text="MIK Profile Fragment"
-            android:textColor="@color/purple_500"
-            android:textSize="20sp" />
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btLogout"
-            android:layout_below="@id/tv1"
-            android:layout_centerHorizontal="true"
+            <TextView
+                android:id="@+id/tvInfoProfilo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Informazioni profilo:"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email:"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tvNome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nome:"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tvCognome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cognome:"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tvDataDiNascita"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Data di nascita:"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tvSesso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sesso:"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/fl1"
+            android:layout_below="@id/ll1"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"/>
+
+        <LinearLayout
+            android:id="@+id/ll2"
+            android:layout_below="@id/fl1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Logout"/>
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Caratteristiche Atleta:"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/tvPeso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Peso (in kg):"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tvAltezza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Altezza (in cm):"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tvEsperienza"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Esperienza:"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/tvNumAllenamenti"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Allenamenti:"
+                android:textStyle="bold"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/fl2"
+            android:layout_below="@id/ll2"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"/>
+
+        <LinearLayout
+            android:id="@+id/ll3"
+            android:layout_below="@id/fl2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btModificaInfo"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="modifica info profilo"/>
+
+            <Button
+                android:id="@+id/btModificaCaratteristiche"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="modifica caratteristiche"/>
+
+            <Button
+                android:id="@+id/btLogout"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="Logout"/>
+
+            <Button
+                android:id="@+id/btCancellaProfilo"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="cancella il profilo"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
 

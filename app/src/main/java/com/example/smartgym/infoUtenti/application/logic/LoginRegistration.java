@@ -25,7 +25,7 @@ public class LoginRegistration {
         return task;
     }
 
-    public FirebaseUser isUserLogged(){
+    public FirebaseUser getUserLogged(){
         FirebaseUser user = mauth.getCurrentUser();
 
         return user;
@@ -37,15 +37,10 @@ public class LoginRegistration {
         return;
     }
 
-
     public Task<AuthResult> createUser(String email, String password) {
         Task<AuthResult> task = mauth.createUserWithEmailAndPassword(email, password);
 
         return task;
-    }
-
-    public Task<Void> saveAthlete(Atleta atleta) {
-        return atletaDAO.doSaveAthlete(atleta);
     }
 
     public Task<Void> deleteUser(String email) {

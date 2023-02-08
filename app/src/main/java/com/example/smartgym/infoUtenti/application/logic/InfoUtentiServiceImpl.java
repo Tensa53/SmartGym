@@ -3,9 +3,7 @@ import com.example.smartgym.infoUtenti.storage.entity.Atleta;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 /**
  * La seguente classe fornisce i servizi e le funzionalita per il package (sottosistema) InfoUtenti
@@ -13,11 +11,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class InfoUtentiServiceImpl implements InfoUtentiService {
 
     LoginRegistration loginRegistration;
-    AthleteInfo athleteInfoUtils;
+    AthleteInfo athleteInfo;
 
     public InfoUtentiServiceImpl(){
         loginRegistration = new LoginRegistration();
-        athleteInfoUtils = new AthleteInfo();
+        athleteInfo = new AthleteInfo();
     }
 
     /**
@@ -43,8 +41,8 @@ public class InfoUtentiServiceImpl implements InfoUtentiService {
      * @pre login(String email, String password)
      * @return l'utente attualmente loggato nel sistema
      */
-    public FirebaseUser isUserLogged(){
-        return loginRegistration.isUserLogged();
+    public FirebaseUser getUserLogged(){
+        return loginRegistration.getUserLogged();
     }
 
     /**
@@ -72,8 +70,8 @@ public class InfoUtentiServiceImpl implements InfoUtentiService {
      *
      * @param atleta istanza della classe Atleta, contiene i dati relativi all'utente atleta
      */
-    public void saveAthlete(Atleta atleta){
-        loginRegistration.saveAthlete(atleta);
+    public void saveAthlete(Atleta atleta, String id){
+        athleteInfo.saveAthlete(atleta,id);
 
         return;
     }
@@ -81,43 +79,38 @@ public class InfoUtentiServiceImpl implements InfoUtentiService {
     /**
      *  accede al DAO per permettere di recuperare i dati dell'utente
      *
-     * @param email l'indirizzo email associato all'utente
+     * @param id l'id di registrazione del profilo
      * @return il riferimento al documento per prelevare i dati
      */
     @Override
-    public Task<DocumentSnapshot> getAthletebyEmail(String email) {
-        return athleteInfoUtils.getAthletebyEmail(email);
+    public Task<DocumentSnapshot> getAthletebyId(String id) {
+        return athleteInfo.getAthletebyId(id);
     }
 
     @Override
-    public void editAthleteInfo() {
-        athleteInfoUtils.editAthleteInfo();
+    public Task<Void> editAthleteInfo(Atleta atleta, String id) {
+        return athleteInfo.editAthleteInfo(atleta, id);
+    }
 
-        return;
+
+    @Override
+    public Task<Void> insertAthleteFeatures(Atleta atleta, String id) {
+        return  athleteInfo.insertAthleteFeatures(atleta, id);
     }
 
     @Override
-    public void insertAthleteFeatures() {
-        athleteInfoUtils.insertAthleteFeatures();
-
-        return;
+    public Task<Void> editAthleteFeatures(Atleta atleta, String id) {
+        return athleteInfo.editAthleteFeatures(atleta, id);
     }
 
     @Override
-    public void editAthleteFeatures() {
-        athleteInfoUtils.editAthleteFeatures();
-
-        return;
+    public Task<Void> deleteUser(String id) {
+        return loginRegistration.deleteUser(id);
     }
 
     @Override
-    public void deleteUser(String email) {
-
-    }
-
-    @Override
-    public Task<Void> deleteAthlete(String email) {
-        return loginRegistration.deleteUser(email);
+    public Task<Void> deleteAthlete(String id) {
+        return athleteInfo.deleteAthlete(id);
     }
 
 }

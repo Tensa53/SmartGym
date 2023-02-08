@@ -12,12 +12,52 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:layout_margin="10dp"
+        android:text="SCHEDA"
         android:textColor="@color/purple_500"
-        android:text="Esercizi della "/>
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/ll1"
+        android:layout_below="@id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btFissaScheda"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:text="Fissa"/>
+
+        <FrameLayout
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btModificaScheda"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:text="Modifica"/>
+
+        <FrameLayout
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btCancellaScheda"
+            android:layout_width="115dp"
+            android:layout_height="wrap_content"
+            android:text="Cancella"/>
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/lv1"
+        android:layout_below="@id/ll1"
         android:layout_width="300dp"
         android:layout_height="600dp"
         android:layout_centerInParent="true"

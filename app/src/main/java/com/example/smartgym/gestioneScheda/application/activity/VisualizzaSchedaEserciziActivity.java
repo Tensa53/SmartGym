@@ -50,21 +50,6 @@ public class VisualizzaSchedaEserciziActivity extends AppCompatActivity {
 
         lv.setAdapter(customAdapterEsercizi);
 
-        lv.setOnItemClickListener( new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView < ? > parent, View view,
-                                    int position, long id) {
-                Object o  = lv.getItemAtPosition(position);
-                Esercizio e = (Esercizio) o;
-
-                Intent i = new Intent(getApplicationContext(),DettagliEsercizi.class);
-                i.putExtra("ESERCIZIO",e.getNome());
-                startActivity(i);
-            }
-        } );
-
-        tv1.setText("Esercizi della scheda " + nome);
-
         populateList();
     }
 
