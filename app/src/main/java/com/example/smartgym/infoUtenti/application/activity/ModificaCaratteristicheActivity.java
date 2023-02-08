@@ -10,15 +10,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smartgym.R;
+import com.example.smartgym.infoUtenti.application.exception.AthleteFeaturesFieldException;
 import com.example.smartgym.infoUtenti.application.logic.AthleteInfo;
 import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
 import com.example.smartgym.infoUtenti.storage.entity.Atleta;
 import com.example.smartgym.start.MainActivity;
+import com.example.smartgym.utils.FormUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -26,15 +29,16 @@ import com.google.android.gms.tasks.Task;
 public class ModificaCaratteristicheActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button btUpdate, btReturn;
-    TextView weight, height, allenamenti;
-    Atleta myAthlete;
+    EditText etPeso, etAltezza, etAllenamenti;
+    Spinner spinnerEsperienza;
+
     LoginRegistration loginRegistration;
     AthleteInfo athleteInfo;
-    Spinner spinnerEsperienza;
-    AutoCompleteTextView autoCompleteTextViewAllenamenti, autoCompleteTextViewEsperienza;
+    FormUtils formUtils;
+    Atleta myAthlete;
+
     ArrayAdapter<String> adapterItems;
     String[] itemsExperience = {"Principiante","Intermedio","Esperto"};
-    String[] itemsAllenamenti = {"1","2","3","4","5","6","7"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +51,21 @@ public class ModificaCaratteristicheActivity extends AppCompatActivity implement
 
         athleteInfo = new AthleteInfo();
 
-        btUpdate = findViewById(R.id.btUpdate);
-        btReturn = findViewById(R.id.btReturn);
+        formUtils = new FormUtils();
 
-        spinnerEsperienza = findViewById(R.id.spinnerEsperienza);
+        widgetBinding();
 
         adapterItems = new ArrayAdapter<String>(this, R.layout.list_experience, itemsExperience);
 
         spinnerEsperienza.setAdapter(adapterItems);
+
+        spinnerEsperienza.setSelection(myAthlete.esperienzaValue());
+
+        etPeso.setText("" + myAthlete.getPeso());
+
+        etAltezza.setText("" + myAthlete.getAltezza());
+
+        etAllenamenti.setText("" + myAthlete.getAllenamentiSettimanali());
 
         spinnerEsperienza.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -68,47 +79,6 @@ public class ModificaCaratteristicheActivity extends AppCompatActivity implement
 
             }
         });
-
-        spinnerEsperienza.setSelection(myAthlete.esperienzaValue());
-
-
-
-//        autoCompleteTextViewAllenamenti = findViewById(R.id.autoCompleteTextViewAllenamenti);
-//        autoCompleteTextViewAllenamenti.setAdapter(adapterItems);
-//        autoCompleteTextViewAllenamenti.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                String item = (String) adapterView.getItemAtPosition(i);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
-//
-//        autoCompleteTextViewEsperienza = findViewById(R.id.autoCompleteTextViewEsperienza);
-//        adapterItems = new ArrayAdapter<String>(this, R.layout.list_experience, itemsExperience);
-//        autoCompleteTextViewEsperienza.setAdapter(adapterItems);
-//        autoCompleteTextViewEsperienza.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                String item = (String) adapterView.getItemAtPosition(i);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
-
-
-        weight = findViewById(R.id.weightValue);
-        weight.setText(myAthlete.getPeso() + "");
-        height = findViewById(R.id.heightValue);
-        height.setText(myAthlete.getAltezza() + "");
-        allenamenti = findViewById(R.id.numAllenamenti);
-        allenamenti.setText(myAthlete.getAllenamentiSettimanali() + "");
 
         btUpdate.setOnClickListener(this);
         btReturn.setOnClickListener(this);
@@ -126,31 +96,62 @@ public class ModificaCaratteristicheActivity extends AppCompatActivity implement
         }
     }
 
+    private void widgetBinding() {
+        btUpdate = findViewById(R.id.btUpdate);
+        btReturn = findViewById(R.id.btReturn);
+        etPeso = findViewById(R.id.etPeso);
+        etAltezza = findViewById(R.id.etAltezza);
+        etAllenamenti = findViewById(R.id.etAllenamenti);
+        spinnerEsperienza = findViewById(R.id.spinnerEsperienza);
+    }
+
     private void onUpdate(){
-        Integer peso = Integer.valueOf(weight.getText().toString());
-        Integer altezza = Integer.valueOf(height.getText().toString());
-        Integer numeroAllenamenti = Integer.valueOf(allenamenti.getText().toString());
+        Integer peso = Integer.valueOf(etPeso.getText().toString());
+        Integer altezza = Integer.valueOf(etAltezza.getText().toString());
+        Integer numeroAllenamenti = Integer.valueOf(etAllenamenti.getText().toString());
         String esperienza = spinnerEsperienza.getSelectedItem().toString();
 
-        myAthlete.setPeso(peso);
-        myAthlete.setAltezza(altezza);
-        myAthlete.setAllenamentiSettimanali(numeroAllenamenti);
-        myAthlete.setEsperienza(esperienza);
+        try {
+            formUtils.controllaCaratteristicheAtleta(peso, altezza, numeroAllenamenti);
 
-        Task <Void> updateResult = athleteInfo.editAthleteFeatures(myAthlete, loginRegistration.getUserLogged().getUid());
+            myAthlete.setPeso(peso);
+            myAthlete.setAltezza(altezza);
+            myAthlete.setAllenamentiSettimanali(numeroAllenamenti);
+            myAthlete.setEsperienza(esperienza);
 
-        updateResult.addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(getApplicationContext(), "Caratteristiche aggiornate con successo !", Toast.LENGTH_LONG).show();
-                lanciaHome();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
+            Task <Void> updateResult = athleteInfo.editAthleteFeatures(myAthlete, loginRegistration.getUserLogged().getUid());
+
+            updateResult.addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(getApplicationContext(), "Caratteristiche aggiornate con successo !", Toast.LENGTH_LONG).show();
+                    lanciaHome();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+
+        } catch (AthleteFeaturesFieldException e) {
+            showError(e.getMessage());
+        }
+    }
+
+    private void showError(String error) {
+        String id = error.split("_")[0];
+        String msg = error.split("_")[1];
+
+        if (id.substring(0,2).equals("et")){
+            int rid = getResources().getIdentifier(id, "id", getPackageName());
+
+            EditText et = findViewById(rid);
+
+            et.setError(msg);
+        } else
+            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+
     }
 
     private void lanciaHome() {

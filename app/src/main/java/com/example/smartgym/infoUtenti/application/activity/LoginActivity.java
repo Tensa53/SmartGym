@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smartgym.R;
@@ -86,8 +87,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             });
         } catch (LoginFieldException e) {
-            Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG).show();
+            showError(e.getMessage());
         }
+    }
+
+    private void showError(String error) {
+        String id = error.split("_")[0];
+        String msg = error.split("_")[1];
+
+        int rid = getResources().getIdentifier(id, "id", getPackageName());
+
+        EditText et = findViewById(rid);
+
+        et.setError(msg);
     }
 
     private void launchHome() {

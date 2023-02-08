@@ -98,7 +98,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 }
             });
         } catch (RegisterFieldException e) {
-            Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
+            showError(e.getMessage());
         }
     }
 
@@ -142,12 +142,29 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     if (task.isSuccessful())
                         completeRegister(email);
                     else
-                        Toast.makeText(getApplicationContext(), "L'indirizzo email e gia' in uso", Toast.LENGTH_SHORT).show();
+                        etEmail.setError("Indirizzo email gia in uso");
                 }
             });
         } catch (LoginFieldException e) {
-            Toast.makeText(this,e.getMessage(),Toast.LENGTH_LONG).show();
+            showError(e.getMessage());
         }
+    }
+
+    private void showError(String error) {
+        String id = error.split("_")[0];
+        String msg = error.split("_")[1];
+
+        Log.d("DEBUG",id.substring(0,2));
+
+        if (id.substring(0,2).equals("et")){
+            int rid = getResources().getIdentifier(id, "id", getPackageName());
+
+            EditText et = findViewById(rid);
+
+            et.setError(msg);
+        } else
+            Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+
     }
 
     private void widgetBinding() {
