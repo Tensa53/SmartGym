@@ -1,5 +1,6 @@
 package com.example.smartgym.gestioneScheda.application.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +37,7 @@ public class CreazioneSchedaManualeActivity extends AppCompatActivity {
 
         int id = v.getId();
         String partedelCorpo = null;
+        Intent intent = null;
 
         switch (id) {
             case R.id.btbraccia: partedelCorpo = "braccia"; break;
@@ -51,7 +53,11 @@ public class CreazioneSchedaManualeActivity extends AppCompatActivity {
             case R.id.bttutto: partedelCorpo = "tuttoilcorpo"; break;
         }
 
-        Toast.makeText(this, "Hai selezionato: " + partedelCorpo + ".\n Da implementare gli esercizi", Toast.LENGTH_LONG).show();
+        intent = new Intent(getApplicationContext(), SelezionaEsercizi.class);
+        intent.putExtra("PARTEDELCORPO", partedelCorpo);
+        startActivity(intent);
+
+        Toast.makeText(this, "Hai selezionato: " + partedelCorpo, Toast.LENGTH_LONG).show();
     }
 
     @Override

@@ -2,7 +2,10 @@ package com.example.smartgym.gestioneScheda.application.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,6 +49,19 @@ public class VisualizzaSchedaEserciziActivity extends AppCompatActivity {
         customAdapterEsercizi = new CustomAdapterEsercizi(this,R.layout.list_esercizi_item,new ArrayList<Esercizio>());
 
         lv.setAdapter(customAdapterEsercizi);
+
+        lv.setOnItemClickListener( new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView < ? > parent, View view,
+                                    int position, long id) {
+                Object o  = lv.getItemAtPosition(position);
+                Esercizio e = (Esercizio) o;
+
+                Intent i = new Intent(getApplicationContext(),DettagliEsercizi.class);
+                i.putExtra("ESERCIZIO",e.getNome());
+                startActivity(i);
+            }
+        } );
 
         tv1.setText("Esercizi della scheda " + nome);
 

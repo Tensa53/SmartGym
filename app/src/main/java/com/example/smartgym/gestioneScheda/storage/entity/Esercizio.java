@@ -1,5 +1,8 @@
 package com.example.smartgym.gestioneScheda.storage.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
 public class Esercizio implements Serializable {
@@ -11,6 +14,7 @@ public class Esercizio implements Serializable {
     private String tipologia;
     private String difficolta;
     private DettaglioEsercizio dettaglio;
+    public Boolean isChecked;
 
     public Esercizio() {
     }
@@ -22,15 +26,29 @@ public class Esercizio implements Serializable {
     public Esercizio(String nome, DettaglioEsercizio dettaglio) {
         this.nome = nome;
         this.dettaglio = dettaglio;
+        this.isChecked = false;
     }
 
-    public Esercizio(String id, String nome, String descrizione, String parteDelCorpo, String tipologia, String difficolta) {
-        this.id = id;
+    public Esercizio(String nome, String parteDelCorpo, DettaglioEsercizio dettaglio) {
+        this.nome = nome;
+        this.parteDelCorpo = parteDelCorpo;
+        this.dettaglio = dettaglio;
+        this.isChecked = false;
+    }
+
+    public Esercizio(String nome, String parteDelCorpo) {
+        this.nome = nome;
+        this.parteDelCorpo = parteDelCorpo;
+        this.isChecked = false;
+    }
+
+    public Esercizio(String nome, String descrizione, String difficolta, String parteDelCorpo, String tipologia) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.parteDelCorpo = parteDelCorpo;
         this.tipologia = tipologia;
         this.difficolta = difficolta;
+        this.isChecked = false;
     }
 
     public Esercizio(String id, String nome, String descrizione, String parteDelCorpo, String tipologia, String difficolta, DettaglioEsercizio dettaglio) {
@@ -41,6 +59,7 @@ public class Esercizio implements Serializable {
         this.tipologia = tipologia;
         this.difficolta = difficolta;
         this.dettaglio = dettaglio;
+        this.isChecked = false;
     }
 
     public String getId() {
@@ -98,4 +117,12 @@ public class Esercizio implements Serializable {
     public void setDettaglio(DettaglioEsercizio dettaglio) {
         this.dettaglio = dettaglio;
     }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+    public void setIschecked(boolean ischecked) {
+        this.isChecked = ischecked;
+    }
+
 }

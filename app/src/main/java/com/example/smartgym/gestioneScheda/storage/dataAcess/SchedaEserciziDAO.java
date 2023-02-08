@@ -17,6 +17,12 @@ public class SchedaEserciziDAO {
         dbHelper = FirebaseFirestore.getInstance();
     }
 
+    public Task<Void> doSaveScheda(SchedaEsercizi scheda) {
+        Task<Void> task = dbHelper.collection("schede_esercizi").document(scheda.getId()).set(scheda);
+
+        return task;
+    }
+
     public Task<QuerySnapshot> doRetrieveAllSchedeByUserEmail(String email) {
         DocumentReference dr = dbHelper.collection("atleti").document(email);
 

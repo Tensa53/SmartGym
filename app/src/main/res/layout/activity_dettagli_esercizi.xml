@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/logo"></ImageView>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"></FrameLayout>
+
+        <TextView
+            android:id="@+id/tvNomeEsercizio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="nomeesercizio"
+            android:textColor="@color/purple_500"
+            android:layout_gravity="center"
+            android:textSize="18dp"/>
+
+        <TextView
+            android:id="@+id/tvDescrizione"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="descrizioneesercizio"
+            android:textColor="@color/purple_500"
+            android:layout_gravity="center"
+            android:textSize="18dp"/>
+
+        <TextView
+            android:id="@+id/tvDifficolta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="difficoltaesercizio"
+            android:textColor="@color/purple_500"
+            android:layout_gravity="center"
+            android:textSize="18dp"/>
+
+        <TextView
+            android:id="@+id/tvParteDelCorpo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="partedelcorpoesercizio"
+            android:textColor="@color/purple_500"
+            android:layout_gravity="center"
+            android:textSize="18dp"/>
+
+        <TextView
+            android:id="@+id/tvTipologia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="tipologiaesercizio"
+            android:textColor="@color/purple_500"
+            android:layout_gravity="center"
+            android:textSize="18dp"/>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"></FrameLayout>
+
+        <Button
+            android:layout_gravity="center"
+            android:id="@+id/indietroButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Indietro"
+            android:onClick="indietro"
+            android:layout_marginRight="10dp"
+            android:layout_below="@id/layout"></Button>
+
+    </LinearLayout>
+
+</RelativeLayout>

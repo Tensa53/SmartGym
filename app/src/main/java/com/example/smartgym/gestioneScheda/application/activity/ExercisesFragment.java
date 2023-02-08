@@ -14,11 +14,17 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.smartgym.R;
 import com.example.smartgym.gestioneScheda.storage.dataAcess.SchedaEserciziDAO;
+import com.example.smartgym.gestioneScheda.storage.entity.Esercizio;
 import com.example.smartgym.gestioneScheda.storage.entity.SchedaEsercizi;
 import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -61,7 +67,7 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
 
         schedaEserciziDAO = new SchedaEserciziDAO();
 
-        customAdapter = new CustomAdapterNomeScheda(getContext(),R.layout.list_nome_scheda_item,new ArrayList<SchedaEsercizi>());
+        customAdapter = new CustomAdapterNomeScheda(getContext(), R.layout.list_nome_scheda_item, new ArrayList<SchedaEsercizi>());
 
         lv1.setAdapter(customAdapter);
 
@@ -76,21 +82,22 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
 //        schedeResult.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
 //            @Override
 //            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if (task.isSuccessful()){
-//                    Log.d("DEBUG",""+task.getResult().size());
+//                if (task.isSuccessful()) {
+//                    Log.d("DEBUG", "" + task.getResult().size());
 //                    for (QueryDocumentSnapshot document : task.getResult()) {
-//                        SchedaEsercizi schedaEsercizi = new SchedaEsercizi();
-//                        schedaEsercizi.setId(document.getId());
-//                        schedaEsercizi.setNome(document.get("nome").toString());
-//                        schedaEsercizi.setModalita(document.get("modalita").toString());
-//                        schedaEsercizi.setInUso((Boolean) document.get("inUso"));
-//                        schedaEsercizi.setPubblica((Boolean) document.get("pubblica"));
-//                        Log.d("DEBUG","NOME SCHEDA: "+ schedaEsercizi.getNome());
-//                        Log.d("DEBUG","MODALITA SCHEDA: " + schedaEsercizi.getModalita());
+//
+//                        String id = document.getId();
+//                        String nome = document.get("nome").toString();
+//
+//                        SchedaEsercizi schedaEsercizi = new SchedaEsercizi(id,nome,new ArrayList<Esercizio>());
+//
+//                        Log.d("DEBUG", "NOME SCHEDA: " + schedaEsercizi.getNome());
+//                        Log.d("DEBUG", "MODALITA SCHEDA: " + schedaEsercizi.getModalita());
+//
 //                        aggiungiScheda(schedaEsercizi);
 //                    }
 //                } else {
-//                    Toast.makeText(getContext(),"MANNAGGIAAA",Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "MANNAGGIAAA", Toast.LENGTH_SHORT).show();
 //                }
 //            }
 //        });
@@ -98,7 +105,7 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
         for (int i = 1; i <= 10; i++) {
             String nomeScheda = "Scheda"+i;
             aggiungiScheda(new SchedaEsercizi(nomeScheda));
-        }
+               }
 
     }
 
@@ -111,7 +118,9 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
         int id = view.getId();
 
         switch (id) {
-            case R.id.bt1: lanciaActivity1(); break;
+            case R.id.bt1:
+                lanciaActivity1();
+                break;
         }
     }
 
@@ -126,9 +135,9 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         SchedaEsercizi schedaEsercizi = (SchedaEsercizi) lv1.getItemAtPosition(i);
-        Log.d("DEBUG",schedaEsercizi.getNome());
+        Log.d("DEBUG", schedaEsercizi.getNome());
         Intent intent = new Intent(getContext(), VisualizzaSchedaEserciziActivity.class);
-        intent.putExtra("NOMESCHEDA",schedaEsercizi.getNome());
+        intent.putExtra("NOMESCHEDA", schedaEsercizi.getNome());
         startActivity(intent);
     }
 }
