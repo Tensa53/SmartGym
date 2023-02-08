@@ -11,7 +11,8 @@
         android:layout_centerVertical="true"
         android:orientation="vertical"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp">
+        android:layout_marginBottom="20dp"
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/tvselezionemodalita"
@@ -24,7 +25,7 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="400dp"
             android:layout_marginTop="20dp"
             android:orientation="vertical">
 
@@ -35,15 +36,19 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"></FrameLayout>
 
-    <Button
-        android:id="@+id/confermaButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Conferma"
-        android:layout_centerHorizontal="true"
-        android:onClick="conferma"
-        android:layout_below="@id/layout"></Button>
+        <Button
+            android:id="@+id/confermaButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Continua"
+            android:layout_gravity="center"
+            android:onClick="conferma"
+            android:layout_below="@id/layout"></Button>
+
+    </LinearLayout>
 
 </RelativeLayout>
