@@ -2,7 +2,10 @@ package com.example.smartgym.gestioneScheda.application.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,8 +49,6 @@ public class VisualizzaSchedaEserciziActivity extends AppCompatActivity {
         customAdapterEsercizi = new CustomAdapterEsercizi(this,R.layout.list_esercizi_item,new ArrayList<Esercizio>());
 
         lv.setAdapter(customAdapterEsercizi);
-
-        tv1.setText(nome);
 
         populateList();
     }

@@ -1,6 +1,8 @@
 package com.example.smartgym.gestioneScheda.storage.entity;
 
-public class DettaglioEsercizio {
+import java.io.Serializable;
+
+public class DettaglioEsercizio implements Serializable {
 
     private Integer ripetizioni;
     private Integer durata;

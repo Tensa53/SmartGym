@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+
+    <ImageView
+        android:id="@+id/imgEsercizio"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_margin="5dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/logo"/>
+
+    <TextView
+        android:id="@+id/tvNomeEsercizio"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:text="NOME ESERCIZIO"
+        android:layout_gravity="center_vertical"/>
+
+    <Button
+        android:id="@+id/decrementaButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="-"
+        android:onClick="decrementa">
+    </Button>
+
+    <LinearLayout
+        android:id="@+id/ll2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvRepsTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_gravity="center_horizontal"
+            android:text="Durata"/>
+
+        <TextView
+            android:id="@+id/tvRepsTimeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10"
+            android:layout_gravity="center_horizontal"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/aumentaButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:text="+"
+        android:onClick="aumenta">
+    </Button>
+
+    <CheckBox
+        android:id="@+id/esercizioCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></CheckBox>
+
+</LinearLayout>
