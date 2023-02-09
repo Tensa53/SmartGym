@@ -8,11 +8,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smartgym.R;
@@ -26,7 +24,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-public class ModificaCaratteristicheActivity extends AppCompatActivity implements View.OnClickListener {
+public class InserimentoModificaCaratteristicheActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button btUpdate, btReturn;
     EditText etPeso, etAltezza, etAllenamenti;
@@ -43,11 +41,11 @@ public class ModificaCaratteristicheActivity extends AppCompatActivity implement
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modifica_caratteristiche);
+        setContentView(R.layout.activity_inserimento_modifica_caratteristiche);
 
         loginRegistration = new LoginRegistration();
         Bundle bundle = getIntent().getExtras();
-        myAthlete = (Atleta) (bundle.getSerializable("User"));
+//        myAthlete = (Atleta) (bundle.getSerializable("User"));
 
         athleteInfo = new AthleteInfo();
 
@@ -59,19 +57,19 @@ public class ModificaCaratteristicheActivity extends AppCompatActivity implement
 
         spinnerEsperienza.setAdapter(adapterItems);
 
-        spinnerEsperienza.setSelection(myAthlete.esperienzaValue());
-
-        etPeso.setText("" + myAthlete.getPeso());
-
-        etAltezza.setText("" + myAthlete.getAltezza());
-
-        etAllenamenti.setText("" + myAthlete.getAllenamentiSettimanali());
+//        spinnerEsperienza.setSelection(myAthlete.esperienzaValue());
+//
+//        etPeso.setText("" + myAthlete.getPeso());
+//
+//        etAltezza.setText("" + myAthlete.getAltezza());
+//
+//        etAllenamenti.setText("" + myAthlete.getAllenamentiSettimanali());
 
         spinnerEsperienza.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String item = (String) adapterView.getItemAtPosition(i);
-                myAthlete.setEsperienza(item);
+//                myAthlete.setEsperienza(item);
             }
 
             @Override
@@ -111,9 +109,7 @@ public class ModificaCaratteristicheActivity extends AppCompatActivity implement
         Integer numeroAllenamenti = Integer.valueOf(etAllenamenti.getText().toString());
         String esperienza = spinnerEsperienza.getSelectedItem().toString();
 
-        try {
-            formUtils.controllaCaratteristicheAtleta(peso, altezza, numeroAllenamenti);
-
+        if (verificaCaratteristiche(peso, altezza, numeroAllenamenti)) {
             myAthlete.setPeso(peso);
             myAthlete.setAltezza(altezza);
             myAthlete.setAllenamentiSettimanali(numeroAllenamenti);
@@ -133,10 +129,18 @@ public class ModificaCaratteristicheActivity extends AppCompatActivity implement
                     Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             });
+        }
+    }
 
+    private boolean verificaCaratteristiche(Integer peso, Integer altezza, Integer numeroAllenamenti) {
+        try {
+            formUtils.controllaCaratteristicheAtleta(peso, altezza, numeroAllenamenti);
         } catch (AthleteFeaturesFieldException e) {
             showError(e.getMessage());
+            return false;
         }
+
+        return true;
     }
 
     private void showError(String error) {

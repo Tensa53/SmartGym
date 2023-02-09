@@ -4,24 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.smartgym.R;
 import com.example.smartgym.gestioneScheda.storage.dataAcess.EsercizioDAO;
-import com.example.smartgym.gestioneScheda.storage.entity.Esercizio;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
-
-public class DettagliEsercizi extends AppCompatActivity {
+public class DettagliEserciziActivity extends AppCompatActivity {
 
     TextView tvNomeEsercizio, tvDescrizione, tvDifficolta, tvParteDelCorpo, tvTipologia;
     EsercizioDAO esercizioDAO;

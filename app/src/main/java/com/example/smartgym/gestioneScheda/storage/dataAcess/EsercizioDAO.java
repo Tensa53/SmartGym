@@ -14,6 +14,12 @@ public class EsercizioDAO {
         dbHelper = FirebaseFirestore.getInstance();
     }
 
+    public Task<QuerySnapshot> doRetrieveAllEsercizi() {
+        Task<QuerySnapshot> task = dbHelper.collection("esercizi").get();
+
+        return task;
+    }
+
     public Task<DocumentSnapshot> doRetrieveDettaglioById(String id) {
         Task<DocumentSnapshot> task = dbHelper.collection("dettagli_esercizi").document(id).get();
 
@@ -28,12 +34,6 @@ public class EsercizioDAO {
 
     public Task<QuerySnapshot> doRetrieveEsercizioByParteDelCorpo(String parteDelCorpo) {
         Task<QuerySnapshot> task = dbHelper.collection("esercizi").whereEqualTo("parteDelCorpo",parteDelCorpo).get();
-
-        return task;
-    }
-
-    public Task<QuerySnapshot> doRetrieveEsercizioById2(String id) {
-        Task<QuerySnapshot> task = dbHelper.collection("esercizi").whereEqualTo("id",id).get();
 
         return task;
     }

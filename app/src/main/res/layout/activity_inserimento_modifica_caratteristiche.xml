@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".infoUtenti.application.activity.ModificaCaratteristicheActivity">
+    tools:context=".infoUtenti.application.activity.InserimentoModificaCaratteristicheActivity">
 
     <LinearLayout
         android:id="@+id/ll1"
@@ -23,7 +23,7 @@
 
             <TextView
                 android:id="@+id/tvPeso"
-                android:layout_width="0dp"
+                android:layout_width="1dp"
                 android:layout_weight="20"
                 android:layout_height="wrap_content"
                 android:text="Peso:"
@@ -31,7 +31,7 @@
 
             <EditText
                 android:id="@+id/etPeso"
-                android:layout_width="0dp"
+                android:layout_width="1dp"
                 android:layout_weight="60"
                 android:layout_height="wrap_content"
                 android:inputType="number"
@@ -39,7 +39,7 @@
 
             <TextView
                 android:id="@+id/tvKilogrammi"
-                android:layout_width="0dp"
+                android:layout_width="1dp"
                 android:layout_weight="20"
                 android:layout_height="wrap_content"
                 android:text="(in kg)"
@@ -55,7 +55,7 @@
 
             <TextView
                 android:id="@+id/tvAltezza"
-                android:layout_width="0dp"
+                android:layout_width="1dp"
                 android:layout_weight="30"
                 android:layout_height="wrap_content"
                 android:text="Altezza:"
@@ -63,7 +63,7 @@
 
             <EditText
                 android:id="@+id/etAltezza"
-                android:layout_width="0dp"
+                android:layout_width="1dp"
                 android:layout_weight="50"
                 android:layout_height="wrap_content"
                 android:inputType="number"
@@ -71,7 +71,7 @@
 
             <TextView
                 android:id="@+id/tvCentimetri"
-                android:layout_width="0dp"
+                android:layout_width="1dp"
                 android:layout_weight="20"
                 android:layout_height="wrap_content"
                 android:text="(in cm)"
@@ -110,7 +110,7 @@
 
             <TextView
                 android:id="@+id/tvNumAllenamenti"
-                android:layout_width="0dp"
+                android:layout_width="1dp"
                 android:layout_weight="40"
                 android:layout_height="wrap_content"
                 android:text="Allenamenti:"
@@ -118,7 +118,7 @@
 
             <EditText
                 android:id="@+id/etAllenamenti"
-                android:layout_width="0dp"
+                android:layout_width="1dp"
                 android:layout_weight="20"
                 android:layout_height="wrap_content"
                 android:inputType="number"
@@ -129,7 +129,7 @@
 
             <TextView
                 android:id="@+id/tvSettimana"
-                android:layout_width="0dp"
+                android:layout_width="1dp"
                 android:layout_weight="40"
                 android:layout_height="wrap_content"
                 android:text="(a settimana)"

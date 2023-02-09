@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,19 +14,21 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.smartgym.R;
+import com.example.smartgym.gestioneScheda.application.exception.ExcersisesDurationExceededException;
+import com.example.smartgym.gestioneScheda.application.exception.ExercisesRepsExceededException;
+import com.example.smartgym.gestioneScheda.application.exception.NumberExercsisesExceededException;
 import com.example.smartgym.gestioneScheda.storage.dataAcess.EsercizioDAO;
 import com.example.smartgym.gestioneScheda.storage.entity.DettaglioEsercizio;
 import com.example.smartgym.gestioneScheda.storage.entity.Esercizio;
+import com.example.smartgym.utils.FormUtils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
-public class SelezionaEsercizi extends AppCompatActivity {
+public class SelezionaEserciziActivity extends AppCompatActivity {
 
     public Button aumenta;
     public Button decrementa;
@@ -56,67 +57,78 @@ public class SelezionaEsercizi extends AppCompatActivity {
 
         lv.setAdapter(customAdapterEserciziChecked);
 
-//        Task<QuerySnapshot> task = esercizioDAO.doRetrieveEsercizioByParteDelCorpo(parteDelCorpo);
-
-//        recuperaEsercizio(task);
-
         populateList(parteDelCorpo);
+
+//        if (parteDelCorpo.equalsIgnoreCase("tuttoilcorpo")){
+//            Task<QuerySnapshot> task = esercizioDAO.doRetrieveAllEsercizi();
+//
+//            recuperaEsercizio(task);
+//        } else {
+//            Task<QuerySnapshot> task = esercizioDAO.doRetrieveEsercizioByParteDelCorpo(parteDelCorpo);
+//
+//            recuperaEsercizio(task);
+//        }
+    }
+
+    private void recuperaEsercizio(Task<QuerySnapshot> task) {
+
+        task.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String nome = (String) document.get("nome");
+                        String parteDelCorpo = (String) document.get("parteDelCorpo");
+                        Log.d("DEBUG", nome+" "+parteDelCorpo);
+                        Esercizio esercizio = new Esercizio(nome, parteDelCorpo);
+                        saveEsercizioInLista(esercizio);
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Ops", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 
-//    private void recuperaEsercizio(Task<QuerySnapshot> task) {
-//
-//        task.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    for (QueryDocumentSnapshot document : task.getResult()) {
-//
-//                        String nome = (String) document.get("nome");
-//                        String parteDelCorpo = (String) document.get("parteDelCorpo");
-//                        Esercizio esercizio = new Esercizio(nome, parteDelCorpo);
-//                        saveEsercizioInLista(esercizio);
-//                    }
-//                } else {
-//                    Toast.makeText(getApplicationContext(), "Ops", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-//
-//    }
+    private void saveEsercizioInLista(Esercizio esercizio) {
 
-//    private void saveEsercizioInLista(Esercizio esercizio) {
-//
-//        esercizi.add(esercizio);
-//
-//    }
+        esercizi.add(esercizio);
+
+    }
 
     public void conferma(View v) {
-
-        int tot = 0;
         ArrayList<Esercizio> checked = new ArrayList<>();
 
         for (Esercizio e : customAdapterEserciziChecked.esercizi) {
-            if (e.isChecked) {
+            if (e.isChecked)
                 checked.add(e);
-                tot++;
-            }
         }
 
-        if (tot > 4 && tot < 11) {
-            Intent intent = new Intent(getApplicationContext(), RiepilogoScheda.class);
+        if(verificaScheda(checked)){
+            Intent intent = new Intent(getApplicationContext(), RiepilogoSchedaActivity.class);
             Bundle b = new Bundle();
             b.putSerializable("Esercizi", checked);
             intent.putExtras(b);
             startActivity(intent);
-        } else {
-            Toast.makeText(this, "Seleziona tra i 5 e i 10 esercizi per proseguire.", Toast.LENGTH_LONG).show();
         }
 
     }
 
-    private void populateList(String parteDelCorpo) {
+    private boolean verificaScheda(ArrayList<Esercizio> checked) {
+        FormUtils formUtils = new FormUtils();
 
+        try {
+            formUtils.controllaListaEsercizi(checked);
+        } catch (NumberExercsisesExceededException | ExercisesRepsExceededException | ExcersisesDurationExceededException e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
+    private void populateList(String parteDelCorpo) {
         esercizi.add(new Esercizio("PushUp", "schiena", new DettaglioEsercizio(10, 0)));
         esercizi.add(new Esercizio("Trazioni", "schiena", new DettaglioEsercizio(10, 0)));
         esercizi.add(new Esercizio("Squat", "gambe", new DettaglioEsercizio(10, 0)));
@@ -144,12 +156,10 @@ public class SelezionaEsercizi extends AppCompatActivity {
         int c1 = e.getDettaglio().getDurata();
         int c2 = e.getDettaglio().getRipetizioni();
 
-        if (c1 != 0 && c1 < 60) {
-            //max 60 sec
+        if (c1 >= 0) {
             c1++;
             e.getDettaglio().setDurata(c1);
-        } else if (c2 != 0 && c2 < 20) {
-            //max 20 rip
+        } else if (c2 >= 0) {
             c2++;
             e.getDettaglio().setRipetizioni(c2);
         }
@@ -164,12 +174,10 @@ public class SelezionaEsercizi extends AppCompatActivity {
         int c1 = e.getDettaglio().getDurata();
         int c2 = e.getDettaglio().getRipetizioni();
 
-        if (c1 > 10) {
-            //almeno 10 sec
+        if (c1 > 0) {
             c1--;
             e.getDettaglio().setDurata(c1);
-        } else if (c2 > 5) {
-            //almeno 5 rip
+        } else if (c2 > 0) {
             c2--;
             e.getDettaglio().setRipetizioni(c2);
         }

@@ -21,7 +21,6 @@ import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
 import com.example.smartgym.infoUtenti.storage.entity.Atleta;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
@@ -75,7 +74,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 //        if (idUser != null)
 //            recuperaAtleta(idUser);
 
-        setFields();
+//        setFields();
 
         btModificaInfo.setOnClickListener(this);
         btModificaCaratteristiche.setOnClickListener(this);
@@ -157,7 +156,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void onModificaCaratteristiche() {
-        Intent intent = new Intent(getContext(), ModificaCaratteristicheActivity.class);
+        Intent intent = new Intent(getContext(), InserimentoModificaCaratteristicheActivity.class);
         Bundle b = new Bundle();
         b.putSerializable("User", myAthlete);
         intent.putExtras(b);

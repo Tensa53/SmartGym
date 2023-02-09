@@ -30,7 +30,7 @@ public class CreazioneSchedaManualeActivity extends AppCompatActivity {
 
         tv = findViewById(R.id.tvModalita);
 
-        tv.append(getIntent().getExtras().getString("stringa"));
+//        tv.append(getIntent().getExtras().getString("stringa"));
     }
 
     public void selezionaParteDelCorpo(View v) {
@@ -53,7 +53,7 @@ public class CreazioneSchedaManualeActivity extends AppCompatActivity {
             case R.id.bttutto: partedelCorpo = "tuttoilcorpo"; break;
         }
 
-        intent = new Intent(getApplicationContext(), SelezionaEsercizi.class);
+        intent = new Intent(getApplicationContext(), SelezionaEserciziActivity.class);
         intent.putExtra("PARTEDELCORPO", partedelCorpo);
         startActivity(intent);
 
