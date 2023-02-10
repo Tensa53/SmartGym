@@ -13,13 +13,6 @@
         android:theme="@style/Theme.SmartGym"
         tools:targetApi="31">
         <activity
-            android:name=".infoUtenti.application.activity.CancellaProfiloActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".infoUtenti.application.activity.InserimentoModificaCaratteristicheActivity"
             android:exported="false">
             <meta-data

@@ -147,7 +147,7 @@
                 android:id="@+id/btModificaCaratteristiche"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:text="modifica caratteristiche"/>
+                android:text="inserisci/modifica caratteristiche"/>
 
             <Button
                 android:id="@+id/btLogout"
