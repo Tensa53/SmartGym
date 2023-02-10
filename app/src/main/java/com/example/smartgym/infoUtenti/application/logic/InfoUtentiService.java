@@ -19,7 +19,7 @@ public interface InfoUtentiService {
 
     Task<AuthResult> createUser(String email, String password);
 
-    void saveAthlete(Atleta atleta, String id);
+    Task<Void> saveAthlete(Atleta atleta, String id);
 
     Task<DocumentSnapshot> getAthletebyId(String id);
 

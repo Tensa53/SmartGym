@@ -30,11 +30,6 @@ public class InfoUtentiServiceImpl implements InfoUtentiService {
         return loginRegistration.login(email,password);
     }
 
-    /*cancellazione,
-    inserimento caratteristiche,
-    modifica caratteristiche,
-    modifica dati profilo*/
-
     /**
      * verifica se l'utente ha effettuato il login
      *
@@ -70,10 +65,8 @@ public class InfoUtentiServiceImpl implements InfoUtentiService {
      *
      * @param atleta istanza della classe Atleta, contiene i dati relativi all'utente atleta
      */
-    public void saveAthlete(Atleta atleta, String id){
-        athleteInfo.saveAthlete(atleta,id);
-
-        return;
+    public Task<Void> saveAthlete(Atleta atleta, String id){
+        return athleteInfo.saveAthlete(atleta,id);
     }
 
     /**
