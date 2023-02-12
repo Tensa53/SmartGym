@@ -6,7 +6,6 @@ public class GestioneSchedaServiceImpl implements GestioneSchedaService {
 
     SchedaLogic schedaLogic;
 
-
     public GestioneSchedaServiceImpl() {
         schedaLogic = new SchedaLogic();
     }

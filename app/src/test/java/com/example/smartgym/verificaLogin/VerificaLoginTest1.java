@@ -1,4 +1,4 @@
-package com.example.smartgym;
+package com.example.smartgym.verificaLogin;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.when;
 

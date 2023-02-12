@@ -1,16 +1,16 @@
-package com.example.smartgym;
+package com.example.smartgym.verificaCaratteristiche;
 
 import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
-public class VerificaCaratteristicheTest3 {
+public class VerificaCaratteristicheTest5 {
 
     @Test
     public void testCaratteristiche() {
-        Integer peso = 60;
-        Integer altezza = 110;
-        Integer numeroAllenamenti = 4;
+        Integer peso = 70;
+        Integer altezza = 160;
+        Integer numeroAllenamenti = 1;
 
         VerificaCaratteristicheMethod verificaCaratteristicheMethod = new VerificaCaratteristicheMethod();
 

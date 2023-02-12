@@ -1,4 +1,4 @@
-package com.example.smartgym;
+package com.example.smartgym.verificaLogin;
 
 import android.app.Activity;
 

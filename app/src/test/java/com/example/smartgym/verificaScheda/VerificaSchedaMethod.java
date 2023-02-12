@@ -1,4 +1,4 @@
-package com.example.smartgym;
+package com.example.smartgym.verificaScheda;
 
 import com.example.smartgym.gestioneScheda.application.exception.ExcersisesDurationExceededException;
 import com.example.smartgym.gestioneScheda.application.exception.ExercisesRepsExceededException;

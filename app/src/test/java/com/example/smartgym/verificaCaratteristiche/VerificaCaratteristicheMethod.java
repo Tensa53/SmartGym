@@ -1,4 +1,4 @@
-package com.example.smartgym;
+package com.example.smartgym.verificaCaratteristiche;
 
 import com.example.smartgym.infoUtenti.application.exception.AthleteFeaturesFieldException;
 import com.example.smartgym.utils.FormUtils;

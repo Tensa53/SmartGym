@@ -19,8 +19,6 @@ public class EsercizioDAO {
     }
 
     public Task<QuerySnapshot> doRetrieveAllEsercizi() {
-        Log.d("DEBUG","SONO QUIII");
-
         Task<QuerySnapshot> task = dbHelper.collection("esercizi").get();
 
         return task;

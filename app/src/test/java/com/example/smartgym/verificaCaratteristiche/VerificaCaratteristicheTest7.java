@@ -1,4 +1,4 @@
-package com.example.smartgym;
+package com.example.smartgym.verificaCaratteristiche;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
