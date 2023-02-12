@@ -1,13 +1,12 @@
 package com.example.smartgym.gestioneScheda.application.activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,6 +17,13 @@ import com.example.smartgym.gestioneScheda.storage.dataAcess.EsercizioDAO;
 import com.example.smartgym.gestioneScheda.storage.dataAcess.SchedaEserciziDAO;
 import com.example.smartgym.gestioneScheda.storage.entity.DettaglioEsercizio;
 import com.example.smartgym.gestioneScheda.storage.entity.Esercizio;
+import com.example.smartgym.gestioneScheda.storage.entity.ProxyScheda;
+import com.example.smartgym.gestioneScheda.storage.entity.RealScheda;
+import com.example.smartgym.gestioneScheda.storage.entity.SchedaEsercizi;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 
@@ -31,6 +37,8 @@ public class VisualizzaSchedaEserciziActivity extends AppCompatActivity implemen
 
     SchedaEserciziDAO schedaEserciziDAO;
 
+    SchedaEsercizi schedaEsercizi;
+
     CustomAdapterEsercizi customAdapterEsercizi;
 
     ListView lv;
@@ -42,25 +50,127 @@ public class VisualizzaSchedaEserciziActivity extends AppCompatActivity implemen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizza_scheda_esercizi);
 
+        Bundle bundle = getIntent().getExtras();
+
+        bundle.isEmpty();
+
+        ProxyScheda proxyScheda = (ProxyScheda) bundle.getSerializable("PROXYSCHEDA");
+
         widgetBinding();
 
-        String nome = getIntent().getStringExtra("NOMESCHEDA");
-
-        tv1.setText(nome);
+        tv1.setText(proxyScheda.getNome());
 
         btFissa.setOnClickListener(this);
         btModifica.setOnClickListener(this);
         btCancella.setOnClickListener(this);
 
+        esercizioDAO = new EsercizioDAO();
+
         schedaEserciziDAO = new SchedaEserciziDAO();
 
-        esercizioDAO = new EsercizioDAO();
+        schedaEsercizi = new RealScheda();
+
+        recuperaScheda(proxyScheda.getId());
 
         customAdapterEsercizi = new CustomAdapterEsercizi(this,R.layout.list_esercizi_item,new ArrayList<Esercizio>());
 
         lv.setAdapter(customAdapterEsercizi);
+    }
 
-        populateList();
+    private void recuperaScheda(String id) {
+        Task<DocumentSnapshot> task = schedaEserciziDAO.doRetrieveSchedaByDocumentId(id);
+
+        task.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot ds = task.getResult();
+                    String modalita = (String) ds.get("modalita");
+                    String nome = (String) ds.get("nome");
+                    boolean inUso = (boolean) ds.get("inUso");
+                    boolean pubblica = (boolean) ds.get("pubblica");
+                    ArrayList<DocumentReference> dettaglies = (ArrayList<DocumentReference>) ds.get("esercizi_scelti");
+
+                    RealScheda realScheda = new RealScheda();
+                    realScheda.setNome(nome);
+                    realScheda.setInUso(inUso);
+                    realScheda.setPubblica(pubblica);
+                    realScheda.setModalita(modalita);
+
+                    setParametriScheda(realScheda);
+
+                    recuperaDettagliScheda(dettaglies);
+                }
+            }
+        });
+    }
+
+    private void recuperaDettagliScheda(ArrayList<DocumentReference> dettaglies) {
+
+        for (DocumentReference dr: dettaglies) {
+            Task<DocumentSnapshot> task = dr.get();
+
+            task.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()){
+                        DocumentSnapshot ds = task.getResult();
+
+                        DocumentReference dr = (DocumentReference) ds.get("esercizio");
+                        Long durata = (Long) ds.get("durata");
+                        Integer durataInt = Math.toIntExact(durata);
+                        Long ripetizioni = (Long) ds.get("ripetizioni");
+                        Integer ripetizioniInt = Math.toIntExact(ripetizioni);
+
+                        DettaglioEsercizio dettaglioEsercizio = new DettaglioEsercizio(ripetizioniInt, durataInt);
+
+                        recuperaEsercizio(dettaglioEsercizio, dr);
+                    }
+                }
+            });
+        }
+
+    }
+
+    private void recuperaEsercizio(DettaglioEsercizio dettaglioEsercizio, DocumentReference dr) {
+
+        Task<DocumentSnapshot> task = dr.get();
+
+        task.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot ds = task.getResult();
+
+                    String esecuzione = (String) ds.get("esecuzione");
+                    String nome = (String) ds.get("nome");
+                    String descrizione = (String) ds.get("descrizione");
+                    String parteDelCorpo = (String) ds.get("parteDelCorpo");
+                    String tipologia = (String) ds.get("tipologia");
+                    String difficolta = (String) ds.get("difficolta");
+
+                    Esercizio esercizio = new Esercizio(nome,descrizione, difficolta, parteDelCorpo, tipologia, esecuzione, dettaglioEsercizio);
+
+                    aggiungiEsercizio(esercizio);
+                }
+            }
+        });
+
+        customAdapterEsercizi.notifyDataSetChanged();
+
+    }
+
+    private void aggiungiEsercizio(Esercizio esercizio) {
+        ((RealScheda) schedaEsercizi).aggiungiEsercizio(esercizio);
+
+        customAdapterEsercizi.add(esercizio);
+    }
+
+    private void setParametriScheda(RealScheda realScheda) {
+        ((RealScheda) schedaEsercizi).setModalita(realScheda.getModalita());
+        ((RealScheda) schedaEsercizi).setNome(realScheda.getNome());
+        ((RealScheda) schedaEsercizi).setInUso(realScheda.isInUso());
+        ((RealScheda) schedaEsercizi).setPubblica(realScheda.isPubblica());
     }
 
     private void widgetBinding() {
@@ -71,31 +181,22 @@ public class VisualizzaSchedaEserciziActivity extends AppCompatActivity implemen
         btCancella = findViewById(R.id.btCancellaScheda);
     }
 
-    private void populateList() {
-        customAdapterEsercizi.add(new Esercizio("PushUp",new DettaglioEsercizio(10,0)));
-        customAdapterEsercizi.add(new Esercizio("TricepDip",new DettaglioEsercizio(10,0)));
-        customAdapterEsercizi.add(new Esercizio("Squat",new DettaglioEsercizio(10,0)));
-        customAdapterEsercizi.add(new Esercizio("Trazioni",new DettaglioEsercizio(10,0)));
-        customAdapterEsercizi.add(new Esercizio("Crunch",new DettaglioEsercizio(10,0)));
-        customAdapterEsercizi.add(new Esercizio("Jumping Jacks",new DettaglioEsercizio(10,0)));
-        customAdapterEsercizi.add(new Esercizio("Mountain Climber",new DettaglioEsercizio(10,0)));
-        customAdapterEsercizi.add(new Esercizio("Plank",new DettaglioEsercizio(0,30)));
-        customAdapterEsercizi.add(new Esercizio("Cobra Stretch",new DettaglioEsercizio(10,0)));
-        customAdapterEsercizi.add(new Esercizio("Side Hop",new DettaglioEsercizio(0,20)));
-    }
-
 
     @Override
     public void onClick(View view) {
         int id = view.getId();
 
         switch (id) {
-            case R.id.btFissaScheda: Toast.makeText(getApplicationContext(), "La scheda viene fissata nella home e considerata come in uso", Toast.LENGTH_SHORT).show();
+            case R.id.btFissaScheda: Toast.makeText(getApplicationContext(), "La scheda viene fissata nella home e considerata come in uso, TODO", Toast.LENGTH_SHORT).show();
             break;
-            case R.id.btModificaScheda: //TODO
+            case R.id.btModificaScheda: onModifica();
             break;
             case R.id.btCancellaScheda: onCancella();
         }
+    }
+
+    private void onModifica() {
+        Toast.makeText(getApplicationContext(), "TODO", Toast.LENGTH_SHORT).show();
     }
 
     private void onCancella() {
@@ -104,10 +205,8 @@ public class VisualizzaSchedaEserciziActivity extends AppCompatActivity implemen
             public void onClick(DialogInterface dialogInterface, int i) {
 
                 switch (i) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                        break;
-                    case DialogInterface.BUTTON_NEGATIVE:
-                        break;
+                    case DialogInterface.BUTTON_POSITIVE: Toast.makeText(getApplicationContext(), "TODO", Toast.LENGTH_SHORT).show();
+                    break;
                 }
             }
         };

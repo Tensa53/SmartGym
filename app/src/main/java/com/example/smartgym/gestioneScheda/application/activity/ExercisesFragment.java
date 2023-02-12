@@ -19,7 +19,8 @@ import android.widget.Toast;
 
 import com.example.smartgym.R;
 import com.example.smartgym.gestioneScheda.storage.dataAcess.SchedaEserciziDAO;
-import com.example.smartgym.gestioneScheda.storage.entity.Esercizio;
+import com.example.smartgym.gestioneScheda.storage.entity.ProxyScheda;
+import com.example.smartgym.gestioneScheda.storage.entity.RealScheda;
 import com.example.smartgym.gestioneScheda.storage.entity.SchedaEsercizi;
 import com.example.smartgym.infoUtenti.application.activity.AtletaReceiver;
 import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
@@ -83,39 +84,44 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
 
         lv1.setOnItemClickListener(this);
 
-        caricaSchede(loginRegistration.getUserLogged().getEmail());
+        caricaSchede(loginRegistration.getUserLogged().getUid());
     }
 
-    private void caricaSchede(String email) {
-//        Task<QuerySnapshot> schedeResult = schedaEserciziDAO.doRetrieveAllSchedeByUserEmail(email);
-//
-//        schedeResult.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    Log.d("DEBUG", "" + task.getResult().size());
-//                    for (QueryDocumentSnapshot document : task.getResult()) {
-//
-//                        String id = document.getId();
-//                        String nome = document.get("nome").toString();
-//
-//                        SchedaEsercizi schedaEsercizi = new SchedaEsercizi(id,nome,new ArrayList<Esercizio>());
-//
-//                        Log.d("DEBUG", "NOME SCHEDA: " + schedaEsercizi.getNome());
-//                        Log.d("DEBUG", "MODALITA SCHEDA: " + schedaEsercizi.getModalita());
-//
-//                        aggiungiScheda(schedaEsercizi);
-//                    }
-//                } else {
-//                    Toast.makeText(getContext(), "MANNAGGIAAA", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
+    private void caricaSchede(String id) {
+        Task<QuerySnapshot> schedeResult = schedaEserciziDAO.doRetrieveAllSchedeByUserId(id);
 
-        for (int i = 1; i <= 10; i++) {
-            String nomeScheda = "Scheda"+i;
-            aggiungiScheda(new SchedaEsercizi(nomeScheda));
-               }
+        schedeResult.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    Log.d("DEBUG", "" + task.getResult().size());
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        String id = document.getId();
+                        String nome = (String) document.get("nome");
+
+                        Log.d("DEBUG", "ID SCHEDA: " + id);
+
+                        Log.d("DEBUG", "NOME SCHEDA: " + nome);
+
+                        SchedaEsercizi schedaEsercizi = new ProxyScheda(id,nome);
+
+                        Log.d("DEBUG", "NOME PROXY SCHEDA: " + schedaEsercizi.getNome());
+
+
+                        aggiungiScheda(schedaEsercizi);
+                    }
+                } else {
+                    Toast.makeText(getContext(), "MANNAGGIAAA", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        customAdapter.notifyDataSetChanged();
+
+//        for (int i = 1; i <= 10; i++) {
+//            String nomeScheda = "Scheda"+i;
+//            aggiungiScheda(new SchedaEsercizi(nomeScheda));
+//               }
 
     }
 
@@ -147,7 +153,9 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
         SchedaEsercizi schedaEsercizi = (SchedaEsercizi) lv1.getItemAtPosition(i);
         Log.d("DEBUG", schedaEsercizi.getNome());
         Intent intent = new Intent(getContext(), VisualizzaSchedaEserciziActivity.class);
-        intent.putExtra("NOMESCHEDA", schedaEsercizi.getNome());
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("PROXYSCHEDA", (ProxyScheda) schedaEsercizi);
+        intent.putExtras(bundle);
         startActivity(intent);
     }
 }

@@ -43,7 +43,7 @@ public class SelezioneModalitaSchedaActivity extends AppCompatActivity {
 
         switch (id) {
             case R.id.btmanuale:
-                intent = new Intent(getApplicationContext(), CreazioneSchedaManualeActivity.class);
+                intent = new Intent(getApplicationContext(), ScegliParteDelCorpoActivity.class);
                 break;
             case R.id.btgenerata: //TODO
                 break;

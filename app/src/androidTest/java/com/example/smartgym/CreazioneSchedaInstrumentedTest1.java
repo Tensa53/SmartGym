@@ -12,7 +12,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
-import com.example.smartgym.gestioneScheda.application.activity.CreazioneSchedaManualeActivity;
+import com.example.smartgym.gestioneScheda.application.activity.ScegliParteDelCorpoActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,7 +22,7 @@ import org.junit.runner.RunWith;
 @LargeTest
 public class CreazioneSchedaInstrumentedTest1 {
 
-    @Rule public ActivityScenarioRule<CreazioneSchedaManualeActivity> activityScenario = new ActivityScenarioRule<CreazioneSchedaManualeActivity>(CreazioneSchedaManualeActivity.class);
+    @Rule public ActivityScenarioRule<ScegliParteDelCorpoActivity> activityScenario = new ActivityScenarioRule<ScegliParteDelCorpoActivity>(ScegliParteDelCorpoActivity.class);
 
 
     @Test

@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.smartgym.R;
 
-public class CreazioneSchedaManualeActivity extends AppCompatActivity {
+public class ScegliParteDelCorpoActivity extends AppCompatActivity {
 
     TextView tv;
 
@@ -57,7 +57,7 @@ public class CreazioneSchedaManualeActivity extends AppCompatActivity {
         intent.putExtra("PARTEDELCORPO", partedelCorpo);
         startActivity(intent);
 
-        Toast.makeText(this, "Hai selezionato: " + partedelCorpo, Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "Hai selezionato: " + partedelCorpo, Toast.LENGTH_LONG).show();
     }
 
     @Override

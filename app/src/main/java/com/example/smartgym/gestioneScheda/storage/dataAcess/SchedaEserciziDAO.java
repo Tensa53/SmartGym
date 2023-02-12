@@ -2,12 +2,14 @@ package com.example.smartgym.gestioneScheda.storage.dataAcess;
 
 import android.util.Log;
 
-import com.example.smartgym.gestioneScheda.storage.entity.SchedaEsercizi;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public class SchedaEserciziDAO {
 
@@ -17,14 +19,30 @@ public class SchedaEserciziDAO {
         dbHelper = FirebaseFirestore.getInstance();
     }
 
-    public Task<Void> doSaveScheda(SchedaEsercizi scheda) {
-        Task<Void> task = dbHelper.collection("schede_esercizi").document(scheda.getId()).set(scheda);
+    public Task<Void> doSaveScheda(Map<String, Object> scheda) {
+        DocumentReference dr = dbHelper.collection("schede_esercizi").document();
 
-        return task;
+        DocumentReference drAtleta = dbHelper.document(String.valueOf(scheda.get("ricevente")));
+
+        ArrayList<String> dettagli = (ArrayList<String>) scheda.get("esercizi_scelti");
+
+        ArrayList<DocumentReference> refEsercizi = new ArrayList<>();
+
+        for (String s : dettagli){
+            refEsercizi.add(dbHelper.document(s));
+        }
+
+        scheda.put("esercizi_scelti", refEsercizi);
+        scheda.put("ricevente", drAtleta);
+
+        return dr.set(scheda);
+
     }
 
-    public Task<QuerySnapshot> doRetrieveAllSchedeByUserEmail(String email) {
-        DocumentReference dr = dbHelper.collection("atleti").document(email);
+    public Task<QuerySnapshot> doRetrieveAllSchedeByUserId(String id) {
+        DocumentReference dr = dbHelper.collection("atleti").document(id);
+
+        Log.d("DEBUG",dr.getPath());
 
         Task<QuerySnapshot> task = dbHelper.collection("schede_esercizi").whereEqualTo("ricevente",dr).get();
 

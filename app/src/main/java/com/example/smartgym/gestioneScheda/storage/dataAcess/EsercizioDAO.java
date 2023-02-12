@@ -1,10 +1,14 @@
 package com.example.smartgym.gestioneScheda.storage.dataAcess;
 
+import android.util.Log;
+
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.Map;
 
 public class EsercizioDAO {
 
@@ -15,6 +19,8 @@ public class EsercizioDAO {
     }
 
     public Task<QuerySnapshot> doRetrieveAllEsercizi() {
+        Log.d("DEBUG","SONO QUIII");
+
         Task<QuerySnapshot> task = dbHelper.collection("esercizi").get();
 
         return task;
@@ -48,6 +54,22 @@ public class EsercizioDAO {
         Task<QuerySnapshot> task = dbHelper.collection("esercizi").get();
 
         return task;
+    }
+
+    public String doSaveDettaglioEsercizio(Map<String,Object> dettagli) {
+        DocumentReference docRef = dbHelper.collection("dettagli_esercizi").document();
+
+        String esercizioPath = (String) dettagli.get("esercizio");
+
+        DocumentReference docRefEsercizio = dbHelper.document(esercizioPath);
+
+        dettagli.put("esercizio", docRefEsercizio);
+
+        String id = docRef.getPath();
+
+        docRef.set(dettagli);
+
+        return id;
     }
 
 }

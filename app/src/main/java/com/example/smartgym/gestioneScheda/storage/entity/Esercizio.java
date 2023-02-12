@@ -7,12 +7,12 @@ import java.io.Serializable;
 
 public class Esercizio implements Serializable {
 
-    private String id;
     private String nome;
     private String descrizione;
     private String parteDelCorpo;
     private String tipologia;
     private String difficolta;
+    private String esecuzione;
     private DettaglioEsercizio dettaglio;
     public Boolean isChecked;
 
@@ -42,33 +42,28 @@ public class Esercizio implements Serializable {
         this.isChecked = false;
     }
 
-    public Esercizio(String nome, String descrizione, String difficolta, String parteDelCorpo, String tipologia) {
+    public Esercizio(String nome, String descrizione, String difficolta, String parteDelCorpo, String tipologia, String esecuzione) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.parteDelCorpo = parteDelCorpo;
         this.tipologia = tipologia;
         this.difficolta = difficolta;
+        this.esecuzione = esecuzione;
         this.isChecked = false;
     }
 
-    public Esercizio(String id, String nome, String descrizione, String parteDelCorpo, String tipologia, String difficolta, DettaglioEsercizio dettaglio) {
-        this.id = id;
+    public Esercizio(String nome, String descrizione, String parteDelCorpo, String tipologia, String difficolta, String esecuzione, DettaglioEsercizio dettaglio) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.parteDelCorpo = parteDelCorpo;
         this.tipologia = tipologia;
         this.difficolta = difficolta;
+        this.esecuzione = esecuzione;
         this.dettaglio = dettaglio;
         this.isChecked = false;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+    public String getId() {return this.nome.replace(" ","");}
 
     public String getNome() {
         return nome;
@@ -118,9 +113,18 @@ public class Esercizio implements Serializable {
         this.dettaglio = dettaglio;
     }
 
+    public String getEsecuzione() {
+        return esecuzione;
+    }
+
+    public void setEsecuzione(String esecuzione) {
+        this.esecuzione = esecuzione;
+    }
+
     public boolean isChecked() {
         return isChecked;
     }
+
     public void setIschecked(boolean ischecked) {
         this.isChecked = ischecked;
     }

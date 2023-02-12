@@ -57,17 +57,17 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
 
         lv.setAdapter(customAdapterEserciziChecked);
 
-        populateList(parteDelCorpo);
+//        populateList(parteDelCorpo);
 
-//        if (parteDelCorpo.equalsIgnoreCase("tuttoilcorpo")){
-//            Task<QuerySnapshot> task = esercizioDAO.doRetrieveAllEsercizi();
-//
-//            recuperaEsercizio(task);
-//        } else {
-//            Task<QuerySnapshot> task = esercizioDAO.doRetrieveEsercizioByParteDelCorpo(parteDelCorpo);
-//
-//            recuperaEsercizio(task);
-//        }
+        if (parteDelCorpo.equalsIgnoreCase("tuttoilcorpo")){
+            Task<QuerySnapshot> task = esercizioDAO.doRetrieveAllEsercizi();
+
+            recuperaEsercizio(task);
+        } else {
+            Task<QuerySnapshot> task = esercizioDAO.doRetrieveEsercizioByParteDelCorpo(parteDelCorpo);
+
+            recuperaEsercizio(task);
+        }
     }
 
     private void recuperaEsercizio(Task<QuerySnapshot> task) {
@@ -79,8 +79,17 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         String nome = (String) document.get("nome");
                         String parteDelCorpo = (String) document.get("parteDelCorpo");
-                        Log.d("DEBUG", nome+" "+parteDelCorpo);
-                        Esercizio esercizio = new Esercizio(nome, parteDelCorpo);
+                        String descrizione = (String) document.get("descrizione");
+                        String difficolta = (String) document.get("difficolta");
+                        String tipologia = (String) document.get("tipologia");
+                        String esecuzione = (String) document.get("esecuzione");
+                        Esercizio esercizio = new Esercizio(nome,parteDelCorpo,descrizione,difficolta,tipologia,esecuzione);
+
+                        if (esercizio.getEsecuzione().equalsIgnoreCase("serie"))
+                            esercizio.setDettaglio(new DettaglioEsercizio(0, -1));
+                        else if (esercizio.getEsecuzione().equalsIgnoreCase("tempo"))
+                            esercizio.setDettaglio(new DettaglioEsercizio(-1, 0));
+
                         saveEsercizioInLista(esercizio);
                     }
                 } else {
@@ -89,12 +98,13 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
             }
         });
 
+        customAdapterEserciziChecked.notifyDataSetChanged();
+
     }
 
     private void saveEsercizioInLista(Esercizio esercizio) {
-
         esercizi.add(esercizio);
-
+        customAdapterEserciziChecked.add(esercizio);
     }
 
     public void conferma(View v) {
@@ -129,16 +139,16 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
     }
 
     private void populateList(String parteDelCorpo) {
-        esercizi.add(new Esercizio("PushUp", "schiena", new DettaglioEsercizio(10, 0)));
-        esercizi.add(new Esercizio("Trazioni", "schiena", new DettaglioEsercizio(10, 0)));
-        esercizi.add(new Esercizio("Squat", "gambe", new DettaglioEsercizio(10, 0)));
-        esercizi.add(new Esercizio("Affondi", "gambe", new DettaglioEsercizio(10, 0)));
-        esercizi.add(new Esercizio("braccia1", "braccia", new DettaglioEsercizio(10, 0)));
-        esercizi.add(new Esercizio("braccia2", "braccia", new DettaglioEsercizio(10, 0)));
-        esercizi.add(new Esercizio("petto1", "petto", new DettaglioEsercizio(10, 0)));
-        esercizi.add(new Esercizio("petto2", "petto", new DettaglioEsercizio(10, 0)));
-        esercizi.add(new Esercizio("addome1", "addome", new DettaglioEsercizio(10, 0)));
-        esercizi.add(new Esercizio("addome2", "addome", new DettaglioEsercizio(10, 0)));
+        esercizi.add(new Esercizio("PushUp", "schiena", new DettaglioEsercizio(10, -1)));
+        esercizi.add(new Esercizio("Trazioni", "schiena", new DettaglioEsercizio(10, -1)));
+        esercizi.add(new Esercizio("Squat", "gambe", new DettaglioEsercizio(10, -1)));
+        esercizi.add(new Esercizio("Affondi", "gambe", new DettaglioEsercizio(10, -1)));
+        esercizi.add(new Esercizio("braccia1", "braccia", new DettaglioEsercizio(10, -1)));
+        esercizi.add(new Esercizio("braccia2", "braccia", new DettaglioEsercizio(10, -1)));
+        esercizi.add(new Esercizio("petto1", "petto", new DettaglioEsercizio(10, -1)));
+        esercizi.add(new Esercizio("petto2", "petto", new DettaglioEsercizio(10, -1)));
+        esercizi.add(new Esercizio("addome1", "addome", new DettaglioEsercizio(10, -1)));
+        esercizi.add(new Esercizio("addome2", "addome", new DettaglioEsercizio(10, -1)));
 
         for (Esercizio e : esercizi) {
             if (e.getParteDelCorpo().equalsIgnoreCase(parteDelCorpo)) {

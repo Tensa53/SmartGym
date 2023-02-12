@@ -1,15 +1,18 @@
 package com.example.smartgym.gestioneScheda.application.logic;
 
-import com.example.smartgym.gestioneScheda.storage.entity.SchedaEsercizi;
+import java.util.Map;
 
 public class GestioneSchedaServiceImpl implements GestioneSchedaService {
 
     SchedaLogic schedaLogic;
 
-    @Override
-    public void saveScheda(SchedaEsercizi scheda) {
-        schedaLogic.saveScheda(scheda);
-        return;
+
+    public GestioneSchedaServiceImpl() {
+        schedaLogic = new SchedaLogic();
     }
 
+    @Override
+    public void saveScheda(Map<String, Object> scheda) {
+        schedaLogic.saveScheda(scheda);
+    }
 }

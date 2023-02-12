@@ -75,15 +75,21 @@ public class FormUtils {
 
         for (Esercizio e: schedaEsercizi) {
             Integer reps = e.getDettaglio().getRipetizioni();
-            Integer time = e.getDettaglio().getRipetizioni();
+            Integer time = e.getDettaglio().getDurata();
 
-            if (reps != null){
-                if (reps < 3 || reps > 30)
+            if (time == -1){
+                if (reps > 0) {
+                    if (reps < 3 || reps > 30)
+                        throw new ExercisesRepsExceededException();
+                } else
                     throw new ExercisesRepsExceededException();
             }
 
-            if (time != null) {
-                if (time < 20 || time > 60)
+            if (reps == -1) {
+                if (time > 0) {
+                    if (time < 20 || time > 60)
+                        throw new ExcersisesDurationExceededException();
+                } else
                     throw new ExcersisesDurationExceededException();
             }
         }

@@ -1,9 +1,9 @@
 package com.example.smartgym.gestioneScheda.application.logic;
 
-import com.example.smartgym.gestioneScheda.storage.entity.SchedaEsercizi;
+import java.util.Map;
 
 public interface GestioneSchedaService {
 
-    void saveScheda(SchedaEsercizi scheda);
+    void saveScheda(Map<String, Object> scheda);
 
 }

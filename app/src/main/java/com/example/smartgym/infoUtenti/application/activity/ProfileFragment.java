@@ -1,11 +1,13 @@
 package com.example.smartgym.infoUtenti.application.activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.smartgym.R;
 import com.example.smartgym.infoUtenti.application.logic.AthleteInfo;
@@ -148,11 +151,26 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void onCancellaProfilo() {
-        Intent intent = new Intent(getContext(), CancellaProfiloActivity.class);
-        Bundle b = new Bundle();
-        b.putSerializable("User", myAthlete);
-        intent.putExtras(b);
-        startActivity(intent);
+        mostraAvviso();
+    }
+
+    private void mostraAvviso() {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                switch (i) {
+                    case DialogInterface.BUTTON_POSITIVE: Toast.makeText(getContext(), "TODO", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        builder.setMessage("Sei sicuro di voler cancellare il profilo ?")
+                .setPositiveButton("Si", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
     }
 
     private void onModificaCaratteristiche() {

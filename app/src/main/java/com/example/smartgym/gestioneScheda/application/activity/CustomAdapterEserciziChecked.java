@@ -63,7 +63,7 @@ public class CustomAdapterEserciziChecked extends ArrayAdapter<Esercizio> {
         imgEsercizio.setImageDrawable(getContext().getResources().getDrawable(R.drawable.logo));
         tvNomeEsercizio.setText(esercizio.getNome());
 
-        if (esercizio.getDettaglio().getDurata() > 0){
+        if (esercizio.getDettaglio().getDurata() >= 0){
             tvRepsTime.setText("Durata(sec.)");
             tvRepsTimeValue.setText("00:"+esercizio.getDettaglio().getDurata());
         } else {
