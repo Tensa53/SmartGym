@@ -1,8 +1,10 @@
 package com.example.smartgym.infoUtenti.application.activity;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -45,7 +47,7 @@ public class InserimentoModificaCaratteristicheActivity extends AppCompatActivit
 
         loginRegistration = new LoginRegistration();
         Bundle bundle = getIntent().getExtras();
-//        myAthlete = (Atleta) (bundle.getSerializable("User"));
+        myAthlete = (Atleta) (bundle.getSerializable("User"));
 
         athleteInfo = new AthleteInfo();
 
@@ -57,19 +59,13 @@ public class InserimentoModificaCaratteristicheActivity extends AppCompatActivit
 
         spinnerEsperienza.setAdapter(adapterItems);
 
-//        spinnerEsperienza.setSelection(myAthlete.esperienzaValue());
-//
-//        etPeso.setText("" + myAthlete.getPeso());
-//
-//        etAltezza.setText("" + myAthlete.getAltezza());
-//
-//        etAllenamenti.setText("" + myAthlete.getAllenamentiSettimanali());
+        setFields();
 
         spinnerEsperienza.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String item = (String) adapterView.getItemAtPosition(i);
-//                myAthlete.setEsperienza(item);
+                myAthlete.setEsperienza(item);
             }
 
             @Override
@@ -80,6 +76,17 @@ public class InserimentoModificaCaratteristicheActivity extends AppCompatActivit
 
         btUpdate.setOnClickListener(this);
         btReturn.setOnClickListener(this);
+    }
+
+    private void setFields() {
+        spinnerEsperienza.setSelection(myAthlete.esperienzaValue());
+
+        etPeso.setText("" + myAthlete.getPeso());
+
+        etAltezza.setText("" + myAthlete.getAltezza());
+
+        etAllenamenti.setText("" + myAthlete.getAllenamentiSettimanali());
+
     }
 
     @Override
@@ -110,26 +117,47 @@ public class InserimentoModificaCaratteristicheActivity extends AppCompatActivit
         String esperienza = spinnerEsperienza.getSelectedItem().toString();
 
         if (verificaCaratteristiche(peso, altezza, numeroAllenamenti)) {
-            myAthlete.setPeso(peso);
-            myAthlete.setAltezza(altezza);
-            myAthlete.setAllenamentiSettimanali(numeroAllenamenti);
-            myAthlete.setEsperienza(esperienza);
-
-            Task <Void> updateResult = athleteInfo.editAthleteFeatures(myAthlete, loginRegistration.getUserLogged().getUid());
-
-            updateResult.addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void unused) {
-                    Toast.makeText(getApplicationContext(), "Caratteristiche aggiornate con successo !", Toast.LENGTH_LONG).show();
-                    lanciaHome();
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
+            updateCaratteristicheAtleta(peso, altezza, numeroAllenamenti, esperienza);
         }
+    }
+
+    private void updateCaratteristicheAtleta(Integer peso, Integer altezza, Integer numeroAllenamenti, String esperienza) {
+        myAthlete.setPeso(peso);
+        myAthlete.setAltezza(altezza);
+        myAthlete.setAllenamentiSettimanali(numeroAllenamenti);
+        myAthlete.setEsperienza(esperienza);
+
+        Task <Void> updateResult = athleteInfo.editAthleteFeatures(myAthlete, loginRegistration.getUserLogged().getUid());
+
+        updateResult.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                mostraAvviso();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void mostraAvviso() {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                switch (i) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        lanciaHome();
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setMessage("Caratteristiche aggiornate con successo !")
+                .setPositiveButton("OK", dialogClickListener).show();
     }
 
     private boolean verificaCaratteristiche(Integer peso, Integer altezza, Integer numeroAllenamenti) {

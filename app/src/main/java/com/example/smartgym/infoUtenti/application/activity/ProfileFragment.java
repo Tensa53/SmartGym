@@ -24,6 +24,7 @@ import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
 import com.example.smartgym.infoUtenti.storage.entity.Atleta;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener {
@@ -36,10 +37,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     Atleta myAthlete;
 
+    AtletaReceiver atletaReceiver;
+
     LoginRegistration loginRegistration;
     AthleteInfo athleteInfo;
-
-    AtletaReceiver atletaReceiver;
 
     public ProfileFragment() {
     }
@@ -68,16 +69,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         athleteInfo = new AthleteInfo();
         loginRegistration = new LoginRegistration();
-        String idUser = loginRegistration.getUserLogged().getUid();
+        FirebaseUser user = loginRegistration.getUserLogged();
 
         myAthlete = atletaReceiver.getAtleta();
 
-
-
-//        if (idUser != null)
-//            recuperaAtleta(idUser);
-
-//        setFields();
+        setFields();
 
         btModificaInfo.setOnClickListener(this);
         btModificaCaratteristiche.setOnClickListener(this);
@@ -99,7 +95,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     }
 
     private void widgetBinding() {
-
         btModificaInfo = getView().findViewById(R.id.btModificaInfo);
         btModificaCaratteristiche = getView().findViewById(R.id.btModificaCaratteristiche);
         btLogout = getView().findViewById(R.id.btLogout);
@@ -115,23 +110,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         tvAltezza = getView().findViewById(R.id.tvAltezza);
         tvAllenamenti = getView().findViewById(R.id.tvNumAllenamenti);
         tvEsperienza = getView().findViewById(R.id.tvEsperienza);
-    }
-
-    private void recuperaAtleta(String id) {
-        Task<DocumentSnapshot> task = athleteInfo.getAthletebyId(id);
-
-        task.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Atleta atleta = documentSnapshot.toObject(Atleta.class);
-                Log.d("DEBUG",atleta.getNome());
-                saveAtleta(atleta);
-            }
-        });
-    }
-
-    private void saveAtleta(Atleta atleta) {
-        myAthlete = atleta;
     }
 
     @Override
