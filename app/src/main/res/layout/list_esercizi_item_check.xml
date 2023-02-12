@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/tvNomeEsercizio"
-        android:layout_width="100dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:gravity="center"
@@ -35,7 +35,7 @@
 
     <LinearLayout
         android:id="@+id/ll2"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
