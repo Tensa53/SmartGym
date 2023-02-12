@@ -49,8 +49,23 @@ public class SchedaEserciziDAO {
         return task;
     }
 
+
+    public Task<Void> doUpdateSchedaInUso(String idScheda, String key, Boolean value) {
+        DocumentReference dr = dbHelper.collection("schede_esercizi").document(idScheda);
+
+        return dr.update(key, value);
+    }
+
     public Task<DocumentSnapshot> doRetrieveSchedaByDocumentId(String id) {
         Task<DocumentSnapshot> task = dbHelper.collection("schede_esercizi").document(id).get();
+
+        return task;
+    }
+
+    public Task<QuerySnapshot> doRetrieveSchedaInUso(String id) {
+        DocumentReference dr = dbHelper.collection("atleti").document(id);
+
+        Task<QuerySnapshot> task = dbHelper.collection("schede_esercizi").whereEqualTo("ricevente", dr).whereEqualTo("inUso", true).get();
 
         return task;
     }

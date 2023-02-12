@@ -37,7 +37,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     Atleta myAthlete;
 
-    AtletaReceiver atletaReceiver;
+    ActivityReceiver activityReceiver;
+
+    String idSchedaInUso = "";
 
     LoginRegistration loginRegistration;
     AthleteInfo athleteInfo;
@@ -48,7 +50,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onAttach(@NonNull Activity activity) {
         super.onAttach(activity);
-        atletaReceiver = (AtletaReceiver) activity;
+        activityReceiver = (ActivityReceiver) activity;
     }
 
     @Override
@@ -71,7 +73,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         loginRegistration = new LoginRegistration();
         FirebaseUser user = loginRegistration.getUserLogged();
 
-        myAthlete = atletaReceiver.getAtleta();
+        myAthlete = activityReceiver.getAtleta();
 
         setFields();
 

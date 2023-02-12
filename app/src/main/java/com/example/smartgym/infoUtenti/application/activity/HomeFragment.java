@@ -14,29 +14,40 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smartgym.R;
 import com.example.smartgym.gestioneScheda.application.activity.CustomAdapterEsercizi;
+import com.example.smartgym.gestioneScheda.storage.dataAcess.EsercizioDAO;
+import com.example.smartgym.gestioneScheda.storage.dataAcess.SchedaEserciziDAO;
 import com.example.smartgym.gestioneScheda.storage.entity.DettaglioEsercizio;
 import com.example.smartgym.gestioneScheda.storage.entity.Esercizio;
+import com.example.smartgym.gestioneScheda.storage.entity.RealScheda;
+import com.example.smartgym.gestioneScheda.storage.entity.SchedaEsercizi;
 import com.example.smartgym.infoUtenti.application.logic.AthleteInfo;
 import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
 import com.example.smartgym.infoUtenti.storage.entity.Atleta;
 import com.example.smartgym.start.MainActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements View.OnClickListener {
 
-    TextView tv1;
-    TextView tvUtente;
+    TextView tvUtente, tvSchedaInUso;
+
+    Button btCompletaProfilo;
 
     CustomAdapterEsercizi customAdapterEsercizi;
 
@@ -45,8 +56,16 @@ public class HomeFragment extends Fragment {
     AthleteInfo athleteInfo;
     LoginRegistration loginRegistration;
 
+    SchedaEsercizi schedaEsercizi;
+
+    String idSchedaInUso = "";
+
     Atleta myAthlete;
-    AtletaReceiver atletaReceiver;
+    FirebaseUser user;
+    ActivityReceiver activityReceiver;
+
+    SchedaEserciziDAO schedaEserciziDAO;
+    EsercizioDAO esercizioDAO;
 
     public HomeFragment() {
     }
@@ -60,7 +79,7 @@ public class HomeFragment extends Fragment {
     public void onAttach(@NonNull Activity activity) {
         super.onAttach(activity);
 
-        atletaReceiver = (AtletaReceiver) activity;
+        activityReceiver = (ActivityReceiver) activity;
     }
 
     @Override
@@ -72,22 +91,137 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        tv1 = view.findViewById(R.id.tv1);
-        tvUtente = view.findViewById(R.id.tvUtente);
-        lv = view.findViewById(R.id.lv1);
+        schedaEserciziDAO = new SchedaEserciziDAO();
+        esercizioDAO = new EsercizioDAO();
+
+        schedaEsercizi = new RealScheda();
+
+        widgetBinding();
+
+        btCompletaProfilo.setOnClickListener(this);
 
         loginRegistration = new LoginRegistration();
         athleteInfo = new AthleteInfo();
-        String idUser = loginRegistration.getUserLogged().getUid();
+        user = loginRegistration.getUserLogged();
 
-        if (idUser != null)
-            recuperaAtleta(idUser);
+        if (user != null)
+            recuperaAtleta(user.getUid());
 
         customAdapterEsercizi = new CustomAdapterEsercizi(getContext(),R.layout.list_esercizi_item,new ArrayList<Esercizio>());
 
+        recuperaSchedaInUso();
+
         lv.setAdapter(customAdapterEsercizi);
 
-        populateList();
+        tvSchedaInUso.setText("Scheda Esercizi fissata: ");
+//
+//        populateList();
+    }
+
+    private void widgetBinding() {
+        tvUtente = getView().findViewById(R.id.tvUtente);
+        btCompletaProfilo = getView().findViewById(R.id.btCompletaProfilo);
+        tvSchedaInUso = getView().findViewById(R.id.tvSchedaInUso);
+        lv = getView().findViewById(R.id.lv1);
+    }
+
+    private void recuperaSchedaInUso() {
+        Task<QuerySnapshot> task = schedaEserciziDAO.doRetrieveSchedaInUso(user.getUid());
+
+        task.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    if (task.getResult().size() > 0){
+                        QuerySnapshot qs = task.getResult();
+                        List<DocumentSnapshot> dss = qs.getDocuments();
+                        DocumentSnapshot ds = dss.get(0);
+                        aggiornaSchedaInUso(ds.getId());
+                        String modalita = (String) ds.get("modalita");
+                        String nome = (String) ds.get("nome");
+                        boolean inUso = (boolean) ds.get("inUso");
+                        boolean pubblica = (boolean) ds.get("pubblica");
+                        ArrayList<DocumentReference> dettaglies = (ArrayList<DocumentReference>) ds.get("esercizi_scelti");
+
+                        RealScheda realScheda = new RealScheda();
+                        realScheda.setNome(nome);
+                        realScheda.setInUso(inUso);
+                        realScheda.setPubblica(pubblica);
+                        realScheda.setModalita(modalita);
+
+                        setParametriScheda(realScheda);
+
+                        recuperaDettagliScheda(dettaglies);
+                    }
+                }
+            }
+        });
+    }
+
+    private void aggiornaSchedaInUso(String id) {
+        idSchedaInUso = id;
+        activityReceiver.setIdSchedaInUso(id);
+    }
+
+    private void recuperaDettagliScheda(ArrayList<DocumentReference> dettaglies) {
+
+        for (DocumentReference dr: dettaglies) {
+            Task<DocumentSnapshot> task = dr.get();
+
+            task.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()){
+                        DocumentSnapshot ds = task.getResult();
+
+                        DocumentReference dr = (DocumentReference) ds.get("esercizio");
+                        Long durata = (Long) ds.get("durata");
+                        Integer durataInt = Math.toIntExact(durata);
+                        Long ripetizioni = (Long) ds.get("ripetizioni");
+                        Integer ripetizioniInt = Math.toIntExact(ripetizioni);
+
+                        DettaglioEsercizio dettaglioEsercizio = new DettaglioEsercizio(ripetizioniInt, durataInt);
+
+                        recuperaEsercizio(dettaglioEsercizio, dr);
+                    }
+                }
+            });
+        }
+
+    }
+
+    private void recuperaEsercizio(DettaglioEsercizio dettaglioEsercizio, DocumentReference dr) {
+
+        Task<DocumentSnapshot> task = dr.get();
+
+        task.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    DocumentSnapshot ds = task.getResult();
+
+                    String esecuzione = (String) ds.get("esecuzione");
+                    String nome = (String) ds.get("nome");
+                    String descrizione = (String) ds.get("descrizione");
+                    String parteDelCorpo = (String) ds.get("parteDelCorpo");
+                    String tipologia = (String) ds.get("tipologia");
+                    String difficolta = (String) ds.get("difficolta");
+
+                    Esercizio esercizio = new Esercizio(nome,descrizione, difficolta, parteDelCorpo, tipologia, esecuzione, dettaglioEsercizio);
+
+                    aggiungiEsercizio(esercizio);
+                }
+            }
+        });
+
+        customAdapterEsercizi.notifyDataSetChanged();
+
+    }
+
+    private void aggiungiEsercizio(Esercizio esercizio) {
+        ((RealScheda) schedaEsercizi).aggiungiEsercizio(esercizio);
+
+        customAdapterEsercizi.add(esercizio);
     }
 
     private void mostraAvviso() {
@@ -123,12 +257,22 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    private void setParametriScheda(RealScheda realScheda) {
+        ((RealScheda) schedaEsercizi).setModalita(realScheda.getModalita());
+        ((RealScheda) schedaEsercizi).setNome(realScheda.getNome());
+        ((RealScheda) schedaEsercizi).setInUso(realScheda.isInUso());
+        ((RealScheda) schedaEsercizi).setPubblica(realScheda.isPubblica());
+    }
+
     private void saveAtleta(Atleta atleta) {
         myAthlete = atleta;
 
-        atletaReceiver.setAtleta(myAthlete);
+        activityReceiver.setAtleta(myAthlete);
 
         tvUtente.setText("Benvenuto " + myAthlete.getNome());
+
+        if (myAthlete.areFeaturesEmpty())
+            btCompletaProfilo.setVisibility(Button.VISIBLE);
     }
 
     private void populateList() {
@@ -144,4 +288,20 @@ public class HomeFragment extends Fragment {
         customAdapterEsercizi.add(new Esercizio("Side Hop",new DettaglioEsercizio(0,20)));
     }
 
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+
+        switch (id) {
+            case R.id.btCompletaProfilo: onCompletProfiloClick();
+        }
+    }
+
+    private void onCompletProfiloClick() {
+        Intent intent = new Intent(getContext(), InserimentoModificaCaratteristicheActivity.class);
+        Bundle b = new Bundle();
+        b.putSerializable("User", myAthlete);
+        intent.putExtras(b);
+        startActivity(intent);
+    }
 }

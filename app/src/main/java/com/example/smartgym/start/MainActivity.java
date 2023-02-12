@@ -13,7 +13,7 @@ import android.view.MenuItem;
 
 import com.example.smartgym.R;
 import com.example.smartgym.gestioneScheda.application.activity.ExercisesFragment;
-import com.example.smartgym.infoUtenti.application.activity.AtletaReceiver;
+import com.example.smartgym.infoUtenti.application.activity.ActivityReceiver;
 import com.example.smartgym.infoUtenti.application.activity.HomeFragment;
 import com.example.smartgym.infoUtenti.application.activity.ProfileFragment;
 import com.example.smartgym.infoUtenti.application.logic.AthleteInfo;
@@ -34,7 +34,7 @@ import java.security.AlgorithmConstraints;
 import java.util.Map;
 import java.util.Set;
 
-public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener, AtletaReceiver {
+public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener, ActivityReceiver {
 
     BottomNavigationView bottomNavigationView;
 
@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     ActionBar actionBar;
 
     Atleta myAthlete;
+    String idSchedaInUso = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,16 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         }
 
         return false;
+    }
+
+    @Override
+    public String getIdSchedaInUso() {
+        return idSchedaInUso;
+    }
+
+    @Override
+    public void setIdSchedaInUso(String id) {
+        idSchedaInUso = id;
     }
 
     @Override

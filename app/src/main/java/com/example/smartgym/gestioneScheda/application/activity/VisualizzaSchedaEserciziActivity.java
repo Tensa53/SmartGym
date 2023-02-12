@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -21,6 +22,8 @@ import com.example.smartgym.gestioneScheda.storage.entity.ProxyScheda;
 import com.example.smartgym.gestioneScheda.storage.entity.RealScheda;
 import com.example.smartgym.gestioneScheda.storage.entity.SchedaEsercizi;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -32,6 +35,10 @@ public class VisualizzaSchedaEserciziActivity extends AppCompatActivity implemen
     String nome;
 
     TextView tv1;
+
+    String idSchedaInUso;
+
+    String idNuovaSchedaInuso;
 
     EsercizioDAO esercizioDAO;
 
@@ -55,6 +62,14 @@ public class VisualizzaSchedaEserciziActivity extends AppCompatActivity implemen
         bundle.isEmpty();
 
         ProxyScheda proxyScheda = (ProxyScheda) bundle.getSerializable("PROXYSCHEDA");
+
+        idSchedaInUso = getIntent().getStringExtra("SCHEDAINUSO");
+
+        Log.d("DEBUG", idSchedaInUso);
+
+        idNuovaSchedaInuso = getIntent().getStringExtra("IDNUOVASCHEDA");
+
+        Log.d("DEBUG", idNuovaSchedaInuso);
 
         widgetBinding();
 
@@ -187,12 +202,47 @@ public class VisualizzaSchedaEserciziActivity extends AppCompatActivity implemen
         int id = view.getId();
 
         switch (id) {
-            case R.id.btFissaScheda: Toast.makeText(getApplicationContext(), "La scheda viene fissata nella home e considerata come in uso, TODO", Toast.LENGTH_SHORT).show();
+            case R.id.btFissaScheda: onFissaScheda();
             break;
             case R.id.btModificaScheda: onModifica();
             break;
             case R.id.btCancellaScheda: onCancella();
         }
+    }
+
+    private void onFissaScheda() {
+        if (!idSchedaInUso.isEmpty()){
+            Task<Void> task = schedaEserciziDAO.doUpdateSchedaInUso(idSchedaInUso, "inUso", false);
+
+            task.addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    fissaNuovaScheda();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else
+            fissaNuovaScheda();
+    }
+
+    private void fissaNuovaScheda() {
+        Task<Void> task = schedaEserciziDAO.doUpdateSchedaInUso(idNuovaSchedaInuso, "inUso", true);
+
+        task.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(getApplicationContext(), "Scheda Fissata nella home", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void onModifica() {

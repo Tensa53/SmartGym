@@ -22,7 +22,7 @@ import com.example.smartgym.gestioneScheda.storage.dataAcess.SchedaEserciziDAO;
 import com.example.smartgym.gestioneScheda.storage.entity.ProxyScheda;
 import com.example.smartgym.gestioneScheda.storage.entity.RealScheda;
 import com.example.smartgym.gestioneScheda.storage.entity.SchedaEsercizi;
-import com.example.smartgym.infoUtenti.application.activity.AtletaReceiver;
+import com.example.smartgym.infoUtenti.application.activity.ActivityReceiver;
 import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,7 +43,9 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
 
     CustomAdapterNomeScheda customAdapter;
 
-    AtletaReceiver atletaReceiver;
+    ActivityReceiver activityReceiver;
+
+    String idSchedaInUso = "";
 
     public ExercisesFragment() {
     }
@@ -51,7 +53,7 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onAttach(@NonNull Activity activity) {
         super.onAttach(activity);
-        atletaReceiver = (AtletaReceiver) activity;
+        activityReceiver = (ActivityReceiver) activity;
     }
 
     @Override
@@ -67,6 +69,8 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        idSchedaInUso = activityReceiver.getIdSchedaInUso();
 
         bt1 = getView().findViewById(R.id.bt1);
 
@@ -106,7 +110,6 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
                         SchedaEsercizi schedaEsercizi = new ProxyScheda(id,nome);
 
                         Log.d("DEBUG", "NOME PROXY SCHEDA: " + schedaEsercizi.getNome());
-
 
                         aggiungiScheda(schedaEsercizi);
                     }
@@ -153,6 +156,12 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
         SchedaEsercizi schedaEsercizi = (SchedaEsercizi) lv1.getItemAtPosition(i);
         Log.d("DEBUG", schedaEsercizi.getNome());
         Intent intent = new Intent(getContext(), VisualizzaSchedaEserciziActivity.class);
+
+        Log.d("DEBUG", "ID SCHEDA IN USO: " + idSchedaInUso);
+        Log.d("DEBUG", "ID NUOVA SCHEDA IN USO: " + schedaEsercizi.getId());
+
+        intent.putExtra("SCHEDAINUSO", idSchedaInUso);
+        intent.putExtra("IDNUOVASCHEDA", schedaEsercizi.getId());
         Bundle bundle = new Bundle();
         bundle.putSerializable("PROXYSCHEDA", (ProxyScheda) schedaEsercizi);
         intent.putExtras(bundle);

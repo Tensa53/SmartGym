@@ -1,6 +1,7 @@
 package com.example.smartgym;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -23,14 +24,28 @@ import org.junit.runner.RunWith;
 public class InserimentoCaratteristicheInstrumentedTest1 {
 
     @Rule
-    public ActivityScenarioRule<InserimentoModificaCaratteristicheActivity> activityScenario = new ActivityScenarioRule<InserimentoModificaCaratteristicheActivity>(InserimentoModificaCaratteristicheActivity.class);
+    public ActivityScenarioRule<MainActivity> activityScenario = new ActivityScenarioRule<MainActivity>(MainActivity.class);
 
     @Test
     public void inserimentoCaratteristicheTest() {
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        onView(withId(R.id.profileFragment)).perform(click());
+
+        onView(withId(R.id.btModificaCaratteristiche)).perform(click());
+
+        onView(withId(R.id.etPeso)).perform(clearText());
         onView(withId(R.id.etPeso)).perform(typeText("500"));
+        onView(withId(R.id.etAltezza)).perform(clearText());
         onView(withId(R.id.etAltezza)).perform(typeText("150"));
         onView(withId(R.id.spinnerEsperienza)).perform(click());
         onView(withText("Principiante")).perform(click());
+        onView(withId(R.id.etAllenamenti)).perform(clearText());
         onView(withId(R.id.etAllenamenti)).perform(typeText("4"));
 
         onView(withId(R.id.btUpdate)).perform(click());
