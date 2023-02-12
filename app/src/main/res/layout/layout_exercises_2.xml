@@ -3,17 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <TextView
-        android:id="@+id/tvModalita"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Modalità: "
-        android:textSize="25dp"
-        android:textColor="@color/purple_500"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"/>
-
     <LinearLayout
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
@@ -27,53 +16,54 @@
             android:textColor="@color/purple_500"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Seleziona una parte del corpo da allenare:"
-            android:textSize="15dp"/>
+            android:text="Parte del corpo da allenare:"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center_horizontal">
 
             <Button
                 android:id="@+id/btbraccia"
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="braccia"
                 android:onClick="selezionaParteDelCorpo"/>
 
             <Button
                 android:id="@+id/btgambe"
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="gambe"
                 android:onClick="selezionaParteDelCorpo"/>
 
             <Button
                 android:id="@+id/btaddome"
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="addome"
                 android:onClick="selezionaParteDelCorpo"/>
 
             <Button
                 android:id="@+id/btpetto"
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="petto"
                 android:onClick="selezionaParteDelCorpo"/>
 
             <Button
                 android:id="@+id/btschiena"
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="schiena"
                 android:onClick="selezionaParteDelCorpo"/>
 
             <Button
                 android:id="@+id/bttutto"
-                android:layout_width="200dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="tutto il corpo"
                 android:onClick="selezionaParteDelCorpo"/>

@@ -15,8 +15,6 @@ import com.example.smartgym.R;
 
 public class SelezioneModalitaSchedaActivity extends AppCompatActivity {
 
-    TextView tv;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,10 +26,6 @@ public class SelezioneModalitaSchedaActivity extends AppCompatActivity {
         actionBar.setTitle("Creazione Scheda Esercizi");
 
         setContentView(R.layout.activity_selezione_modalita_scheda);
-
-        tv = findViewById(R.id.tvselezionemodalita);
-
-        tv.setText(getIntent().getExtras().getString("stringa"));
     }
 
     public void selezionaModalita(View v) {
@@ -51,7 +45,6 @@ public class SelezioneModalitaSchedaActivity extends AppCompatActivity {
                 break;
         }
 
-        intent.putExtra("stringa", b.getText().toString());
         startActivity(intent);
     }
 

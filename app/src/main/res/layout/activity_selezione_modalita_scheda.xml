@@ -17,27 +17,29 @@
             android:id="@+id/tvselezionemodalita"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Seleziona la modalità di creazione della scheda:"
+            android:text="Modalità di creazione: "
+            android:textSize="24sp"
+            android:textStyle="bold"
             android:layout_centerHorizontal="true"
             android:textColor="@color/purple_500"
             android:layout_centerVertical="true"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center_horizontal">
 
             <Button
                 android:id="@+id/btmanuale"
-                android:layout_width="120dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Manuale"
                 android:onClick="selezionaModalita"/>
 
             <Button
                 android:id="@+id/btgenerata"
-                android:layout_width="120dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Generata"
                 android:enabled="false"
@@ -45,7 +47,7 @@
 
             <Button
                 android:id="@+id/bttrainer"
-                android:layout_width="120dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Trainer"
                 android:enabled="false"

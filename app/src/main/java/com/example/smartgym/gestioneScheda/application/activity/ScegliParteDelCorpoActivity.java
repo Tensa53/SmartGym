@@ -15,8 +15,6 @@ import com.example.smartgym.R;
 
 public class ScegliParteDelCorpoActivity extends AppCompatActivity {
 
-    TextView tv;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,10 +25,6 @@ public class ScegliParteDelCorpoActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         actionBar.setTitle("Creazione Scheda Esercizi");
-
-        tv = findViewById(R.id.tvModalita);
-
-//        tv.append(getIntent().getExtras().getString("stringa"));
     }
 
     public void selezionaParteDelCorpo(View v) {
@@ -56,8 +50,6 @@ public class ScegliParteDelCorpoActivity extends AppCompatActivity {
         intent = new Intent(getApplicationContext(), SelezionaEserciziActivity.class);
         intent.putExtra("PARTEDELCORPO", partedelCorpo);
         startActivity(intent);
-
-//        Toast.makeText(this, "Hai selezionato: " + partedelCorpo, Toast.LENGTH_LONG).show();
     }
 
     @Override

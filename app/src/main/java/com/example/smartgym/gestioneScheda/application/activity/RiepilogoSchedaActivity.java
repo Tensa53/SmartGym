@@ -4,7 +4,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,8 +33,11 @@ public class RiepilogoSchedaActivity extends AppCompatActivity {
 
     private ArrayList<Esercizio> esercizi = new ArrayList<Esercizio>();
     ListView lv;
+    EditText etNomeScheda;
     SchedaLogic schedaLogic;
     CustomAdapterEsercizi customAdapterEsercizi;
+
+    String nomeScheda = "";
 
     Map<String, Object> dettagli = new HashMap<>();
 
@@ -55,6 +60,8 @@ public class RiepilogoSchedaActivity extends AppCompatActivity {
         esercizi = (ArrayList<Esercizio>) bundle.getSerializable("Esercizi");
 
         lv = (ListView) findViewById(R.id.eserciziLV);
+        etNomeScheda = findViewById(R.id.etNomeScheda);
+
         schedaLogic = new SchedaLogic();
 
 //        athleteInfo = new AthleteInfo();
@@ -75,40 +82,44 @@ public class RiepilogoSchedaActivity extends AppCompatActivity {
 
     public void conferma(View v) {
 
-        EsercizioDAO esercizioDAO = new EsercizioDAO();
+        nomeScheda = etNomeScheda.getText().toString();
 
-        schedaEs.put("nome","scheda");
-        schedaEs.put("pubblica", false);
-        schedaEs.put("modalita", "manuale");
-        schedaEs.put("ricevente", "/atleti/"+loginRegistration.getUserLogged().getUid());
-        schedaEs.put("inUso", false);
+        if (!nomeScheda.isEmpty()) {
+            EsercizioDAO esercizioDAO = new EsercizioDAO();
 
-        for (int i = 0; i < lv.getChildCount(); i++) {
-            Esercizio esercizio = (Esercizio) lv.getItemAtPosition(i);
+            schedaEs.put("nome",nomeScheda);
+            schedaEs.put("pubblica", false);
+            schedaEs.put("modalita", "manuale");
+            schedaEs.put("ricevente", "/atleti/"+loginRegistration.getUserLogged().getUid());
+            schedaEs.put("inUso", false);
 
-            dettagli.put("durata", esercizio.getDettaglio().getDurata());
-            dettagli.put("ripetizioni", esercizio.getDettaglio().getRipetizioni());
-            dettagli.put("esercizio", "/esercizi/"+esercizio.getId());
+            for (int i = 0; i < lv.getChildCount(); i++) {
+                Esercizio esercizio = (Esercizio) lv.getItemAtPosition(i);
 
-            idDettagli.add(esercizioDAO.doSaveDettaglioEsercizio(dettagli));
+                dettagli.put("durata", esercizio.getDettaglio().getDurata());
+                dettagli.put("ripetizioni", esercizio.getDettaglio().getRipetizioni());
+                dettagli.put("esercizio", "/esercizi/"+esercizio.getId());
 
-            dettagli.clear();
-        }
+                idDettagli.add(esercizioDAO.doSaveDettaglioEsercizio(dettagli));
 
-        schedaEs.put("esercizi_scelti",idDettagli);
-
-        SchedaEserciziDAO schedaEserciziDAO = new SchedaEserciziDAO();
-
-        Task<Void> saveResult = schedaEserciziDAO.doSaveScheda(schedaEs);
-
-        saveResult.addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful())
-                    mostraMessaggio();
+                dettagli.clear();
             }
-        });
 
+            schedaEs.put("esercizi_scelti",idDettagli);
+
+            SchedaEserciziDAO schedaEserciziDAO = new SchedaEserciziDAO();
+
+            Task<Void> saveResult = schedaEserciziDAO.doSaveScheda(schedaEs);
+
+            saveResult.addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful())
+                        mostraMessaggio();
+                }
+            });
+        } else
+            etNomeScheda.setError("Inserisci un nome scheda");
 
 //        schedaLogic.saveScheda(scheda);
 

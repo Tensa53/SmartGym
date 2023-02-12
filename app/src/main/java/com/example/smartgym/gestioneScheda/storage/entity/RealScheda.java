@@ -73,6 +73,10 @@ public class RealScheda implements Serializable,SchedaEsercizi {
         esercizi.add(esercizio);
     }
 
+    public int getNumEsercizi() {
+        return esercizi.size();
+    }
+
     public void rimuoviEsercizio(Esercizio esercizio) {
         esercizi.remove(esercizio);
     }

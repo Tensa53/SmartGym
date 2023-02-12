@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.smartgym.R;
@@ -42,6 +43,10 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seleziona_esercizi);
+
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setTitle("Creazione Scheda Esercizi");
 
         esercizioDAO = new EsercizioDAO();
         esercizi = new ArrayList<>();
@@ -167,7 +172,7 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
         int c2 = e.getDettaglio().getRipetizioni();
 
         if (c1 >= 0) {
-            c1++;
+            c1+=5;
             e.getDettaglio().setDurata(c1);
         } else if (c2 >= 0) {
             c2++;
@@ -185,7 +190,7 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
         int c2 = e.getDettaglio().getRipetizioni();
 
         if (c1 > 0) {
-            c1--;
+            c1-=5;
             e.getDettaglio().setDurata(c1);
         } else if (c2 > 0) {
             c2--;

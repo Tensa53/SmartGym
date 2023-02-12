@@ -14,26 +14,36 @@
         android:layout_marginBottom="20dp">
 
         <TextView
+            android:id="@+id/tv1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Inserisci un nome per la scheda:"
+            android:textColor="@color/purple_500"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"/>
+
+        <EditText
+            android:id="@+id/etNomeScheda"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Nome Scheda"/>
+
+        <TextView
             android:id="@+id/tvselezionemodalita"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hai selezionato i seguenti esercizi:"
+            android:textStyle="bold"
             android:textColor="@color/purple_500"
             android:layout_gravity="center"
-            android:textSize="18dp"/>
+            android:textSize="24sp"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical">
-
-            <ListView
-                android:id="@+id/eserciziLV"
-                android:layout_width="300dp"
-                android:layout_height="400dp" />
-
-        </LinearLayout>
+        <ListView
+            android:id="@+id/eserciziLV"
+            android:layout_width="300dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="420dp" />
 
     </LinearLayout>
 
@@ -51,7 +61,7 @@
             android:text="Indietro"
             android:onClick="indietro"
             android:layout_marginRight="10dp"
-            android:layout_below="@id/layout"></Button>
+            android:layout_below="@id/layout"/>
 
         <Button
             android:id="@+id/confermaButton"
@@ -60,9 +70,21 @@
             android:text="Conferma"
             android:onClick="conferma"
             android:layout_marginLeft="10dp"
-            android:layout_below="@id/layout"></Button>
+            android:layout_below="@id/layout"/>
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/layout0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+
+
+
+
+    </LinearLayout>
 
 </RelativeLayout>
