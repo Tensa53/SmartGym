@@ -26,7 +26,7 @@ public class InserimentoCaratteristicheInstrumentedTest1 {
     public ActivityScenarioRule<InserimentoModificaCaratteristicheActivity> activityScenario = new ActivityScenarioRule<InserimentoModificaCaratteristicheActivity>(InserimentoModificaCaratteristicheActivity.class);
 
     @Test
-    public void inserimentoCaratteritsicheTest() {
+    public void inserimentoCaratteristicheTest() {
         onView(withId(R.id.etPeso)).perform(typeText("500"));
         onView(withId(R.id.etAltezza)).perform(typeText("150"));
         onView(withId(R.id.spinnerEsperienza)).perform(click());
