@@ -44,6 +44,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     LoginRegistration loginRegistration;
     AthleteInfo athleteInfo;
 
+    AtletaReceiver atletaReceiver;
+
     public ProfileFragment() {
     }
 
@@ -151,6 +153,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         builder.setMessage("Sei sicuro di voler cancellare il profilo ?")
                 .setPositiveButton("Si", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
+        /*Intent intent = new Intent(getContext(), CancellaProfiloActivity.class);
+        Bundle b = new Bundle();
+        b.putSerializable("User", myAthlete);
+        intent.putExtras(b);
+        startActivity(intent);
+         */
     }
 
     private void onModificaCaratteristiche() {
