@@ -1,6 +1,7 @@
 package com.example.smartgym.inserimentoCaratteristiche;
 
 import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -13,6 +14,7 @@ import androidx.test.filters.LargeTest;
 
 import com.example.smartgym.R;
 import com.example.smartgym.infoUtenti.application.activity.InserimentoModificaCaratteristicheActivity;
+import com.example.smartgym.start.MainActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,14 +25,28 @@ import org.junit.runner.RunWith;
 public class InserimentoCaratteristicheInstrumentedTest6 {
 
     @Rule
-    public ActivityScenarioRule<InserimentoModificaCaratteristicheActivity> activityScenario = new ActivityScenarioRule<InserimentoModificaCaratteristicheActivity>(InserimentoModificaCaratteristicheActivity.class);
+    public ActivityScenarioRule<MainActivity> activityScenario = new ActivityScenarioRule<MainActivity>(MainActivity.class);
 
     @Test
     public void inserimentoCaratteristicheTest() {
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        onView(ViewMatchers.withId(R.id.profileFragment)).perform(click());
+
+        onView(withId(R.id.btModificaCaratteristiche)).perform(click());
+
+        onView(withId(R.id.etPeso)).perform(clearText());
         onView(ViewMatchers.withId(R.id.etPeso)).perform(typeText("80"));
+        onView(withId(R.id.etAltezza)).perform(clearText());
         onView(withId(R.id.etAltezza)).perform(typeText("190"));
         onView(withId(R.id.spinnerEsperienza)).perform(click());
         onView(withText("Principiante")).perform(click());
+        onView(withId(R.id.etAllenamenti)).perform(clearText());
         onView(withId(R.id.etAllenamenti)).perform(typeText("8"));
 
         onView(withId(R.id.btUpdate)).perform(click());
