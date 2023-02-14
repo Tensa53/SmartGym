@@ -14,8 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.smartgym.R;
-import com.example.smartgym.gestioneScheda.storage.dataAcess.EsercizioDAO;
-import com.example.smartgym.gestioneScheda.storage.dataAcess.SchedaEserciziDAO;
+import com.example.smartgym.gestioneScheda.application.logic.SchedaLogic;
 import com.example.smartgym.gestioneScheda.storage.entity.DettaglioEsercizio;
 import com.example.smartgym.gestioneScheda.storage.entity.Esercizio;
 import com.example.smartgym.gestioneScheda.storage.entity.ProxyScheda;
@@ -40,9 +39,7 @@ public class VisualizzaSchedaEserciziActivity extends AppCompatActivity implemen
 
     String idNuovaSchedaInuso;
 
-    EsercizioDAO esercizioDAO;
-
-    SchedaEserciziDAO schedaEserciziDAO;
+    SchedaLogic schedaLogic;
 
     SchedaEsercizi schedaEsercizi;
 
@@ -79,9 +76,7 @@ public class VisualizzaSchedaEserciziActivity extends AppCompatActivity implemen
         btModifica.setOnClickListener(this);
         btCancella.setOnClickListener(this);
 
-        esercizioDAO = new EsercizioDAO();
-
-        schedaEserciziDAO = new SchedaEserciziDAO();
+        schedaLogic = new SchedaLogic();
 
         schedaEsercizi = new RealScheda();
 
@@ -93,7 +88,7 @@ public class VisualizzaSchedaEserciziActivity extends AppCompatActivity implemen
     }
 
     private void recuperaScheda(String id) {
-        Task<DocumentSnapshot> task = schedaEserciziDAO.doRetrieveSchedaByDocumentId(id);
+        Task<DocumentSnapshot> task = schedaLogic.getSchedaById(id);
 
         task.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -212,7 +207,7 @@ public class VisualizzaSchedaEserciziActivity extends AppCompatActivity implemen
 
     private void onFissaScheda() {
         if (!idSchedaInUso.isEmpty()){
-            Task<Void> task = schedaEserciziDAO.doUpdateSchedaInUso(idSchedaInUso, "inUso", false);
+            Task<Void> task = schedaLogic.setSchedaInUso(idSchedaInUso, "inUso", false);
 
             task.addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -230,7 +225,7 @@ public class VisualizzaSchedaEserciziActivity extends AppCompatActivity implemen
     }
 
     private void fissaNuovaScheda() {
-        Task<Void> task = schedaEserciziDAO.doUpdateSchedaInUso(idNuovaSchedaInuso, "inUso", true);
+        Task<Void> task = schedaLogic.setSchedaInUso(idNuovaSchedaInuso, "inUso", true);
 
         task.addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

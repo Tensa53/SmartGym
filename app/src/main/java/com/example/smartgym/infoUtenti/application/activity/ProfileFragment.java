@@ -44,8 +44,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     LoginRegistration loginRegistration;
     AthleteInfo athleteInfo;
 
-    AtletaReceiver atletaReceiver;
-
     public ProfileFragment() {
     }
 

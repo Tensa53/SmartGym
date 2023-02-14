@@ -84,7 +84,6 @@
         </activity>
         <activity android:name=".gestioneScheda.application.activity.ScegliParteDelCorpoActivity" />
         <activity android:name=".gestioneScheda.application.activity.RiepilogoSchedaActivity" />
-        <activity android:name=".gestioneScheda.application.activity.DettagliEserciziActivity" />
     </application>
 
 </manifest>

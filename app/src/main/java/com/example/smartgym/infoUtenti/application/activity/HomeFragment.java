@@ -21,8 +21,8 @@ import android.widget.Toast;
 
 import com.example.smartgym.R;
 import com.example.smartgym.gestioneScheda.application.activity.CustomAdapterEsercizi;
-import com.example.smartgym.gestioneScheda.storage.dataAcess.EsercizioDAO;
-import com.example.smartgym.gestioneScheda.storage.dataAcess.SchedaEserciziDAO;
+import com.example.smartgym.gestioneScheda.application.logic.GestioneSchedaService;
+import com.example.smartgym.gestioneScheda.application.logic.GestioneSchedaServiceImpl;
 import com.example.smartgym.gestioneScheda.storage.entity.DettaglioEsercizio;
 import com.example.smartgym.gestioneScheda.storage.entity.Esercizio;
 import com.example.smartgym.gestioneScheda.storage.entity.RealScheda;
@@ -30,14 +30,12 @@ import com.example.smartgym.gestioneScheda.storage.entity.SchedaEsercizi;
 import com.example.smartgym.infoUtenti.application.logic.AthleteInfo;
 import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
 import com.example.smartgym.infoUtenti.storage.entity.Atleta;
-import com.example.smartgym.start.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -64,8 +62,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     FirebaseUser user;
     ActivityReceiver activityReceiver;
 
-    SchedaEserciziDAO schedaEserciziDAO;
-    EsercizioDAO esercizioDAO;
+    GestioneSchedaService gestioneSchedaService;
 
     public HomeFragment() {
     }
@@ -91,8 +88,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        schedaEserciziDAO = new SchedaEserciziDAO();
-        esercizioDAO = new EsercizioDAO();
+        gestioneSchedaService = new GestioneSchedaServiceImpl();
 
         schedaEsercizi = new RealScheda();
 
@@ -114,8 +110,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         lv.setAdapter(customAdapterEsercizi);
 
         tvSchedaInUso.setText("Scheda Esercizi fissata: ");
-//
-//        populateList();
     }
 
     private void widgetBinding() {
@@ -126,7 +120,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void recuperaSchedaInUso() {
-        Task<QuerySnapshot> task = schedaEserciziDAO.doRetrieveSchedaInUso(user.getUid());
+        Task<QuerySnapshot> task = gestioneSchedaService.getSchedaInUso(user.getUid());
 
         task.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -275,18 +269,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             btCompletaProfilo.setVisibility(Button.VISIBLE);
     }
 
-    private void populateList() {
-        customAdapterEsercizi.add(new Esercizio("PushUp",new DettaglioEsercizio(10,0)));
-        customAdapterEsercizi.add(new Esercizio("TricepDip",new DettaglioEsercizio(10,0)));
-        customAdapterEsercizi.add(new Esercizio("Squat",new DettaglioEsercizio(10,0)));
-        customAdapterEsercizi.add(new Esercizio("Trazioni",new DettaglioEsercizio(10,0)));
-        customAdapterEsercizi.add(new Esercizio("Crunch",new DettaglioEsercizio(10,0)));
-        customAdapterEsercizi.add(new Esercizio("Jumping Jacks",new DettaglioEsercizio(10,0)));
-        customAdapterEsercizi.add(new Esercizio("Mountain Climber",new DettaglioEsercizio(10,0)));
-        customAdapterEsercizi.add(new Esercizio("Plank",new DettaglioEsercizio(0,30)));
-        customAdapterEsercizi.add(new Esercizio("Cobra Stretch",new DettaglioEsercizio(10,0)));
-        customAdapterEsercizi.add(new Esercizio("Side Hop",new DettaglioEsercizio(0,20)));
-    }
+//    private void populateList() {
+//        customAdapterEsercizi.add(new Esercizio("PushUp",new DettaglioEsercizio(10,0)));
+//        customAdapterEsercizi.add(new Esercizio("TricepDip",new DettaglioEsercizio(10,0)));
+//        customAdapterEsercizi.add(new Esercizio("Squat",new DettaglioEsercizio(10,0)));
+//        customAdapterEsercizi.add(new Esercizio("Trazioni",new DettaglioEsercizio(10,0)));
+//        customAdapterEsercizi.add(new Esercizio("Crunch",new DettaglioEsercizio(10,0)));
+//        customAdapterEsercizi.add(new Esercizio("Jumping Jacks",new DettaglioEsercizio(10,0)));
+//        customAdapterEsercizi.add(new Esercizio("Mountain Climber",new DettaglioEsercizio(10,0)));
+//        customAdapterEsercizi.add(new Esercizio("Plank",new DettaglioEsercizio(0,30)));
+//        customAdapterEsercizi.add(new Esercizio("Cobra Stretch",new DettaglioEsercizio(10,0)));
+//        customAdapterEsercizi.add(new Esercizio("Side Hop",new DettaglioEsercizio(0,20)));
+//    }
 
     @Override
     public void onClick(View view) {

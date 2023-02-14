@@ -49,6 +49,12 @@ public class SchedaEserciziDAO {
         return task;
     }
 
+    public Task<Void> doUpdateSchedaById(Map<String, Object> scheda, String idScheda) {
+        DocumentReference dr = dbHelper.collection("schede_esercizi").document(idScheda);
+
+        return dr.set(scheda);
+    }
+
 
     public Task<Void> doUpdateSchedaInUso(String idScheda, String key, Boolean value) {
         DocumentReference dr = dbHelper.collection("schede_esercizi").document(idScheda);

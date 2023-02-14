@@ -43,7 +43,7 @@ public class LoginRegistration {
         return task;
     }
 
-    public Task<Void> deleteUser(String email) {
+    public Task<Void> deleteUser() {
         Task<Void> task = mauth.getCurrentUser().delete();
 
         return task;

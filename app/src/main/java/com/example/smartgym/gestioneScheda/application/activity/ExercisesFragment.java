@@ -18,9 +18,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.smartgym.R;
-import com.example.smartgym.gestioneScheda.storage.dataAcess.SchedaEserciziDAO;
+import com.example.smartgym.gestioneScheda.application.logic.SchedaLogic;
 import com.example.smartgym.gestioneScheda.storage.entity.ProxyScheda;
-import com.example.smartgym.gestioneScheda.storage.entity.RealScheda;
 import com.example.smartgym.gestioneScheda.storage.entity.SchedaEsercizi;
 import com.example.smartgym.infoUtenti.application.activity.ActivityReceiver;
 import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
@@ -39,7 +38,7 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
 
     LoginRegistration loginRegistration;
 
-    SchedaEserciziDAO schedaEserciziDAO;
+    SchedaLogic schedaLogic;
 
     CustomAdapterNomeScheda customAdapter;
 
@@ -80,7 +79,7 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
 
         loginRegistration = new LoginRegistration();
 
-        schedaEserciziDAO = new SchedaEserciziDAO();
+        schedaLogic = new SchedaLogic();
 
         customAdapter = new CustomAdapterNomeScheda(getContext(), R.layout.list_nome_scheda_item, new ArrayList<SchedaEsercizi>());
 
@@ -92,7 +91,7 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
     }
 
     private void caricaSchede(String id) {
-        Task<QuerySnapshot> schedeResult = schedaEserciziDAO.doRetrieveAllSchedeByUserId(id);
+        Task<QuerySnapshot> schedeResult = schedaLogic.getAllUserSchede(id);
 
         schedeResult.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -120,12 +119,6 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
         });
 
         customAdapter.notifyDataSetChanged();
-
-//        for (int i = 1; i <= 10; i++) {
-//            String nomeScheda = "Scheda"+i;
-//            aggiungiScheda(new SchedaEsercizi(nomeScheda));
-//               }
-
     }
 
     private void aggiungiScheda(SchedaEsercizi schedaEsercizi) {

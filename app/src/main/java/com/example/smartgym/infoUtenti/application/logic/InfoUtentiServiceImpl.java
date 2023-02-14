@@ -97,8 +97,8 @@ public class InfoUtentiServiceImpl implements InfoUtentiService {
     }
 
     @Override
-    public Task<Void> deleteUser(String id) {
-        return loginRegistration.deleteUser(id);
+    public Task<Void> deleteUser() {
+        return loginRegistration.deleteUser();
     }
 
     @Override

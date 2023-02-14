@@ -18,7 +18,7 @@ import com.example.smartgym.R;
 import com.example.smartgym.gestioneScheda.application.exception.ExcersisesDurationExceededException;
 import com.example.smartgym.gestioneScheda.application.exception.ExercisesRepsExceededException;
 import com.example.smartgym.gestioneScheda.application.exception.NumberExercsisesExceededException;
-import com.example.smartgym.gestioneScheda.storage.dataAcess.EsercizioDAO;
+import com.example.smartgym.gestioneScheda.application.logic.SchedaLogic;
 import com.example.smartgym.gestioneScheda.storage.entity.DettaglioEsercizio;
 import com.example.smartgym.gestioneScheda.storage.entity.Esercizio;
 import com.example.smartgym.utils.FormUtils;
@@ -36,8 +36,8 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
     public TextView counter;
     CustomAdapterEserciziChecked customAdapterEserciziChecked;
     ListView lv;
-    EsercizioDAO esercizioDAO;
     ArrayList<Esercizio> esercizi;
+    private SchedaLogic schedaLogic;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,7 +48,8 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
 
         actionBar.setTitle("Creazione Scheda Esercizi");
 
-        esercizioDAO = new EsercizioDAO();
+        schedaLogic = new SchedaLogic();
+
         esercizi = new ArrayList<>();
 
         String parteDelCorpo = getIntent().getStringExtra("PARTEDELCORPO");
@@ -65,11 +66,11 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
 //        populateList(parteDelCorpo);
 
         if (parteDelCorpo.equalsIgnoreCase("tuttoilcorpo")){
-            Task<QuerySnapshot> task = esercizioDAO.doRetrieveAllEsercizi();
+            Task<QuerySnapshot> task = schedaLogic.getAllEsercizi();
 
             recuperaEsercizio(task);
         } else {
-            Task<QuerySnapshot> task = esercizioDAO.doRetrieveEsercizioByParteDelCorpo(parteDelCorpo);
+            Task<QuerySnapshot> task = schedaLogic.getAllEserciziParteDelCorpo(parteDelCorpo);
 
             recuperaEsercizio(task);
         }

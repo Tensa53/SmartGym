@@ -27,10 +27,10 @@ public interface InfoUtentiService {
 
     Task<Void> insertAthleteFeatures(Atleta atleta, String id);
 
-    Task<Void> editAthleteFeatures(Atleta atleta, String id);
+    Task<Void> editAthleteFeatures(Atleta atleta, String id);///
 
-    Task<Void> deleteUser(String id);
+    Task<Void> deleteUser();///
 
-    Task<Void> deleteAthlete(String id);
+    Task<Void> deleteAthlete(String id);///
 
 }

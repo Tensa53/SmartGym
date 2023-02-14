@@ -16,10 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.smartgym.R;
 import com.example.smartgym.gestioneScheda.application.logic.SchedaLogic;
 import com.example.smartgym.gestioneScheda.storage.dataAcess.EsercizioDAO;
-import com.example.smartgym.gestioneScheda.storage.dataAcess.SchedaEserciziDAO;
 import com.example.smartgym.gestioneScheda.storage.entity.Esercizio;
-import com.example.smartgym.gestioneScheda.storage.entity.RealScheda;
-import com.example.smartgym.infoUtenti.application.logic.AthleteInfo;
 import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
 import com.example.smartgym.start.MainActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -46,7 +43,6 @@ public class RiepilogoSchedaActivity extends AppCompatActivity {
     ArrayList<String> idDettagli = new ArrayList<>();
 
     LoginRegistration loginRegistration;
-    AthleteInfo athleteInfo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,16 +60,6 @@ public class RiepilogoSchedaActivity extends AppCompatActivity {
 
         schedaLogic = new SchedaLogic();
 
-//        athleteInfo = new AthleteInfo();
-//        loginRegistration = new LoginRegistration();
-//
-//        FirebaseUser user = loginRegistration.isUserLogged();
-//
-//        if (user != null)
-//            recuperaAtleta(user.getEmail());
-
-        //SchedaEsercizi scheda = new SchedaEsercizi(uid???,user.getDisplayName(),esercizi);
-
         customAdapterEsercizi = new CustomAdapterEsercizi(this, R.layout.list_esercizi_item, esercizi);
 
         lv.setAdapter(customAdapterEsercizi);
@@ -85,8 +71,6 @@ public class RiepilogoSchedaActivity extends AppCompatActivity {
         nomeScheda = etNomeScheda.getText().toString();
 
         if (!nomeScheda.isEmpty()) {
-            EsercizioDAO esercizioDAO = new EsercizioDAO();
-
             schedaEs.put("nome",nomeScheda);
             schedaEs.put("pubblica", false);
             schedaEs.put("modalita", "manuale");
@@ -100,16 +84,14 @@ public class RiepilogoSchedaActivity extends AppCompatActivity {
                 dettagli.put("ripetizioni", esercizio.getDettaglio().getRipetizioni());
                 dettagli.put("esercizio", "/esercizi/"+esercizio.getId());
 
-                idDettagli.add(esercizioDAO.doSaveDettaglioEsercizio(dettagli));
+                idDettagli.add(schedaLogic.saveDettaglioEsercizio(dettagli));
 
                 dettagli.clear();
             }
 
             schedaEs.put("esercizi_scelti",idDettagli);
 
-            SchedaEserciziDAO schedaEserciziDAO = new SchedaEserciziDAO();
-
-            Task<Void> saveResult = schedaEserciziDAO.doSaveScheda(schedaEs);
+            Task<Void> saveResult = schedaLogic.saveScheda(schedaEs);
 
             saveResult.addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -120,11 +102,6 @@ public class RiepilogoSchedaActivity extends AppCompatActivity {
             });
         } else
             etNomeScheda.setError("Inserisci un nome scheda");
-
-//        schedaLogic.saveScheda(scheda);
-
-//        Intent intent = new Intent(getApplicationContext(), SchedaSuccess.class);
-//        startActivity(intent);
 
     }
 
@@ -155,18 +132,6 @@ public class RiepilogoSchedaActivity extends AppCompatActivity {
     public void indietro(View v) {
         super.onBackPressed();
     }
-
-//    private void recuperaAtleta(String email) {
-//        Task<DocumentSnapshot> task = athleteInfo.getAthletebyEmail(email);
-//
-//        task.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-//            @Override
-//            public void onSuccess(DocumentSnapshot documentSnapshot) {
-//                Atleta atleta = documentSnapshot.toObject(Atleta.class);
-//                Log.d("DEBUG",atleta.getNome());
-//            }
-//        });
-//    }
 
 }
 
