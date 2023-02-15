@@ -30,6 +30,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+/**
+ * La classe ExercisesFragment rappresenta il fragment che gestisce la visualizzazione
+ * delle schede degli esercizi. È una sottoclasse della classe Fragment e implementa
+ * l'interfaccia View.OnClickListener e AdapterView.OnItemClickListener.
+ */
 public class ExercisesFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     Button bt1;
@@ -46,25 +51,56 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
 
     String idSchedaInUso = "";
 
+    /**
+     * Costruttore vuoto per la classe ExercisesFragment.
+     */
     public ExercisesFragment() {
     }
 
+    /**
+     * Metodo che viene chiamato quando il fragment è associato all'Activity.
+     *
+     * @param activity l'Activity a cui il fragment è associato.
+     */
     @Override
     public void onAttach(@NonNull Activity activity) {
         super.onAttach(activity);
         activityReceiver = (ActivityReceiver) activity;
     }
 
+    /**
+     * Metodo che viene chiamato quando il fragment è stato creato.
+     *
+     * @param savedInstanceState bundle che contiene gli eventuali dati salvati
+     *                           in precedenza dal fragment.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * Metodo che viene chiamato per creare e restituire la View gerarchia del layout associato
+     * al fragment.
+     *
+     * @param inflater           il layoutInflater che viene utilizzato per gonfiare la view.
+     * @param container          il ViewGroup a cui la view verrà eventualmente allegata.
+     * @param savedInstanceState bundle che contiene gli eventuali dati salvati
+     *                           in precedenza dal fragment.
+     * @return la view creata per il fragment.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_exercises, container, false);
     }
 
+    /**
+     * Metodo chiamato subito dopo che il layout del fragment è stato creato.
+     *
+     * @param view               la view creata dal metodo onCreateView().
+     * @param savedInstanceState bundle che contiene gli eventuali dati salvati
+     *                           in precedenza dal fragment.
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -90,6 +126,13 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
         caricaSchede(loginRegistration.getUserLogged().getUid());
     }
 
+    /**
+     * Questo metodo carica tutte le schede dell'utente con l'id specificato.
+     * Utilizza la schedaLogic per ottenere le schede, quindi aggiunge le schede all'adapter della ListView.
+     * Infine, notifica l'adapter delle modifiche effettuate.
+     *
+     * @param id l'id dell'utente di cui caricare le schede.
+     */
     private void caricaSchede(String id) {
         Task<QuerySnapshot> schedeResult = schedaLogic.getAllUserSchede(id);
 
@@ -106,7 +149,7 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
 
                         Log.d("DEBUG", "NOME SCHEDA: " + nome);
 
-                        SchedaEsercizi schedaEsercizi = new ProxyScheda(id,nome);
+                        SchedaEsercizi schedaEsercizi = new ProxyScheda(id, nome);
 
                         Log.d("DEBUG", "NOME PROXY SCHEDA: " + schedaEsercizi.getNome());
 
@@ -121,10 +164,20 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
         customAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Questo metodo aggiunge la schedaEsercizi all'adapter della ListView.
+     *
+     * @param schedaEsercizi la scheda da aggiungere all'adapter
+     */
     private void aggiungiScheda(SchedaEsercizi schedaEsercizi) {
         customAdapter.add(schedaEsercizi);
     }
 
+    /**
+     * Questo metodo gestisce l'evento di click del pulsante specificato.
+     *
+     * @param view la vista che ha generato l'evento di click
+     */
     @Override
     public void onClick(View view) {
         int id = view.getId();
@@ -136,6 +189,10 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
         }
     }
 
+    /**
+     * Questo metodo lancia l'activity "SelezioneModalitaSchedaActivity".
+     * Passa una stringa extra all'activity per visualizzarla all'interno della stessa.
+     */
     private void lanciaActivity1() {
         Intent i = new Intent(getContext(), SelezioneModalitaSchedaActivity.class);
 
@@ -144,6 +201,15 @@ public class ExercisesFragment extends Fragment implements View.OnClickListener,
         startActivity(i);
     }
 
+    /**
+     * Questo metodo gestisce l'evento di click su un elemento della ListView.
+     * Lancia l'activity "VisualizzaSchedaEserciziActivity" passando l'id della scheda selezionata.
+     *
+     * @param adapterView la ListView in cui è stato effettuato il click
+     * @param view        la vista selezionata
+     * @param i           la posizione dell'elemento selezionato all'interno della ListView
+     * @param l           l'id dell'elemento selezionato
+     */
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         SchedaEsercizi schedaEsercizi = (SchedaEsercizi) lv1.getItemAtPosition(i);

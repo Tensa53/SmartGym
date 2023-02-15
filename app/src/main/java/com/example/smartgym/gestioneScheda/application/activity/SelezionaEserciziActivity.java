@@ -29,6 +29,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+/**
+ * Questa classe gestisce l'activity per la selezione degli esercizi per una scheda di allenamento.
+ */
 public class SelezionaEserciziActivity extends AppCompatActivity {
 
     public Button aumenta;
@@ -39,6 +42,12 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
     ArrayList<Esercizio> esercizi;
     private SchedaLogic schedaLogic;
 
+    /**
+     * Questo metodo viene chiamato all'avvio dell'activity. Inizializza gli elementi grafici dell'interfaccia e richiama
+     * la funzione per recuperare gli esercizi da visualizzare nella lista.
+     *
+     * @param savedInstanceState lo stato precedente dell'activity
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +74,7 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
 
 //        populateList(parteDelCorpo);
 
-        if (parteDelCorpo.equalsIgnoreCase("tuttoilcorpo")){
+        if (parteDelCorpo.equalsIgnoreCase("tuttoilcorpo")) {
             Task<QuerySnapshot> task = schedaLogic.getAllEsercizi();
 
             recuperaEsercizio(task);
@@ -76,6 +85,12 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Questo metodo viene chiamato alla fine del recupero degli esercizi dal database Firebase. Aggiunge gli esercizi
+     * recuperati alla lista degli esercizi e notifica l'adapter per l'aggiornamento della ListView.
+     *
+     * @param task il task di recupero degli esercizi dal database Firebase
+     */
     private void recuperaEsercizio(Task<QuerySnapshot> task) {
 
         task.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -89,7 +104,7 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
                         String difficolta = (String) document.get("difficolta");
                         String tipologia = (String) document.get("tipologia");
                         String esecuzione = (String) document.get("esecuzione");
-                        Esercizio esercizio = new Esercizio(nome,parteDelCorpo,descrizione,difficolta,tipologia,esecuzione);
+                        Esercizio esercizio = new Esercizio(nome, parteDelCorpo, descrizione, difficolta, tipologia, esecuzione);
 
                         if (esercizio.getEsecuzione().equalsIgnoreCase("serie"))
                             esercizio.setDettaglio(new DettaglioEsercizio(0, -1));
@@ -108,11 +123,22 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Questo metodo salva l'esercizio nella lista e lo aggiunge all'adapter della ListView.
+     *
+     * @param esercizio l'esercizio da salvare e aggiungere all'adapter
+     */
     private void saveEsercizioInLista(Esercizio esercizio) {
         esercizi.add(esercizio);
         customAdapterEserciziChecked.add(esercizio);
     }
 
+    /**
+     * Questo metodo viene chiamato quando l'utente preme il pulsante "Conferma" per confermare la selezione degli esercizi.
+     * Verifica la validità della selezione e, in caso positivo, avvia l'activity di riepilogo della scheda di allenamento.
+     *
+     * @param v la vista del pulsante "Conferma"
+     */
     public void conferma(View v) {
         ArrayList<Esercizio> checked = new ArrayList<>();
 
@@ -121,7 +147,7 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
                 checked.add(e);
         }
 
-        if(verificaScheda(checked)){
+        if (verificaScheda(checked)) {
             Intent intent = new Intent(getApplicationContext(), RiepilogoSchedaActivity.class);
             Bundle b = new Bundle();
             b.putSerializable("Esercizi", checked);
@@ -131,6 +157,12 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Questo metodo verifica che la selezione degli esercizi per la scheda di allenamento sia valida.
+     *
+     * @param checked la lista degli esercizi selezionati dall'utente
+     * @return true se la selezione è valida, false altrimenti
+     */
     private boolean verificaScheda(ArrayList<Esercizio> checked) {
         FormUtils formUtils = new FormUtils();
 
@@ -144,28 +176,33 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
         return true;
     }
 
-    private void populateList(String parteDelCorpo) {
-        esercizi.add(new Esercizio("PushUp", "schiena", new DettaglioEsercizio(10, -1)));
-        esercizi.add(new Esercizio("Trazioni", "schiena", new DettaglioEsercizio(10, -1)));
-        esercizi.add(new Esercizio("Squat", "gambe", new DettaglioEsercizio(10, -1)));
-        esercizi.add(new Esercizio("Affondi", "gambe", new DettaglioEsercizio(10, -1)));
-        esercizi.add(new Esercizio("braccia1", "braccia", new DettaglioEsercizio(10, -1)));
-        esercizi.add(new Esercizio("braccia2", "braccia", new DettaglioEsercizio(10, -1)));
-        esercizi.add(new Esercizio("petto1", "petto", new DettaglioEsercizio(10, -1)));
-        esercizi.add(new Esercizio("petto2", "petto", new DettaglioEsercizio(10, -1)));
-        esercizi.add(new Esercizio("addome1", "addome", new DettaglioEsercizio(10, -1)));
-        esercizi.add(new Esercizio("addome2", "addome", new DettaglioEsercizio(10, -1)));
+//    private void populateList(String parteDelCorpo) {
+//        esercizi.add(new Esercizio("PushUp", "schiena", new DettaglioEsercizio(10, -1)));
+//        esercizi.add(new Esercizio("Trazioni", "schiena", new DettaglioEsercizio(10, -1)));
+//        esercizi.add(new Esercizio("Squat", "gambe", new DettaglioEsercizio(10, -1)));
+//        esercizi.add(new Esercizio("Affondi", "gambe", new DettaglioEsercizio(10, -1)));
+//        esercizi.add(new Esercizio("braccia1", "braccia", new DettaglioEsercizio(10, -1)));
+//        esercizi.add(new Esercizio("braccia2", "braccia", new DettaglioEsercizio(10, -1)));
+//        esercizi.add(new Esercizio("petto1", "petto", new DettaglioEsercizio(10, -1)));
+//        esercizi.add(new Esercizio("petto2", "petto", new DettaglioEsercizio(10, -1)));
+//        esercizi.add(new Esercizio("addome1", "addome", new DettaglioEsercizio(10, -1)));
+//        esercizi.add(new Esercizio("addome2", "addome", new DettaglioEsercizio(10, -1)));
+//
+//        for (Esercizio e : esercizi) {
+//            if (e.getParteDelCorpo().equalsIgnoreCase(parteDelCorpo)) {
+//                customAdapterEserciziChecked.add(e);
+//            } else if (parteDelCorpo.equalsIgnoreCase("tuttoilcorpo")) {
+//                customAdapterEserciziChecked.add(e);
+//            }
+//        }
+//
+//    }
 
-        for (Esercizio e : esercizi) {
-            if (e.getParteDelCorpo().equalsIgnoreCase(parteDelCorpo)) {
-                customAdapterEserciziChecked.add(e);
-            } else if (parteDelCorpo.equalsIgnoreCase("tuttoilcorpo")) {
-                customAdapterEserciziChecked.add(e);
-            }
-        }
-
-    }
-
+    /**
+     * Metodo che aumenta la durata o il numero di ripetizioni dell'esercizio selezionato.
+     *
+     * @param v La View che ha scatenato l'evento click sul pulsante.
+     */
     public void aumenta(View v) {
         int position = Integer.parseInt(v.getTag().toString());
         Esercizio e = customAdapterEserciziChecked.getItem(position);
@@ -173,7 +210,7 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
         int c2 = e.getDettaglio().getRipetizioni();
 
         if (c1 >= 0) {
-            c1+=5;
+            c1 += 5;
             e.getDettaglio().setDurata(c1);
         } else if (c2 >= 0) {
             c2++;
@@ -184,6 +221,11 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Metodo che decrementa la durata o il numero di ripetizioni dell'esercizio selezionato.
+     *
+     * @param v La View che ha scatenato l'evento click sul pulsante.
+     */
     public void decrementa(View v) {
         int position = Integer.parseInt(v.getTag().toString());
         Esercizio e = customAdapterEserciziChecked.getItem(position);
@@ -191,7 +233,7 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
         int c2 = e.getDettaglio().getRipetizioni();
 
         if (c1 > 0) {
-            c1-=5;
+            c1 -= 5;
             e.getDettaglio().setDurata(c1);
         } else if (c2 > 0) {
             c2--;
