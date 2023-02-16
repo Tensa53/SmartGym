@@ -26,6 +26,11 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+/**
+ * Questa classe rappresenta l'activity per l'inserimento e/o la modifica delle caratteristiche dell'atleta.
+ * In questa activity sarà visbile un form dove inserire e/o modificare le caratteristiche e due pulsanti
+ * che rispettivamente permetteranno di salvare le modifiche o annullarle
+ */
 public class InserimentoModificaCaratteristicheActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button btUpdate, btReturn;
@@ -40,6 +45,14 @@ public class InserimentoModificaCaratteristicheActivity extends AppCompatActivit
     ArrayAdapter<String> adapterItems;
     String[] itemsExperience = {"Principiante","Intermedio","Esperto"};
 
+    /**
+     * Metodo di callback chiamato quando l'Activity viene creata.
+     * In esso sono richiamati i relativi metodi per istanziare i widget e i campi del form che
+     * sono riempiti attraverso l'atleta recuperato dall'intent. Inoltre sono settati i listener
+     * e gli adapter per i pulsanti e per il dropdown menu
+     *
+     * @param savedInstanceState oggetto Bundle contenente lo stato dell'Activity in caso di riavvio
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +91,10 @@ public class InserimentoModificaCaratteristicheActivity extends AppCompatActivit
         btReturn.setOnClickListener(this);
     }
 
+    /**
+     * Questo metodo viene chiamato da OnCreate() per settare i campi del form dopo aver recuperato
+     * l'atleta dall'intent
+     */
     private void setFields() {
         spinnerEsperienza.setSelection(myAthlete.esperienzaValue());
 
@@ -89,6 +106,11 @@ public class InserimentoModificaCaratteristicheActivity extends AppCompatActivit
 
     }
 
+    /**
+     * Questo metodo gestisce l'evento di click del pulsante specificato.
+     *
+     * @param view la vista che ha generato l'evento di click
+     */
     @Override
     public void onClick(View view) {
         int id = view.getId();
@@ -101,6 +123,10 @@ public class InserimentoModificaCaratteristicheActivity extends AppCompatActivit
         }
     }
 
+    /**
+     * Metodo che viene chiamato per effettuare il binding dei widget del layout
+     * con le rispettive istanze della classe a cui appartengono
+     */
     private void widgetBinding() {
         btUpdate = findViewById(R.id.btUpdate);
         btReturn = findViewById(R.id.btReturn);
@@ -110,6 +136,10 @@ public class InserimentoModificaCaratteristicheActivity extends AppCompatActivit
         spinnerEsperienza = findViewById(R.id.spinnerEsperienza);
     }
 
+    /**
+     * Questo metodo viene richiamato da onClick() per gestire le operazioni relative al salvataggio
+     * delle informazioni relative all'inserimento e/o modifica caratteristiche
+     */
     private void onUpdate(){
         Integer peso = Integer.valueOf(etPeso.getText().toString());
         Integer altezza = Integer.valueOf(etAltezza.getText().toString());
@@ -121,6 +151,15 @@ public class InserimentoModificaCaratteristicheActivity extends AppCompatActivit
         }
     }
 
+    /**
+     * Questo metodo viene richiamato da onUpdate() per salvare le nuove caratteristiche nel db
+     * richiamando il task nella relativa classe DAO
+     *
+     * @param peso, il peso dell'atleta espresso in kg e memorizzato in una variabile Integer
+     * @param altezza, l'altezza dell'atleta espressa in cm e memorizzata in una variabile Integer
+     * @param numeroAllenamenti, il numero di allenamenti settimanali che l'atleta vuole svolegere
+     * @param esperienza, lo stadio di esperienza dell'atleta
+     */
     private void updateCaratteristicheAtleta(Integer peso, Integer altezza, Integer numeroAllenamenti, String esperienza) {
         myAthlete.setPeso(peso);
         myAthlete.setAltezza(altezza);
@@ -142,6 +181,10 @@ public class InserimentoModificaCaratteristicheActivity extends AppCompatActivit
         });
     }
 
+    /**
+     * Questo metodo viene richiamato da updateCaratterisiticheAtleta() per mostrare un messaggio di
+     * successo quando le caratteristiche sono state correttamente memorizzate
+     */
     private void mostraAvviso() {
         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
             @Override
@@ -160,6 +203,16 @@ public class InserimentoModificaCaratteristicheActivity extends AppCompatActivit
                 .setPositiveButton("OK", dialogClickListener).show();
     }
 
+    /**
+     * Questo metodo viene richiamato da onUpdate() per verificare i valori inseriti nei campi
+     * del form. Fa uso dei metodi della classe FormUtils per validare i dati. Gestisce l'eccezione
+     * AthelteFeaturesFieldException
+     *
+     * @param peso, il peso dell'atleta espresso in kg e memorizzato in una variabile Integer
+     * @param altezza, l'altezza dell'atleta espressa in cm e memorizzata in una variabile Integer
+     * @param numeroAllenamenti, il numero di allenamenti settimanali che l'atleta vuole svolegere
+     * @return boolean, un valore true/false a seconda dell'avvenuta validazione dei valori dei campi
+     */
     private boolean verificaCaratteristiche(Integer peso, Integer altezza, Integer numeroAllenamenti) {
         try {
             formUtils.controllaCaratteristicheAtleta(peso, altezza, numeroAllenamenti);
@@ -171,6 +224,12 @@ public class InserimentoModificaCaratteristicheActivity extends AppCompatActivit
         return true;
     }
 
+    /**
+     * Questo metodo viene richiamato da verificaCaratteristiche() per mostrare un messaggio d'errore
+     * sul campo che non ha superato la validazione
+     *
+     * @param error, rappresenta il messaggio di errore da visualizzare
+     */
     private void showError(String error) {
         String id = error.split("_")[0];
         String msg = error.split("_")[1];
@@ -186,12 +245,20 @@ public class InserimentoModificaCaratteristicheActivity extends AppCompatActivit
 
     }
 
+    /**
+     * Questo metodo viene richiamato da mostraAvviso() per riportare l'atleta alla home dopo aver
+     * inserito correttamente le informazioni
+     */
     private void lanciaHome() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
+    /**
+     * Questo metodo viene richiamato da onClick() per gestire le operazioni relative al pulsante
+     * che annulla l'operazione e riporta alla vista precedente
+     */
     private void returnProfile(){
         super.onBackPressed();
     }

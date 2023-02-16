@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.smartgym.R;
 import com.example.smartgym.gestioneScheda.application.logic.SchedaLogic;
-import com.example.smartgym.gestioneScheda.storage.dataAcess.EsercizioDAO;
 import com.example.smartgym.gestioneScheda.storage.entity.Esercizio;
 import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
 import com.example.smartgym.start.MainActivity;

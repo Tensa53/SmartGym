@@ -1,29 +1,23 @@
 package com.example.smartgym.gestioneScheda.application.activity;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+
 import com.example.smartgym.R;
-import com.example.smartgym.gestioneScheda.storage.entity.DettaglioEsercizio;
 import com.example.smartgym.gestioneScheda.storage.entity.Esercizio;
 
-import org.checkerframework.checker.units.qual.A;
-
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * CustomAdapterEserciziChecked è una classe che estende ArrayAdapter<Esercizio> e viene utilizzata per mostrare una lista

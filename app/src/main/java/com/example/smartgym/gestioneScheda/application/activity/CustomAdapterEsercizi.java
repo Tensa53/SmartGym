@@ -1,7 +1,6 @@
 package com.example.smartgym.gestioneScheda.application.activity;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+
 import com.example.smartgym.R;
 import com.example.smartgym.gestioneScheda.storage.entity.Esercizio;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 

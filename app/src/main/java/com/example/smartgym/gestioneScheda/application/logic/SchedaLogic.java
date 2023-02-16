@@ -3,7 +3,6 @@ package com.example.smartgym.gestioneScheda.application.logic;
 import com.example.smartgym.gestioneScheda.storage.dataAcess.EsercizioDAO;
 import com.example.smartgym.gestioneScheda.storage.dataAcess.SchedaEserciziDAO;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -19,16 +18,14 @@ import java.util.Map;
  */
 public class SchedaLogic {
 
-    private FirebaseAuth mauth;
     private SchedaEserciziDAO schedaEserciziDAO;
     private EsercizioDAO esercizioDAO;
 
     /**
-     * Costruttore della classe. Inizializza la variabile mauth come istanza di FirebaseAuth, e le variabili schedaEserciziDAO ed esercizioDAO
+     * Costruttore della classe. Inizializza le variabili schedaEserciziDAO ed esercizioDAO
      * come rispettivamente istanze di SchedaEserciziDAO ed EsercizioDAO.
      */
     public SchedaLogic() {
-        mauth = FirebaseAuth.getInstance();
         schedaEserciziDAO = new SchedaEserciziDAO();
         esercizioDAO = new EsercizioDAO();
     }

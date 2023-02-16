@@ -3,12 +3,10 @@ package com.example.smartgym.start;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.smartgym.R;
@@ -16,24 +14,15 @@ import com.example.smartgym.gestioneScheda.application.activity.ExercisesFragmen
 import com.example.smartgym.infoUtenti.application.activity.ActivityReceiver;
 import com.example.smartgym.infoUtenti.application.activity.HomeFragment;
 import com.example.smartgym.infoUtenti.application.activity.ProfileFragment;
-import com.example.smartgym.infoUtenti.application.logic.AthleteInfo;
-import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
 import com.example.smartgym.infoUtenti.storage.entity.Atleta;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.security.AlgorithmConstraints;
-import java.util.Map;
-import java.util.Set;
-
+/**
+ * Questa classe definisce l'activity principale dell'app dove è contenuto la bottom bar per la navigazione tra i vari fragment
+ * che rappresentano le relative sezioni del sistema come la home, sezione esercizi e sezione del profilo. Implementa l'interfaccia
+ * NavigationBarView.OnItemSelectedListener e ActivityReceiver
+ */
 public class MainActivity extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener, ActivityReceiver {
 
     BottomNavigationView bottomNavigationView;
@@ -47,6 +36,15 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
     Atleta myAthlete;
     String idSchedaInUso = "";
 
+    /**
+     * Metodo di callback chiamato quando l'Activity viene creata.
+     * In esso viene settato il layout dell'activity e la actionBar. Inoltre la bottom bar viene
+     * collegata al metodo listener che si occupa di fare la transizione tra i fragment del menu.
+     * Nell'activity sono mantenute inoltre alcune variabili globali richiamabili dai fragment
+     * attraverso l'interfaccia ActivityReceiver quando avviene l'attach del fragment
+     *
+     * @param savedInstanceState oggetto Bundle contenente lo stato dell'Activity in caso di riavvio
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +58,13 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         bottomNavigationView.setSelectedItemId(R.id.homeFragment);
     }
 
+    /**
+     * Metodo listener chiamato quando si interagisce con la bottom bar che si occupa di effetuare
+     * la transizione al fragment relativo alla voce selezionata
+     *
+     * @param item rappresenta una delle voci selezionata nella bottom bar
+     * @return boolean, un valore true/false per stabilire se è stata selezionata una voce della bottom bar
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         FragmentManager fm = getSupportFragmentManager();
@@ -89,21 +94,33 @@ public class MainActivity extends AppCompatActivity implements NavigationBarView
         return false;
     }
 
+    /**
+     {@inheritDoc}
+     */
     @Override
     public String getIdSchedaInUso() {
         return idSchedaInUso;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setIdSchedaInUso(String id) {
         idSchedaInUso = id;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Atleta getAtleta() {
         return myAthlete;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setAtleta(Atleta atleta) {
         myAthlete = atleta;

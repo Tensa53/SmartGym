@@ -26,10 +26,7 @@ import com.example.smartgym.infoUtenti.application.logic.LoginRegistration;
 import com.example.smartgym.infoUtenti.storage.entity.Atleta;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.AuthResult;
-
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.Calendar;
 import java.util.Date;

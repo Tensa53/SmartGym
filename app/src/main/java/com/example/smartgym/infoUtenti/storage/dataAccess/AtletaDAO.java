@@ -6,6 +6,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/**
+ * Questa classe rappresenta un oggetto per l'accesso ai dati degli esercizi nella base di dati Firebase Firestore.
+ */
 public class AtletaDAO {
 
     FirebaseFirestore dbHelper;

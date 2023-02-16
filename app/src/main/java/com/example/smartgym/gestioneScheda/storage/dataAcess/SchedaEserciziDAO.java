@@ -1,7 +1,5 @@
 package com.example.smartgym.gestioneScheda.storage.dataAcess;
 
-import android.util.Log;
-
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -59,8 +57,6 @@ public class SchedaEserciziDAO {
      */
     public Task<QuerySnapshot> doRetrieveAllSchedeByUserId(String id) {
         DocumentReference dr = dbHelper.collection("atleti").document(id);
-
-        Log.d("DEBUG", dr.getPath());
 
         Task<QuerySnapshot> task = dbHelper.collection("schede_esercizi").whereEqualTo("ricevente", dr).get();
 

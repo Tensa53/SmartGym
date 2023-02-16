@@ -1,7 +1,6 @@
 package com.example.smartgym.gestioneScheda.storage.entity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Questa interfaccia definisce i metodi necessari per accedere alle informazioni di una scheda di allenamento

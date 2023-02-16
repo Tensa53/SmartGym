@@ -7,7 +7,6 @@ import com.example.smartgym.gestioneScheda.storage.entity.Esercizio;
 import com.example.smartgym.infoUtenti.application.exception.AthleteFeaturesFieldException;
 import com.example.smartgym.infoUtenti.application.exception.LoginFieldException;
 import com.example.smartgym.infoUtenti.application.exception.RegisterFieldException;
-import com.google.firebase.Timestamp;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -16,28 +15,21 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * La classe FormUtils si occupa di verificare i form presenti nel nostro sistema e validare gli input ricevuti. Nel caso di valori non ammissibili saranno sollevate
+ * le adeguate eccezioni da controllare nella classe chiamante
+ */
 public class FormUtils {
 
-    public void controllaAltriCampiRegistrazione(String nome,String cognome,String dataDiNascita,int selectedRadio) throws RegisterFieldException {
-        if (nome.length() == 0)
-            throw new RegisterFieldException("etNome_Inserire un nome !!!");
-
-        if (nome.length() > 20)
-            throw new RegisterFieldException("etNome_Il nome non deve superare i 20 caratteri !!!");
-
-        if (cognome.length() == 0)
-            throw new RegisterFieldException("etCognome_Inserire un cognome !!!");
-
-        if (cognome.length() > 20)
-            throw new RegisterFieldException("etCognome_Il cognome non deve superare i 20 caratteri !!!");
-
-        if (dataDiNascita.compareTo("DD-MM-YYYY") == 0)
-            throw new RegisterFieldException("tvDatadiNascita_Inserire una data di nascita !!!");
-
-        if (selectedRadio == -1)
-            throw new RegisterFieldException("rbSesso_Selezionare il sesso !!!");
-    }
-
+    /**
+     * Controlla i che i valori inseriti nei campi relativi ad Email e Password siano validi. Il seguente metodo viene usato
+     * sui form di login e registrazione
+     *
+     * @param email
+     * @param password
+     * @param ripetiPassword
+     * @throws LoginFieldException
+     */
     public void controllaEmailEPassword(String email, String password, String ripetiPassword) throws LoginFieldException {
         if (email.length() == 0)
             throw new LoginFieldException("etEmail_Inserisci un indirizzo email");
@@ -69,6 +61,43 @@ public class FormUtils {
             throw new LoginFieldException("etPassword_La password deve avere almeno 8 caratteri, di cui uno maiuscolo,un numero, un carattere speciale");
     }
 
+    /**
+     * Controlla che i restanti valori inseriti nei campi del form di registrazione siano validi
+     *
+     * @param nome
+     * @param cognome
+     * @param dataDiNascita
+     * @param selectedRadio
+     * @throws RegisterFieldException
+     */
+    public void controllaAltriCampiRegistrazione(String nome,String cognome,String dataDiNascita,int selectedRadio) throws RegisterFieldException {
+        if (nome.length() == 0)
+            throw new RegisterFieldException("etNome_Inserire un nome !!!");
+
+        if (nome.length() > 20)
+            throw new RegisterFieldException("etNome_Il nome non deve superare i 20 caratteri !!!");
+
+        if (cognome.length() == 0)
+            throw new RegisterFieldException("etCognome_Inserire un cognome !!!");
+
+        if (cognome.length() > 20)
+            throw new RegisterFieldException("etCognome_Il cognome non deve superare i 20 caratteri !!!");
+
+        if (dataDiNascita.compareTo("DD-MM-YYYY") == 0)
+            throw new RegisterFieldException("tvDatadiNascita_Inserire una data di nascita !!!");
+
+        if (selectedRadio == -1)
+            throw new RegisterFieldException("rbSesso_Selezionare il sesso !!!");
+    }
+
+    /**
+     * Controlla che i valori inseriti nei campi relativi alla creazione della scheda esercizi siano validi
+     *
+     * @param schedaEsercizi
+     * @throws NumberExercsisesExceededException
+     * @throws ExercisesRepsExceededException
+     * @throws ExcersisesDurationExceededException
+     */
     public void controllaListaEsercizi(List<Esercizio> schedaEsercizi) throws NumberExercsisesExceededException, ExercisesRepsExceededException, ExcersisesDurationExceededException {
         if (schedaEsercizi.size() < 3 || schedaEsercizi.size() > 10)
             throw new NumberExercsisesExceededException();
@@ -95,6 +124,14 @@ public class FormUtils {
         }
     }
 
+    /**
+     * Controlla che i valori inseriti nei campi relativi all'inserimento e/o modifica caratteristiche siano validi
+     *
+     * @param peso
+     * @param altezza
+     * @param numAllenamenti
+     * @throws AthleteFeaturesFieldException
+     */
     public void controllaCaratteristicheAtleta(Integer peso, Integer altezza, Integer numAllenamenti) throws AthleteFeaturesFieldException {
 
         if (peso == 0)
@@ -117,6 +154,12 @@ public class FormUtils {
 
     }
 
+    /**
+     * Calcola la dataDiNascita a partire dalla stringa ricevuta in input
+     *
+     * @param dataDiNascita
+     * @return Date, un'istanza della classe che si occupa di gestire le date
+     */
     public Date calcolaDataDiNascita(String dataDiNascita) {
         int day = Integer.parseInt(dataDiNascita.split("-")[0]);
 
@@ -131,6 +174,11 @@ public class FormUtils {
         return date;
     }
 
+    /**
+     * Calcola la data massima da poter inserire tale che l'età sia 18 anni
+     *
+     * @return Long, il valore della data massima in millisecondi
+     */
     public long getMaxDate() {
         long yearTime;
 

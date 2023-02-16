@@ -41,6 +41,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * La classe HomeFragment rappresenta il fragment che gestisce la home dell'applicazione
+ * dove viene visualizzato un messaggio di benvenuto, un'eventuale scheda fissata e il
+ * pulsante di completa profilo nel caso non siano state inserite tutte le caratteristiche
+ * dell'utente atleta. Sottoclasse di Fragment, implementa l'interfaccia View.OnClickListener
+ */
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
     TextView tvUtente, tvSchedaInUso;
@@ -64,14 +70,28 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     GestioneSchedaService gestioneSchedaService;
 
+    /**
+     * Costruttore vuoto per la classe HomeFragment
+     */
     public HomeFragment() {
     }
 
+    /**
+     * Metodo che viene chiamato quando il fragment è stato creato.
+     *
+     * @param savedInstanceState bundle che contiene gli eventuali dati salvati
+     *                           in precedenza dal fragment.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    /**
+     * Metodo che viene chiamato quando il fragment è associato all'Activity.
+     *
+     * @param activity l'Activity a cui il fragment è associato.
+     */
     @Override
     public void onAttach(@NonNull Activity activity) {
         super.onAttach(activity);
@@ -79,11 +99,28 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         activityReceiver = (ActivityReceiver) activity;
     }
 
+    /**
+     * Metodo che viene chiamato per creare e restituire la View gerarchia del layout associato
+     * al fragment.
+     *
+     * @param inflater           il layoutInflater che viene utilizzato per gonfiare la view.
+     * @param container          il ViewGroup a cui la view verrà eventualmente allegata.
+     * @param savedInstanceState bundle che contiene gli eventuali dati salvati
+     *                           in precedenza dal fragment.
+     * @return la view creata per il fragment.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
+    /**
+     * Metodo chiamato subito dopo che il layout del fragment è stato creato.
+     *
+     * @param view               la view creata dal metodo onCreateView().
+     * @param savedInstanceState bundle che contiene gli eventuali dati salvati
+     *                           in precedenza dal fragment.
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -112,6 +149,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         tvSchedaInUso.setText("Scheda Esercizi fissata: ");
     }
 
+    /**
+     * Metodo che viene chiamato per effettuare il binding dei widget del layout
+     * con le rispettive istanze della classe a cui appartengono
+     */
     private void widgetBinding() {
         tvUtente = getView().findViewById(R.id.tvUtente);
         btCompletaProfilo = getView().findViewById(R.id.btCompletaProfilo);
@@ -119,6 +160,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         lv = getView().findViewById(R.id.lv1);
     }
 
+    /**
+     * Questo metodo si occupa di recupera la scheda in uso attraverso il task restituito dalla classe
+     * DAO. Sono richiamati i metodi setParametriScheda() e recuperaDettagli() per recuperare ulteriori
+     * informazioni della scheda e salvare i dati nell'istanza della scheda presente nella classe. Inoltre
+     * attraverso il metodo aggiornaSchedaInUso viene settato il nuovo id della scheda attraverso
+     * ActivityReceiver
+     */
     private void recuperaSchedaInUso() {
         Task<QuerySnapshot> task = gestioneSchedaService.getSchedaInUso(user.getUid());
 
@@ -152,11 +200,36 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         });
     }
 
+    /**
+     * Questo metodo viene chiamato da recuperaSchedaInUso() per memorizzare l'id della scheda
+     * attualmente in uso e fissata nella home
+     * @param id, l'identificativo della scheda
+     */
     private void aggiornaSchedaInUso(String id) {
         idSchedaInUso = id;
         activityReceiver.setIdSchedaInUso(id);
     }
 
+    /**
+     * Questo metodo viene richiamato da recuperaSchedaInUso() per memorizzare le informazioni
+     * relativi ai parametri della scheda nell'istanza presenza nella scheda
+     *
+     * @param realScheda, un'istanza della scheda presente nella classe
+     */
+    private void setParametriScheda(RealScheda realScheda) {
+        ((RealScheda) schedaEsercizi).setModalita(realScheda.getModalita());
+        ((RealScheda) schedaEsercizi).setNome(realScheda.getNome());
+        ((RealScheda) schedaEsercizi).setInUso(realScheda.isInUso());
+        ((RealScheda) schedaEsercizi).setPubblica(realScheda.isPubblica());
+    }
+
+    /**
+     * Questo metodo viene chiamato da recuperaSchedaInUso() per recuperare i dettagli relativi
+     * agli esercizi contenuti nella scheda esercizi. Viene richiamato il metodo recuperaEsercizio()
+     * per recuperare l'esercizio legato al dettaglio appena recuperato
+     *
+     * @param dettaglies, una collezione dei riferimenti dei dettagli esercizi da recuperare dal db
+     */
     private void recuperaDettagliScheda(ArrayList<DocumentReference> dettaglies) {
 
         for (DocumentReference dr: dettaglies) {
@@ -184,6 +257,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    /**
+     * Questo metodo viene chiamato da recuperaDettagliScheda() per recuperare le informazioni relative
+     * all'esercizio legato al relativo dettaglio. Viene richiamato il metodo aggiungiEsercizio() per
+     * popolare la listview con l'esercizio appena recuperato
+     *
+     * @param dettaglioEsercizio, il dettaglio del relativo esercizio da recuperare
+     * @param dr, il riferimento nel db dell'esercizio da recuperare
+     */
     private void recuperaEsercizio(DettaglioEsercizio dettaglioEsercizio, DocumentReference dr) {
 
         Task<DocumentSnapshot> task = dr.get();
@@ -212,32 +293,26 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
 
     }
 
+    /**
+     * Questo metodo viene richiamato da recuperaEsercizio() per popolare la listview
+     * con l'esercizio appena recuperato
+     *
+     * @param esercizio, l'esercizio appena recuperato da aggiungere alla listview attraverso
+     * il customapdapter utilizzato
+     */
     private void aggiungiEsercizio(Esercizio esercizio) {
         ((RealScheda) schedaEsercizi).aggiungiEsercizio(esercizio);
 
         customAdapterEsercizi.add(esercizio);
     }
 
-    private void mostraAvviso() {
-        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-                switch (i) {
-                    case DialogInterface.BUTTON_POSITIVE:
-                    {
-                        Toast.makeText(getContext(),"OKAY", Toast.LENGTH_LONG).show();
-                    }
-                    break;
-                }
-            }
-        };
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setMessage("Informazioni aggiornate con successo !")
-                .setPositiveButton("OK", dialogClickListener).show();
-    }
-
+    /**
+     * Questo metodo si occupa di recuperare le informazioni relative all'atleta attraverso il task
+     * restituito dalla classe DAO. Viene richiamato il metodo saveAtleta() per memorizzare l'atleta\
+     * nella variabile d'istanza della classe
+     *
+     * @param id, l'identificativo del documento dove sono memorizzate le informazioni dell'atleta
+     */
     private void recuperaAtleta(String id) {
         Task<DocumentSnapshot> task = athleteInfo.getAthletebyId(id);
 
@@ -251,13 +326,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         });
     }
 
-    private void setParametriScheda(RealScheda realScheda) {
-        ((RealScheda) schedaEsercizi).setModalita(realScheda.getModalita());
-        ((RealScheda) schedaEsercizi).setNome(realScheda.getNome());
-        ((RealScheda) schedaEsercizi).setInUso(realScheda.isInUso());
-        ((RealScheda) schedaEsercizi).setPubblica(realScheda.isPubblica());
-    }
-
+    /**
+     * Questo metodo viene richiamato da recuperaAtleta() per memorizzare le informazioni relative
+     * all'atleta all'interno di una variabile di istanza
+     *
+     * @param atleta, un'istanza di atleta da memorizzare
+     */
     private void saveAtleta(Atleta atleta) {
         myAthlete = atleta;
 
@@ -269,20 +343,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
             btCompletaProfilo.setVisibility(Button.VISIBLE);
     }
 
-//    private void populateList() {
-//        customAdapterEsercizi.add(new Esercizio("PushUp",new DettaglioEsercizio(10,0)));
-//        customAdapterEsercizi.add(new Esercizio("TricepDip",new DettaglioEsercizio(10,0)));
-//        customAdapterEsercizi.add(new Esercizio("Squat",new DettaglioEsercizio(10,0)));
-//        customAdapterEsercizi.add(new Esercizio("Trazioni",new DettaglioEsercizio(10,0)));
-//        customAdapterEsercizi.add(new Esercizio("Crunch",new DettaglioEsercizio(10,0)));
-//        customAdapterEsercizi.add(new Esercizio("Jumping Jacks",new DettaglioEsercizio(10,0)));
-//        customAdapterEsercizi.add(new Esercizio("Mountain Climber",new DettaglioEsercizio(10,0)));
-//        customAdapterEsercizi.add(new Esercizio("Plank",new DettaglioEsercizio(0,30)));
-//        customAdapterEsercizi.add(new Esercizio("Cobra Stretch",new DettaglioEsercizio(10,0)));
-//        customAdapterEsercizi.add(new Esercizio("Side Hop",new DettaglioEsercizio(0,20)));
-//    }
-
-    @Override
+    /**
+     * Questo metodo gestisce l'evento di click del pulsante specificato.
+     *
+     * @param view la vista che ha generato l'evento di click
+     */
     public void onClick(View view) {
         int id = view.getId();
 
@@ -291,6 +356,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    /**
+     * Questo metodo viene richiamato da onClick() per gestire le operazioni relative al completamento
+     * del profilo dell'atleta. Viene passata alla nuova activity lanciata, l'istanza dell'atleta
+     * precedentemente recuperata dal db
+     */
     private void onCompletProfiloClick() {
         Intent intent = new Intent(getContext(), InserimentoModificaCaratteristicheActivity.class);
         Bundle b = new Bundle();
