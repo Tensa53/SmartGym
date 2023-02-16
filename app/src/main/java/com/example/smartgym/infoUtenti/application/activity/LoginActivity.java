@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.smartgym.R;
-
 import com.example.smartgym.start.MainActivity;
 import com.example.smartgym.infoUtenti.application.exception.LoginFieldException;
 import com.example.smartgym.utils.FormUtils;

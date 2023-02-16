@@ -1,13 +1,12 @@
 package com.example.smartgym.infoUtenti.application.activity;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
+
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -17,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.smartgym.R;
 import com.example.smartgym.gestioneScheda.application.activity.CustomAdapterEsercizi;

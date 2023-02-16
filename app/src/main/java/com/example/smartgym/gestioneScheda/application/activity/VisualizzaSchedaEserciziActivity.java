@@ -36,8 +36,6 @@ import java.util.ArrayList;
  */
 public class VisualizzaSchedaEserciziActivity extends AppCompatActivity implements View.OnClickListener {
 
-    String nome;
-
     TextView tv1;
 
     String idSchedaInUso;

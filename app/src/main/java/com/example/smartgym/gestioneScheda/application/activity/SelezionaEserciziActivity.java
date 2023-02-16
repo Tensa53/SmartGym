@@ -71,8 +71,6 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
 
         lv.setAdapter(customAdapterEserciziChecked);
 
-//        populateList(parteDelCorpo);
-
         if (parteDelCorpo.equalsIgnoreCase("tuttoilcorpo")) {
             Task<QuerySnapshot> task = schedaLogic.getAllEsercizi();
 
@@ -174,28 +172,6 @@ public class SelezionaEserciziActivity extends AppCompatActivity {
 
         return true;
     }
-
-//    private void populateList(String parteDelCorpo) {
-//        esercizi.add(new Esercizio("PushUp", "schiena", new DettaglioEsercizio(10, -1)));
-//        esercizi.add(new Esercizio("Trazioni", "schiena", new DettaglioEsercizio(10, -1)));
-//        esercizi.add(new Esercizio("Squat", "gambe", new DettaglioEsercizio(10, -1)));
-//        esercizi.add(new Esercizio("Affondi", "gambe", new DettaglioEsercizio(10, -1)));
-//        esercizi.add(new Esercizio("braccia1", "braccia", new DettaglioEsercizio(10, -1)));
-//        esercizi.add(new Esercizio("braccia2", "braccia", new DettaglioEsercizio(10, -1)));
-//        esercizi.add(new Esercizio("petto1", "petto", new DettaglioEsercizio(10, -1)));
-//        esercizi.add(new Esercizio("petto2", "petto", new DettaglioEsercizio(10, -1)));
-//        esercizi.add(new Esercizio("addome1", "addome", new DettaglioEsercizio(10, -1)));
-//        esercizi.add(new Esercizio("addome2", "addome", new DettaglioEsercizio(10, -1)));
-//
-//        for (Esercizio e : esercizi) {
-//            if (e.getParteDelCorpo().equalsIgnoreCase(parteDelCorpo)) {
-//                customAdapterEserciziChecked.add(e);
-//            } else if (parteDelCorpo.equalsIgnoreCase("tuttoilcorpo")) {
-//                customAdapterEserciziChecked.add(e);
-//            }
-//        }
-//
-//    }
 
     /**
      * Metodo che aumenta la durata o il numero di ripetizioni dell'esercizio selezionato.

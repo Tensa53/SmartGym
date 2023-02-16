@@ -25,9 +25,9 @@ public class FormUtils {
      * Controlla i che i valori inseriti nei campi relativi ad Email e Password siano validi. Il seguente metodo viene usato
      * sui form di login e registrazione
      *
-     * @param email
-     * @param password
-     * @param ripetiPassword
+     * @param email, l'email dell'utente
+     * @param password, la password dell'utente
+     * @param ripetiPassword, la password ripetuta
      * @throws LoginFieldException
      */
     public void controllaEmailEPassword(String email, String password, String ripetiPassword) throws LoginFieldException {
@@ -64,10 +64,10 @@ public class FormUtils {
     /**
      * Controlla che i restanti valori inseriti nei campi del form di registrazione siano validi
      *
-     * @param nome
-     * @param cognome
-     * @param dataDiNascita
-     * @param selectedRadio
+     * @param nome, il nome dell'utente
+     * @param cognome, il cognome dell'utente
+     * @param dataDiNascita, la data di nascita dell'utente
+     * @param selectedRadio, l'id del radio button selezionato
      * @throws RegisterFieldException
      */
     public void controllaAltriCampiRegistrazione(String nome,String cognome,String dataDiNascita,int selectedRadio) throws RegisterFieldException {
@@ -93,7 +93,7 @@ public class FormUtils {
     /**
      * Controlla che i valori inseriti nei campi relativi alla creazione della scheda esercizi siano validi
      *
-     * @param schedaEsercizi
+     * @param schedaEsercizi, una raccolta di esercizi
      * @throws NumberExercsisesExceededException
      * @throws ExercisesRepsExceededException
      * @throws ExcersisesDurationExceededException
@@ -127,9 +127,9 @@ public class FormUtils {
     /**
      * Controlla che i valori inseriti nei campi relativi all'inserimento e/o modifica caratteristiche siano validi
      *
-     * @param peso
-     * @param altezza
-     * @param numAllenamenti
+     * @param peso, il peso dell'atleta
+     * @param altezza, l'altezza dell'atleta
+     * @param numAllenamenti, gli allenamenti dell'atleta
      * @throws AthleteFeaturesFieldException
      */
     public void controllaCaratteristicheAtleta(Integer peso, Integer altezza, Integer numAllenamenti) throws AthleteFeaturesFieldException {
@@ -157,7 +157,7 @@ public class FormUtils {
     /**
      * Calcola la dataDiNascita a partire dalla stringa ricevuta in input
      *
-     * @param dataDiNascita
+     * @param dataDiNascita, la data di nascita dell'utente
      * @return Date, un'istanza della classe che si occupa di gestire le date
      */
     public Date calcolaDataDiNascita(String dataDiNascita) {

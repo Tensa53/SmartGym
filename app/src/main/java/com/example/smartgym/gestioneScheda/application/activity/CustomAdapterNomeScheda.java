@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.smartgym.R;
 import com.example.smartgym.gestioneScheda.storage.entity.SchedaEsercizi;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public class CustomAdapterNomeScheda extends ArrayAdapter<SchedaEsercizi> {
 
         SchedaEsercizi schedaEsercizi = getItem(position);
 
-        tv = convertView.findViewById(com.example.smartgym.R.id.textViewList);
+        tv = convertView.findViewById(R.id.textViewList);
 
         tv.setText(schedaEsercizi.getNome());
 

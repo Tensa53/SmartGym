@@ -31,6 +31,10 @@ import com.google.firebase.auth.AuthResult;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Questa classe rappresenta l'activity che si occupa di effettuare le operazioni di registrazione.
+ * Implementa l'interfaccia View.OnClickListener e DataPickerDialog.OnDateListener
+ */
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener,DatePickerDialog.OnDateSetListener {
 
     EditText etNome,etCognome,etEmail,etPassword,etRipetiPassword;
@@ -45,6 +49,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     FormUtils formUtils;
 
+    /**
+     * Metodo di callback chiamato quando l'Activity viene creata.
+     * In esso sono richiamati i relativi metodi per istanziare i widget.
+     * Inoltre sono settati i listener per i pulsanti
+     *
+     * @param savedInstanceState oggetto Bundle contenente lo stato dell'Activity in caso di riavvio
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,12 +110,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    /**
+     * Questo metodo viene richiamato da onLogin() quando la validazione dei campi del form va a
+     * buon e viene quindi lanciata l'activity home
+     */
     private void launchHome() {
         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
         startActivity(intent);
         finish();
     }
 
+    /**
+     * Questo metodo viene chiamato da onClick() per mostrare il datePickerDialog
+     */
     private void onClickData() {
         final Calendar c = Calendar.getInstance();
 
@@ -122,6 +140,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         datePickerDialog.show();
     }
 
+    /**
+     * Questo metodo viene chiamato da onClick() per effettuare le operazioni relative alla
+     * registrazione. Gestisce l'eccezione LoginFieldException
+     */
     private void onRegister() {
 
         String email = etEmail.getText().toString();
@@ -147,6 +169,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    /**
+     * Questo metodo viene richiamato da onRegister() per mostrare un messaggio di errore quando uno
+     * dei valori inserito nei campi del form nom viene validato
+     * @param error, rappresenta il messaggio di errore
+     */
     private void showError(String error) {
         String id = error.split("_")[0];
         String msg = error.split("_")[1];
@@ -164,6 +191,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+    /**
+     * Metodo che viene chiamato per effettuare il binding dei widget del layout
+     * con le rispettive istanze della classe a cui appartengono
+     */
     private void widgetBinding() {
         etNome = findViewById(R.id.etNome);
         etCognome = findViewById(R.id.etCognome);
@@ -176,6 +207,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         rbg1 = findViewById(R.id.rbg1);
     }
 
+    /**
+     * Questo metodo gestisce l'evento di click del pulsante specificato.
+     *
+     * @param view la vista che ha generato l'evento di click
+     */
     @Override
     public void onClick(View view) {
         int id = view.getId();
@@ -188,6 +224,15 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    /**
+     * Questo metodo viene chiamato dopo aver confermato la data sul datePickerDialog. Permette
+     * di recuperare la data scelta e di memorizzarla
+     *
+     * @param datePicker, il widget di riferimento per le date
+     * @param i, intero che indica il giorno scelto
+     * @param i1, intero che indica il mese scelto
+     * @param i2, intero che indica l'anno scelto
+     */
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
         tvDataDiNascita.setTag(i2 + "-" + i1 + "-" + i);

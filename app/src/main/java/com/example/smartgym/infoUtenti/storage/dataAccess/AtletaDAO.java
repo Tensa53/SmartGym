@@ -13,25 +13,54 @@ public class AtletaDAO {
 
     FirebaseFirestore dbHelper;
 
+    /**
+     * Costruttore della classe. Inizializza l'istanza del dbHelper
+     */
     public AtletaDAO() {
         dbHelper = FirebaseFirestore.getInstance();
     }
 
+    /**
+     * Recupera il documento dell'atleta attraverso l'id
+     *
+     * @param id, l'id del documento
+     * @return Task<DocumentSnapshot> rappresenta il risultato dell'operazione
+     */
     public Task<DocumentSnapshot> doRetrieveAthleteDocById(String id) {
         Task<DocumentSnapshot> task = dbHelper.collection("atleti").document(id).get();
 
         return task;
     }
 
+    /**
+     * Salva l'atleta nel db
+     *
+     * @param atleta, l'atleta da salvare
+     * @param id, l'id del documento
+     * @return Task<Void> rappresenta il risultato dell'operazione
+     */
     public Task<Void> doSaveAthlete(Atleta atleta, String id) {
         Task<Void> task = dbHelper.collection("atleti").document(id).set(atleta);
         return task;
     }
 
+    /**
+     * Cancella l'atleta dal db
+     *
+     * @param id, l'id del documento
+     * @return Task<Void> rappresenta il risultato dell'operazione
+     */
     public Task<Void> doDeleteAthlete(String id) {
         return dbHelper.collection("atleti").document(id).delete();
     }
 
+    /**
+     * Aggiorna l'atleta
+     *
+     * @param atleta, l'atleta aggiornato
+     * @param id, l'id del documento da modificare
+     * @return Task<Void> rappresenta il risultato dell'operazione
+     */
     public Task<Void> doUpdateAthlete(Atleta atleta, String id){
         DocumentReference doc = dbHelper.collection("atleti").document(id);
         Task<Void> task = doc.set(atleta);
