@@ -1,0 +1,1389 @@
+﻿<!DOCTYPE html>
+<html language="it-IT">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>TrelloExport</title>
+<style>
+@import "http://fonts.googleapis.com/css?family=Open+Sans";
+@import "http://fonts.googleapis.com/css?family=Patrick+Hand+SC";
+html,
+body,
+footer,
+.footer {
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+}
+
+html {
+    font-size: 100%;
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+body {
+    background: #fff;
+    color: #333;
+    font-family: 'Open Sans', sans-serif;
+    min-height: 100vh;
+    padding: 10px;
+}
+
+.TrelloExport {
+    padding: 20px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+legend {
+    font-family: 'Open Sans';
+    padding: 0;
+    margin: 0;
+}
+
+h1 {
+    background-color: #00AAFF;
+    color: black;
+    padding: 10px;
+    font-size: 2em;
+}
+
+h2 {
+    color: #000;
+    padding: 10px;
+    font-size: 1.8em;
+    border: solid 2px #00AAFF;
+    margin-top: 20px;
+}
+
+h2:first-of-type {
+    margin-top: 10px
+}
+
+h3 {
+    color: #B229FF;
+    font-size: 1.5em;
+}
+
+h4 {
+    font-size: 1.3em;
+    /* text-decoration: underline; */
+}
+
+p {
+    font-size: 1em;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+img {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.FluidYellow {
+    background-color: #FFD000;
+}
+
+a,
+a:visited,
+a:focus {
+    color: #FF0000;
+}
+
+.col-md-3 {
+    width: 50%;
+    float: left;
+}
+
+.card {
+    border: solid 1px #ccc;
+    box-shadow: 5px 5px #eee;
+    margin: 10px 0 10px 0;
+    padding: 0 5px;
+}
+
+.card .info:first-of-type {
+    margin-top: 5px
+}
+
+.card h1,
+.card h2,
+.card h3,
+.card h4,
+.card h5,
+.card h6,
+.card .info,
+.card .description,
+.card .comments,
+.card .comment,
+.card .attachments,
+.card .attachment,
+.card .checklists,
+.card .checklist,
+.card .customFields,
+.card .customField,
+.card .labels {
+    padding: 2px;
+    width: auto;
+    max-width: 100%;
+    background-color: white;
+}
+
+.card .customField {
+    margin-left: 10px
+}
+
+.card .description p {
+    padding: 0;
+}
+
+.card .label {
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: bold;
+    width: auto;
+    min-width: 180px
+}
+
+.comment,
+.attachment {
+    margin: 0
+}
+
+.comment .label,
+.attachment .label,
+.comment .text,
+.attachment .text {
+    text-transform: none;
+    display: block;
+    width: auto;
+    font-weight: bold;
+    border: solid 1px #eee;
+    background-color: #eee;
+    border-radius: 5px;
+    padding: 5px
+}
+
+.comment .text,
+.attachment .text {
+    border: solid 1px white;
+    background-color: white;
+}
+
+.checklists ul li .completed {
+    font-size: .8em
+}
+</style>
+</head>
+<body class="TrelloExport">
+             <h1>Progetto Ingegneria del Software A.A. 2022/23 &gt;&gt; Task</h1>
+                            <h2>Terminati</h2>
+            <div class="card">
+        <h3><a href="https://trello.com/c/CipvRscu">Mostrare al prof la bozza dello Statement of Work</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">8/10/2022 22:47:31</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Wed Oct 12 2022 01:00:00 GMT+0200 (Ora legale dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"><p>Analizzare e integrare i feedback ricevuti dal prof, sperando che approvi la nostra idea di progetto</p></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/wNarqxve">Completare e Consegnare lo SOW</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">15/10/2022 18:46:21</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Tue Oct 18 2022 23:59:00 GMT+0200 (Ora legale dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/hzzQFJDa">Completare gli use case</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">22/10/2022 16:01:18</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Wed Oct 26 2022 00:00:00 GMT+0200 (Ora legale dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/Mzbbujfo">Completare use e scenari</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">29/10/2022 17:12:36</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Wed Nov 02 2022 00:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/C3sEnZaT">Completare use case model e requisiti non funzionali</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">5/11/2022 18:39:13</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Wed Nov 09 2022 00:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/jamnJZ4j">Completare mockup e diagrammi navigazionali</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">19/11/2022 13:11:44</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Tue Nov 15 2022 23:59:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/eSsyxb2z">Completare i design goal</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">19/11/2022 13:10:12</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Tue Nov 22 2022 23:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/ddvpP06X">Completare matrici di accesso e diagramma architetturale</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">19/11/2022 13:11:20</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Tue Nov 29 2022 22:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/W0STgmyD">Completare use case boundary e category partition tests</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">3/12/2022 17:33:22</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Tue Dec 06 2022 22:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/caTJNY3t">Scrivere il RAD</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">19/11/2022 13:12:15</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Sun Dec 18 2022 00:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/zhHz29kt">Scrivere il SDD</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">3/12/2022 17:33:06</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Sun Dec 18 2022 00:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/Lp0arHf1">Scrivere i documenti di testing</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">11/12/2022 14:32:32</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Sun Dec 18 2022 00:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/7oDaHzL1">Iniziare l'implementazione delle funzionalit&#224;</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">18/12/2022 15:39:07</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Sat Jan 28 2023 15:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"><p>creazioneScheda (per Mary)
+modificaDatiAnagraficiPersonali (per Mik)</p></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/AC3eoxWW">Completare la realizzazione delle interfacce grafiche</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">30/1/2023 12:09:40</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Fri Feb 03 2023 23:59:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/jAUhDuYG">Scrivere i manuali d'uso e d'installazione</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">25/1/2023 14:25:48</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Sun Feb 05 2023 23:59:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/v7XOenpJ">Scrivere l'ODD</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">18/12/2022 15:39:02</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Tue Feb 14 2023 23:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/hwoGHxfg">Completare il testing</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">18/12/2022 15:39:14</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Tue Feb 14 2023 23:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/lHyh8E7l">Scrivere la javadoc</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">30/1/2023 12:11:01</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Fri Feb 17 2023 22:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"></p>
+        </div>
+                                            </div>
+                             <h2>Riunioni</h2>
+            <div class="card">
+        <h3><a href="https://trello.com/c/OSDjTWIf">Riunione iniziale (8 ottobre ore 15:30)</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">7/10/2022 21:46:17</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Sat Oct 08 2022 18:30:00 GMT+0200 (Ora legale dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"><p>Primo incontro tra i membri del team per stabilire le idee di progetto, le tecnologie da utilizzare e le scadenze da rispettare</p></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/W2wBHcSc">Riunione del progetto (15 ottobre ore 15)</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">15/10/2022 11:09:46</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Sat Oct 15 2022 18:00:00 GMT+0200 (Ora legale dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"><p>Secondo incontro per completare il documento di Statement Of Work</p></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/nPZgpxxP">Riunione del progetto (22 ottobre ore 9)</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">22/10/2022 16:00:46</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Sat Oct 22 2022 12:00:00 GMT+0200 (Ora legale dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"><p>Terzo incontro per inizio stesura della documentazione di raccolta dei requisiti</p></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/HPEWLljB">Riunione del progetto (25 ottobre ore 15:30)</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">25/11/2022 19:05:48</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Tue Oct 25 2022 18:30:00 GMT+0200 (Ora legale dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"><p>Completamento dei design goal e revisione delle attivit&#224; di raccolta e analisi dei requisiti</p></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/ShkPmwzs">Riunione del progetto (29 ottobre ore 15)</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">27/10/2022 20:46:23</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Sat Oct 29 2022 18:00:00 GMT+0200 (Ora legale dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"><p>Quarto incontro per completare la documentazione relativa alla raccolta dei requisiti</p></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/7Fgkzi55">Riunione del progetto (4 novembre ore 14)</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">8/11/2022 10:28:03</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Fri Nov 04 2022 16:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"><p>Primo incontro in presenza. Interruzione causata dall'evacuazione dell'Universit&#224;. Abbozzato un class diagram e un glossario degli oggetti</p></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/6OHrevE3">Riunione del progetto (5 novembre ore 15)</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">29/1/2023 20:05:26</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Thu Jan 05 2023 18:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"><p>Continuazione del lavoro interrotto ieri</p></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/OAzoHikc">Riunione del progetto (12 novembre ore 15)</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">10/11/2022 14:30:58</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Sat Nov 12 2022 18:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"><p>Completamento della fase di analisi e inizio stesura del documento RAD</p></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/ZnfYTd9f">Riunione del progetto (19 novembre ore 9)</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">16/11/2022 11:57:18</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Sat Nov 19 2022 12:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"><p>Ancora revisione sulla fase di analisi e inizio del system design</p></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/ADRtEzIk">Riunione del progetto (3 dicembre ore 10)</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">3/12/2022 17:32:33</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Sat Dec 03 2022 13:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"><p>Continuazione delle attivit&#224; di system design</p></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/t4DjLIpw">Project Space</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">17/1/2023 22:03:19</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Wed Feb 01 2023 19:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"><p>Slot giornalieri dove lavorare sul progetto (indicativamente dalle 15 alle 19). Ogni giorno viene avviata una riunione meet,chiunque stia lavorando al progetto pu&#242; unirsi alla chiamata e discuterne in gruppo</p></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/gNKBpH3k">Riunione del progetto (19 gennaio ore 15)</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">19/1/2023 12:51:33</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Thu Jan 19 2023 18:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"><p>Discussione dei feedback ricevuti ed inizio della fase di Object Design. Per la riunione sar&#224; utilizzato lo slot giornaliero di Project Space</p></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/pmRNrmtu">Riunione del progetto (25 gennaio ore 15)</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">25/1/2023 14:20:13</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Wed Jan 25 2023 18:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"><p>Inizio della stesura del documento di Object Design, organizzazione sulla divisione delle parti del sistema da implementare e testare. Per la riunione sar&#224; utilizzato lo slot giornaliero di Project Space</p></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/33SXi4tX">Riunione del progetto (28 gennaio ore 15)</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">25/1/2023 22:59:37</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Sat Jan 28 2023 18:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/3vMxG59u">Project Space Two</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">6/2/2023 15:02:31</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Tue Feb 14 2023 19:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"><p>Slot giornalieri dove lavorare sul progetto (indicativamente dalle 15 alle 19). Ogni giorno viene avviata una riunione meet,chiunque stia lavorando al progetto pu&#242; unirsi alla chiamata e discuterne in gruppo</p></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/t7JTGKYx">Riunione del progetto (4 febbraio ore 15)</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">5/2/2023 16:58:18</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Sat Feb 04 2023 15:40:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"><p>Breve riunione per fare il punto della situazione ed organizzare le ultime attivit&#224;</p></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/CPlxccEL">Riunione del progetto (10 febbraio ore 15)</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">10/2/2023 22:11:23</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Fri Feb 10 2023 16:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"><p>Riunione per organizzare le attivit&#224; di testing e le restanti attivit&#224; </p></p>
+        </div>
+                                            </div>
+                             <div class="card">
+        <h3><a href="https://trello.com/c/iPT2wBl9">Riunione finale del progetto (17 febbraio ore 15)</a></h3>        
+        <div class="row">
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created:</span>
+                <span class="text">17/2/2023 00:12:16</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Created By:</span>
+                <span class="text">Daniele Fabiano</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Due:</span>
+                <span class="text">Fri Feb 17 2023 19:00:00 GMT+0100 (Ora standard dellEuropa centrale)</span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info">
+                <span class="label">Completed:</span>
+                                <span class="text"><input type="checkbox" disabled checked></span>
+                            </div>
+        </div>
+        </div>
+        <div class="description">
+            <span class="label">Description:</span>
+            <p class="text"><p>Resoconto delle attivit&#224; svolte e revisione dei documenti</p></p>
+        </div>
+                                            </div>
+</body>
+</html>
