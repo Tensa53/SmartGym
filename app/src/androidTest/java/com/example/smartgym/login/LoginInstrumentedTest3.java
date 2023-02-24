@@ -1,5 +1,6 @@
 package com.example.smartgym.login;
 
+import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.typeText;
@@ -29,11 +30,10 @@ public class LoginInstrumentedTest3 {
 
         onView(ViewMatchers.withId(R.id.etEmail)).perform(typeText("giuseppeverdi@mail.it"));
         onView(withId(R.id.etPassword)).perform(typeText("OkayMyPass1@"));
-
         onView(withId(R.id.btLogin)).perform(click());
 
         try {
-            Thread.sleep(1000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

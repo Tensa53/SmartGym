@@ -53,7 +53,7 @@ public class InserimentoCaratteristicheInstrumentedTest1 {
         onView(withId(R.id.etPeso)).perform(click());
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

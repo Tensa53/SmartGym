@@ -24,45 +24,11 @@ public class Esercizio implements Serializable {
     public Esercizio() {
     }
 
-//    /**
-//     * Costruttore con parametro DettaglioEsercizio.
-//     *
-//     * @param dettaglio il dettaglio dell'esercizio.
-//     */
-//    public Esercizio(DettaglioEsercizio dettaglio) {
-//        this.dettaglio = dettaglio;
-//    }
-//
-//    public Esercizio(String nome, DettaglioEsercizio dettaglio) {
-//        this.nome = nome;
-//        this.dettaglio = dettaglio;
-//        this.isChecked = false;
-//    }
-//
-//    /**
-//     * Costruttore con nome e DettaglioEsercizio.
-//     *
-//     * @param nome      il nome dell'esercizio.
-//     * @param dettaglio il dettaglio dell'esercizio.
-//     */
-//    public Esercizio(String nome, String parteDelCorpo, DettaglioEsercizio dettaglio) {
-//        this.nome = nome;
-//        this.parteDelCorpo = parteDelCorpo;
-//        this.dettaglio = dettaglio;
-//        this.isChecked = false;
-//    }
-//
-//    /**
-//     * Costruttore con nome e parte del corpo
-//     *
-//     * @param nome          il nome dell'esercizio.
-//     * @param parteDelCorpo la parte del corpo su cui agisce l'esercizio.
-//     */
-//    public Esercizio(String nome, String parteDelCorpo) {
-//        this.nome = nome;
-//        this.parteDelCorpo = parteDelCorpo;
-//        this.isChecked = false;
-//    }
+    public Esercizio(String nome, DettaglioEsercizio dettaglio) {
+        this.nome = nome;
+        this.dettaglio = dettaglio;
+        this.isChecked = false;
+    }
 
     /**
      * Costruttore con nome, descrizione, difficoltà, parte del corpo, tipologia, esecuzione
